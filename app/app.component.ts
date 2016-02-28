@@ -1,17 +1,6 @@
 import {Component} from 'angular2/core';
-
-interface ReviewTeam {
-  id: number;
-  name: string;
-  reviewers: Reviewer[];
-  selected: boolean;
-}
-
-interface Reviewer {
-  id: number;
-  name: string;
-  email: string;
-}
+import {ReviewTeam} from './review-team';
+import {TeamDetailComponent} from './team-detail.component';
 
 @Component({
   selector: 'review-list',
@@ -34,11 +23,14 @@ interface Reviewer {
         </div>
     </div>
 
-    <div *ngIf="hasSelected">
+    <div *ngIf="lastSelectedTeam">
+      <div>
+        <team-detail [team]="lastSelectedTeam"></team-detail>
+      </div>
       <div>
         <!-- You selected: {{selectedTeam.name}} -->
         <br/>
-        <span *ngIf="mailList">Mail list: {{mailList}}</span>
+        <span *ngIf="mailList"><strong>Mail list: </strong> {{mailList}}</span>
       </div>
       <div>
         <button (click)="generateMailList()">Generate mail list</button>
@@ -50,18 +42,28 @@ interface Reviewer {
       background-color: #ddcc00;
       color: white;
     }
-  `]
+  `],
+  directives: [TeamDetailComponent]
 })
 export class AppComponent {
   teamFilter = '';
   reviewTeams = REVIEWLIST;
   hasSelected: boolean;
   mailList: string;
+  lastSelectedTeam: ReviewTeam;
 
   onSelect(team: ReviewTeam) {
     team.selected = !team.selected;
     this.mailList = '';
-    this.hasSelected = hasSelectedTeam(this.reviewTeams);
+
+    if (team.selected) {
+      this.lastSelectedTeam = team;
+    } else {
+      this.lastSelectedTeam = getFirstSelectedTeam(this.reviewTeams);
+    }
+    // if (this.lastSelectedTeam) {
+    //   alert(this.lastSelectedTeam.name);
+    // }
   }
 
   generateMailList() {
@@ -76,13 +78,22 @@ export class AppComponent {
   }
 }
 
-var hasSelectedTeam = function(teams: Array) {
+var hasSelectedTeam = function(teams: ReviewTeam[]) {
   for (var i = 0; i < teams.length; i++) {
     if (teams[i].selected) {
       return true;
     }
   }
   return false;
+}
+
+var getFirstSelectedTeam = function(teams: ReviewTeam[]) {
+  for (var i = 0; i < teams.length; i++) {
+    if (teams[i].selected) {
+      return teams[i];
+    }
+  }
+  return null; 
 }
 
 var REVIEWLIST: ReviewTeam[] = [
@@ -92,7 +103,10 @@ var REVIEWLIST: ReviewTeam[] = [
     reviewers: [
       {id: 101, name: 'Tina', email: 'tina@mail.com'}, 
       {id:102, name: 'Kym', email: 'kym@mail.com'}
-    ]
+    ],
+    selected: false,
+    workingProduct: 'Vehicle',
+    manager: 'The big one'
   },
   { 
     id: 2,
@@ -100,6 +114,9 @@ var REVIEWLIST: ReviewTeam[] = [
     reviewers: [
       { id: 101, name: 'Valentyna', email: 'val@mail.com' },
       { id: 102, name: 'Josh', email: 'josh@mail.com'}
-    ]
+    ],
+    selected: false,
+    workingProduct: 'Ads',
+    manager: 'Cowboys'
   }
 ];
