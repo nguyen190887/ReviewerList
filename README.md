@@ -7,3 +7,8 @@ Just executes below commands:
 1. npm install
 
 2. npm start
+
+
+# Reference
+  https://angular.io/docs/ts/latest/tutorial/
+  
