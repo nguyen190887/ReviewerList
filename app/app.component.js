@@ -1,4 +1,6 @@
-System.register(['angular2/core', './team-detail.component'], function(exports_1) {
+System.register(['angular2/core', './team-detail.component'], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -52,14 +54,14 @@ System.register(['angular2/core', './team-detail.component'], function(exports_1
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'review-list',
-                        template: "\n    <h1>Review Teams</h1>\n    \n    <div>\n      <label>Type your filter: </label>\n      <input [(ngModel)]=\"teamFilter\" />\n    </div>\n\n    <div *ngFor=\"#team of reviewTeams\"\n      [class.selected]=\"team.selected\"\n      (click)=\"onSelect(team)\">\n      <div *ngIf=\"team.name.toLowerCase().indexOf(teamFilter.toLowerCase()) >= 0\">\n        <h3>{{team.id}} - {{team.name}}</h3>\n        <ul>\n          <li *ngFor=\"#reviewer of team.reviewers\">{{reviewer.name}}</li>\n        </ul>\n        </div>\n    </div>\n\n    <div *ngIf=\"lastSelectedTeam\">\n      <div>\n        <team-detail [team]=\"lastSelectedTeam\"></team-detail>\n      </div>\n      <div>\n        <!-- You selected: {{selectedTeam.name}} -->\n        <br/>\n        <span *ngIf=\"mailList\"><strong>Mail list: </strong> {{mailList}}</span>\n      </div>\n      <div>\n        <button (click)=\"generateMailList()\">Generate mail list</button>\n      </div>\n    </div>\n    ",
-                        styles: ["\n    .selected {\n      background-color: #ddcc00;\n      color: white;\n    }\n  "],
+                        template: "\n    <h1>Review Teams</h1>\n\n    <div class=\"filter\">\n      <label>Type your filter: </label>\n      <input [(ngModel)]=\"teamFilter\" />\n    </div>\n\n    <div class=\"reviewTeam\"\n      *ngFor=\"#team of reviewTeams\"\n      [class.selected]=\"team.selected\"\n      (click)=\"onSelect(team)\">\n      <div *ngIf=\"team.name.toLowerCase().indexOf(teamFilter.toLowerCase()) >= 0\">\n        <h3>{{team.id}} - {{team.name}}</h3>\n        <ul>\n          <li *ngFor=\"#reviewer of team.reviewers\">{{reviewer.name}}</li>\n        </ul>\n        </div>\n    </div>\n\n    <div class=\"clearfix\"></div>\n\n    <div *ngIf=\"lastSelectedTeam\">\n      <div>\n        <team-detail [team]=\"lastSelectedTeam\"></team-detail>\n      </div>\n      <div>\n        <!-- You selected: {{selectedTeam.name}} -->\n        <br/>\n      </div>\n      <div>\n        <button (click)=\"generateMailList()\">Generate mail list</button>\n      </div>\n    </div>\n\n    <div *ngIf=\"mailList\">\n        <textarea class=\"mail-list\">{{mailList}}</textarea>\n    </div>\n    ",
+                        styles: ["\n    .selected {\n      background-color: #ddcc00;\n      color: white;\n    }\n\n    .reviewTeam {\n      width: 200px;\n      float: left;\n      cursor: pointer;\n      margin-right: 10px;\n      padding: 5px;\n    }\n\n    .reviewTeam:hover {\n        background-color: yellow;\n    }\n\n    .filter {\n        margin-bottom: 20px;\n    }\n\n    .mail-list {\n        width: 600px;\n        height: 200px;\n        margin-top: 20px;\n    }\n\n    .clearfix {\n        clear: both;\n    }\n  "],
                         directives: [team_detail_component_1.TeamDetailComponent]
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);
                 return AppComponent;
-            })();
+            }());
             exports_1("AppComponent", AppComponent);
             hasSelectedTeam = function (teams) {
                 for (var i = 0; i < teams.length; i++) {

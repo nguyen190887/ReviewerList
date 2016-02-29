@@ -6,13 +6,14 @@ import {TeamDetailComponent} from './team-detail.component';
   selector: 'review-list',
   template: `
     <h1>Review Teams</h1>
-    
-    <div>
+
+    <div class="filter">
       <label>Type your filter: </label>
       <input [(ngModel)]="teamFilter" />
     </div>
 
-    <div *ngFor="#team of reviewTeams"
+    <div class="reviewTeam"
+      *ngFor="#team of reviewTeams"
       [class.selected]="team.selected"
       (click)="onSelect(team)">
       <div *ngIf="team.name.toLowerCase().indexOf(teamFilter.toLowerCase()) >= 0">
@@ -23,6 +24,8 @@ import {TeamDetailComponent} from './team-detail.component';
         </div>
     </div>
 
+    <div class="clearfix"></div>
+
     <div *ngIf="lastSelectedTeam">
       <div>
         <team-detail [team]="lastSelectedTeam"></team-detail>
@@ -30,17 +33,46 @@ import {TeamDetailComponent} from './team-detail.component';
       <div>
         <!-- You selected: {{selectedTeam.name}} -->
         <br/>
-        <span *ngIf="mailList"><strong>Mail list: </strong> {{mailList}}</span>
       </div>
       <div>
         <button (click)="generateMailList()">Generate mail list</button>
       </div>
+    </div>
+
+    <div *ngIf="mailList">
+        <textarea class="mail-list">{{mailList}}</textarea>
     </div>
     `,
   styles: [`
     .selected {
       background-color: #ddcc00;
       color: white;
+    }
+
+    .reviewTeam {
+      width: 200px;
+      float: left;
+      cursor: pointer;
+      margin-right: 10px;
+      padding: 5px;
+    }
+
+    .reviewTeam:hover {
+        background-color: yellow;
+    }
+
+    .filter {
+        margin-bottom: 20px;
+    }
+
+    .mail-list {
+        width: 600px;
+        height: 200px;
+        margin-top: 20px;
+    }
+
+    .clearfix {
+        clear: both;
     }
   `],
   directives: [TeamDetailComponent]
@@ -93,22 +125,22 @@ var getFirstSelectedTeam = function(teams: ReviewTeam[]) {
       return teams[i];
     }
   }
-  return null; 
+  return null;
 }
 
 var REVIEWLIST: ReviewTeam[] = [
-  { 
-    id: 1, 
-    name: 'Super women', 
+  {
+    id: 1,
+    name: 'Super women',
     reviewers: [
-      {id: 101, name: 'Tina', email: 'tina@mail.com'}, 
+      {id: 101, name: 'Tina', email: 'tina@mail.com'},
       {id:102, name: 'Kym', email: 'kym@mail.com'}
     ],
     selected: false,
     workingProduct: 'Vehicle',
     manager: 'The big one'
   },
-  { 
+  {
     id: 2,
     name: 'Advertiser',
     reviewers: [
