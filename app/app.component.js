@@ -1,4 +1,4 @@
-System.register(['angular2/core', './team-detail.component'], function(exports_1, context_1) {
+System.register(['angular2/core', './team-detail.component', './review-data', 'angular2/common'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,8 +10,8 @@ System.register(['angular2/core', './team-detail.component'], function(exports_1
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, team_detail_component_1;
-    var AppComponent, hasSelectedTeam, getFirstSelectedTeam, REVIEWLIST;
+    var core_1, team_detail_component_1, review_data_1, common_1;
+    var AppComponent, hasSelectedTeam, getFirstSelectedTeam;
     return {
         setters:[
             function (core_1_1) {
@@ -19,12 +19,18 @@ System.register(['angular2/core', './team-detail.component'], function(exports_1
             },
             function (team_detail_component_1_1) {
                 team_detail_component_1 = team_detail_component_1_1;
+            },
+            function (review_data_1_1) {
+                review_data_1 = review_data_1_1;
+            },
+            function (common_1_1) {
+                common_1 = common_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
                 function AppComponent() {
                     this.teamFilter = '';
-                    this.reviewTeams = REVIEWLIST;
+                    this.reviewTeams = review_data_1.ReviewData.REVIEWLIST;
                 }
                 AppComponent.prototype.onSelect = function (team) {
                     team.selected = !team.selected;
@@ -35,9 +41,6 @@ System.register(['angular2/core', './team-detail.component'], function(exports_1
                     else {
                         this.lastSelectedTeam = getFirstSelectedTeam(this.reviewTeams);
                     }
-                    // if (this.lastSelectedTeam) {
-                    //   alert(this.lastSelectedTeam.name);
-                    // }
                 };
                 AppComponent.prototype.generateMailList = function () {
                     this.mailList = '';
@@ -54,9 +57,9 @@ System.register(['angular2/core', './team-detail.component'], function(exports_1
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'review-list',
-                        template: "\n    <h1>Review Teams</h1>\n\n    <div class=\"filter\">\n      <label>Type your filter: </label>\n      <input [(ngModel)]=\"teamFilter\" />\n    </div>\n\n    <div class=\"reviewTeam\"\n      *ngFor=\"#team of reviewTeams\"\n      [class.selected]=\"team.selected\"\n      (click)=\"onSelect(team)\">\n      <div *ngIf=\"team.name.toLowerCase().indexOf(teamFilter.toLowerCase()) >= 0\">\n        <h3>{{team.id}} - {{team.name}}</h3>\n        <ul>\n          <li *ngFor=\"#reviewer of team.reviewers\">{{reviewer.name}}</li>\n        </ul>\n        </div>\n    </div>\n\n    <div class=\"clearfix\"></div>\n\n    <div *ngIf=\"lastSelectedTeam\">\n      <div>\n        <team-detail [team]=\"lastSelectedTeam\"></team-detail>\n      </div>\n      <div>\n        <!-- You selected: {{selectedTeam.name}} -->\n        <br/>\n      </div>\n      <div>\n        <button (click)=\"generateMailList()\">Generate mail list</button>\n      </div>\n    </div>\n\n    <div *ngIf=\"mailList\">\n        <textarea class=\"mail-list\">{{mailList}}</textarea>\n    </div>\n    ",
-                        styles: ["\n    .selected {\n      background-color: #ddcc00;\n      color: white;\n    }\n\n    .reviewTeam {\n      width: 200px;\n      float: left;\n      cursor: pointer;\n      margin-right: 10px;\n      padding: 5px;\n    }\n\n    .reviewTeam:hover {\n        background-color: yellow;\n    }\n\n    .filter {\n        margin-bottom: 20px;\n    }\n\n    .mail-list {\n        width: 600px;\n        height: 200px;\n        margin-top: 20px;\n    }\n\n    .clearfix {\n        clear: both;\n    }\n  "],
-                        directives: [team_detail_component_1.TeamDetailComponent]
+                        template: "\n    <h1>Review Teams</h1>\n\n    <div class=\"filter\">\n      <label>Type your filter: </label>\n      <input [(ngModel)]=\"teamFilter\" />\n    </div>\n\n    <div class=\"reviewTeam\"\n      *ngFor=\"#team of reviewTeams\"\n      [class.selected]=\"team.selected\"\n      (click)=\"onSelect(team)\"\n      [ngClass]=\"{hidden: teamFilter && team.name.toLowerCase().indexOf(teamFilter.toLowerCase()) < 0}\">\n        <h3>{{team.id}} - {{team.name}}</h3>\n        <ul>\n          <li *ngFor=\"#reviewer of team.reviewers\"\n              [ngClass]=\"{\n                  'the-fed': reviewer.devType === 'FED',\n                  'the-bee': reviewer.devType === 'BEE'}\">\n              {{reviewer.name}} ({{reviewer.devType}})\n          </li>\n        </ul>\n    </div>\n\n    <div class=\"clearfix\"></div>\n\n    <div *ngIf=\"lastSelectedTeam\">\n      <div>\n        <team-detail [team]=\"lastSelectedTeam\"></team-detail>\n      </div>\n      <div>\n        <!-- You selected: {{selectedTeam.name}} -->\n        <br/>\n      </div>\n      <div>\n        <button (click)=\"generateMailList()\">Generate mail list</button>\n      </div>\n    </div>\n\n    <div *ngIf=\"mailList\">\n        <textarea class=\"mail-list\">{{mailList}}</textarea>\n    </div>\n    ",
+                        styles: ["\n    .selected {\n      background-color: #ddcc00;\n      color: white;\n    }\n\n    .reviewTeam {\n      width: 200px;\n      float: left;\n      cursor: pointer;\n      margin-right: 10px;\n      padding: 5px;\n    }\n\n    .reviewTeam:hover {\n        background-color: yellow;\n    }\n\n    .filter {\n        margin-bottom: 20px;\n    }\n\n    .mail-list {\n        width: 600px;\n        height: 200px;\n        margin-top: 20px;\n    }\n\n    .hidden {\n        display: none;\n    }\n\n    .clearfix {\n        clear: both;\n    }\n\n    .the-bee {\n        color: brown;\n    }\n\n    .the-fed {\n        color: green;\n    }\n  "],
+                        directives: [team_detail_component_1.TeamDetailComponent, common_1.NgClass]
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);
@@ -79,30 +82,6 @@ System.register(['angular2/core', './team-detail.component'], function(exports_1
                 }
                 return null;
             };
-            REVIEWLIST = [
-                {
-                    id: 1,
-                    name: 'Super women',
-                    reviewers: [
-                        { id: 101, name: 'Tina', email: 'tina@mail.com' },
-                        { id: 102, name: 'Kym', email: 'kym@mail.com' }
-                    ],
-                    selected: false,
-                    workingProduct: 'Vehicle',
-                    manager: 'The big one'
-                },
-                {
-                    id: 2,
-                    name: 'Advertiser',
-                    reviewers: [
-                        { id: 101, name: 'Valentyna', email: 'val@mail.com' },
-                        { id: 102, name: 'Josh', email: 'josh@mail.com' }
-                    ],
-                    selected: false,
-                    workingProduct: 'Ads',
-                    manager: 'Cowboys'
-                }
-            ];
         }
     }
 });

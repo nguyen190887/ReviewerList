@@ -1,6 +1,8 @@
 import {Component} from 'angular2/core';
 import {ReviewTeam} from './review-team';
 import {TeamDetailComponent} from './team-detail.component';
+import {ReviewData} from './review-data';
+import {NgClass} from 'angular2/common';
 
 @Component({
   selector: 'review-list',
@@ -15,13 +17,17 @@ import {TeamDetailComponent} from './team-detail.component';
     <div class="reviewTeam"
       *ngFor="#team of reviewTeams"
       [class.selected]="team.selected"
-      (click)="onSelect(team)">
-      <div *ngIf="team.name.toLowerCase().indexOf(teamFilter.toLowerCase()) >= 0">
+      (click)="onSelect(team)"
+      [ngClass]="{hidden: teamFilter && team.name.toLowerCase().indexOf(teamFilter.toLowerCase()) < 0}">
         <h3>{{team.id}} - {{team.name}}</h3>
         <ul>
-          <li *ngFor="#reviewer of team.reviewers">{{reviewer.name}}</li>
+          <li *ngFor="#reviewer of team.reviewers"
+              [ngClass]="{
+                  'the-fed': reviewer.devType === 'FED',
+                  'the-bee': reviewer.devType === 'BEE'}">
+              {{reviewer.name}} ({{reviewer.devType}})
+          </li>
         </ul>
-        </div>
     </div>
 
     <div class="clearfix"></div>
@@ -71,15 +77,27 @@ import {TeamDetailComponent} from './team-detail.component';
         margin-top: 20px;
     }
 
+    .hidden {
+        display: none;
+    }
+
     .clearfix {
         clear: both;
     }
+
+    .the-bee {
+        color: brown;
+    }
+
+    .the-fed {
+        color: green;
+    }
   `],
-  directives: [TeamDetailComponent]
+  directives: [TeamDetailComponent, NgClass]
 })
 export class AppComponent {
   teamFilter = '';
-  reviewTeams = REVIEWLIST;
+  reviewTeams = ReviewData.REVIEWLIST;
   hasSelected: boolean;
   mailList: string;
   lastSelectedTeam: ReviewTeam;
@@ -93,9 +111,6 @@ export class AppComponent {
     } else {
       this.lastSelectedTeam = getFirstSelectedTeam(this.reviewTeams);
     }
-    // if (this.lastSelectedTeam) {
-    //   alert(this.lastSelectedTeam.name);
-    // }
   }
 
   generateMailList() {
@@ -128,27 +143,3 @@ var getFirstSelectedTeam = function(teams: ReviewTeam[]) {
   return null;
 }
 
-var REVIEWLIST: ReviewTeam[] = [
-  {
-    id: 1,
-    name: 'Super women',
-    reviewers: [
-      {id: 101, name: 'Tina', email: 'tina@mail.com'},
-      {id:102, name: 'Kym', email: 'kym@mail.com'}
-    ],
-    selected: false,
-    workingProduct: 'Vehicle',
-    manager: 'The big one'
-  },
-  {
-    id: 2,
-    name: 'Advertiser',
-    reviewers: [
-      { id: 101, name: 'Valentyna', email: 'val@mail.com' },
-      { id: 102, name: 'Josh', email: 'josh@mail.com'}
-    ],
-    selected: false,
-    workingProduct: 'Ads',
-    manager: 'Cowboys'
-  }
-];
