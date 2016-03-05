@@ -1,6 +1,4 @@
-System.register(['angular2/core'], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
+System.register(['angular2/core'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -24,14 +22,14 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 TeamDetailComponent = __decorate([
                     core_1.Component({
                         selector: 'team-detail',
-                        template: "\n    \n      <h2>Details of {{team.name}}</h2>\n      <div>Working product: {{team.workingProduct}}</div>\n      <div>Manager: {{team.manager}}</div>\n    ",
-                        styles: ["\n    \n  "],
+                        template: "\n        <h2>Details of {{team.name}}</h2>\n        <div>Working product: {{team.workingProduct}}</div>\n        <div>Manager: {{team.manager}}</div>\n    ",
+                        styles: ["\n\n    "],
                         inputs: ['team']
                     }), 
                     __metadata('design:paramtypes', [])
                 ], TeamDetailComponent);
                 return TeamDetailComponent;
-            }());
+            })();
             exports_1("TeamDetailComponent", TeamDetailComponent);
         }
     }
