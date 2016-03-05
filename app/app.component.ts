@@ -1,8 +1,9 @@
 import {Component} from 'angular2/core';
-import {ReviewTeam} from './review-team';
+import {NgClass} from 'angular2/common'; 
+import {OnInit} from 'angular2/core';
 import {TeamDetailComponent} from './team-detail.component';
-import {ReviewData} from './review-data';
-import {NgClass} from 'angular2/common';
+import {ReviewTeam} from './review-team';
+import {ReviewService} from './review.service';
 
 @Component({
     selector: 'review-list',
@@ -93,14 +94,21 @@ import {NgClass} from 'angular2/common';
                 color: green;
         }
     `],
-    directives: [TeamDetailComponent, NgClass]
+    directives: [TeamDetailComponent, NgClass],
+    providers: [ReviewService]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     teamFilter = '';
-    reviewTeams = ReviewData.REVIEWLIST;
+    reviewTeams: ReviewTeam[];
     hasSelected: boolean;
     mailList: string;
     lastSelectedTeam: ReviewTeam;
+
+    constructor(private _reviewService: ReviewService) {}
+
+    ngOnInit() {
+        this._reviewService.getReviewTeams().then(teams => this.reviewTeams = teams);
+    }
 
     onSelect(team: ReviewTeam) {
         team.selected = !team.selected;
