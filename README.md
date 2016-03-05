@@ -12,3 +12,8 @@ Just executes below commands:
 # Reference
   https://angular.io/docs/ts/latest/tutorial/
   
+# Key notes
+  Lifecycle hook - https://angular.io/docs/ts/latest/guide/lifecycle-hooks.html
+  ES6 Promise - http://www.datchley.name/es6-promises/
+  ES6 Arrow Function - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+  
