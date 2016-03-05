@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', './team-detail.component', './review.service'], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', './reviewer-list.component', './contact-list.component', './review.service'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,83 +8,60 @@ System.register(['angular2/core', 'angular2/common', './team-detail.component', 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, team_detail_component_1, review_service_1;
-    var AppComponent, hasSelectedTeam, getFirstSelectedTeam;
+    var core_1, router_1, reviewer_list_component_1, contact_list_component_1, review_service_1;
+    var AppComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (common_1_1) {
-                common_1 = common_1_1;
+            function (router_1_1) {
+                router_1 = router_1_1;
             },
-            function (team_detail_component_1_1) {
-                team_detail_component_1 = team_detail_component_1_1;
+            function (reviewer_list_component_1_1) {
+                reviewer_list_component_1 = reviewer_list_component_1_1;
+            },
+            function (contact_list_component_1_1) {
+                contact_list_component_1 = contact_list_component_1_1;
             },
             function (review_service_1_1) {
                 review_service_1 = review_service_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
-                function AppComponent(_reviewService) {
-                    this._reviewService = _reviewService;
-                    this.teamFilter = '';
+                function AppComponent() {
+                    this.title = 'Reviewer List App';
                 }
-                AppComponent.prototype.ngOnInit = function () {
-                    var _this = this;
-                    this._reviewService.getReviewTeams().then(function (teams) { return _this.reviewTeams = teams; });
-                };
-                AppComponent.prototype.onSelect = function (team) {
-                    team.selected = !team.selected;
-                    this.mailList = '';
-                    if (team.selected) {
-                        this.lastSelectedTeam = team;
-                    }
-                    else {
-                        this.lastSelectedTeam = getFirstSelectedTeam(this.reviewTeams);
-                    }
-                };
-                AppComponent.prototype.generateMailList = function () {
-                    this.mailList = '';
-                    for (var _i = 0, _a = this.reviewTeams; _i < _a.length; _i++) {
-                        var team = _a[_i];
-                        if (team.selected) {
-                            for (var _b = 0, _c = team.reviewers; _b < _c.length; _b++) {
-                                var reviewer = _c[_b];
-                                this.mailList += reviewer.email + '; ';
-                            }
-                        }
-                    }
-                };
                 AppComponent = __decorate([
                     core_1.Component({
-                        selector: 'review-list',
-                        template: "\n        <h1>Review Teams</h1>\n\n        <div class=\"filter\">\n            <label>Type your filter: </label>\n            <input [(ngModel)]=\"teamFilter\" />\n        </div>\n\n        <div class=\"reviewTeam\"\n            *ngFor=\"#team of reviewTeams\"\n            [class.selected]=\"team.selected\"\n            (click)=\"onSelect(team)\"\n            [ngClass]=\"{hidden: teamFilter && team.name.toLowerCase().indexOf(teamFilter.toLowerCase()) < 0}\">\n                <h3>{{team.id}} - {{team.name}}</h3>\n                <ul>\n                    <li *ngFor=\"#reviewer of team.reviewers\"\n                            [ngClass]=\"{\n                                    'the-fed': reviewer.devType === 'FED',\n                                    'the-bee': reviewer.devType === 'BEE'}\">\n                            {{reviewer.name}} ({{reviewer.devType}})\n                    </li>\n                </ul>\n        </div>\n\n        <div class=\"clearfix\"></div>\n\n        <div *ngIf=\"lastSelectedTeam\">\n            <div>\n                <team-detail [team]=\"lastSelectedTeam\"></team-detail>\n            </div>\n            <div>\n                <!-- You selected: {{selectedTeam.name}} -->\n                <br/>\n            </div>\n            <div>\n                <button (click)=\"generateMailList()\">Generate mail list</button>\n            </div>\n        </div>\n\n        <div *ngIf=\"mailList\">\n                <textarea class=\"mail-list\">{{mailList}}</textarea>\n        </div>\n        ",
-                        styles: ["\n        .selected {\n            background-color: #ddcc00;\n            color: white;\n        }\n\n        .reviewTeam {\n            width: 200px;\n            float: left;\n            cursor: pointer;\n            margin-right: 10px;\n            padding: 5px;\n        }\n\n        .reviewTeam:hover {\n                background-color: yellow;\n        }\n\n        .filter {\n                margin-bottom: 20px;\n        }\n\n        .mail-list {\n                width: 600px;\n                height: 200px;\n                margin-top: 20px;\n        }\n\n        .hidden {\n                display: none;\n        }\n\n        .clearfix {\n                clear: both;\n        }\n\n        .the-bee {\n                color: brown;\n        }\n\n        .the-fed {\n                color: green;\n        }\n    "],
-                        directives: [team_detail_component_1.TeamDetailComponent, common_1.NgClass],
-                        providers: [review_service_1.ReviewService]
-                    }), 
-                    __metadata('design:paramtypes', [review_service_1.ReviewService])
+                        selector: 'reviewer-list-app',
+                        template: "\n        <h1>{{title}}</h1>\n        <a [routerLink]=\"['ReviewerList']\">Reviewer List</a>\n        <span> | </span>\n        <a [routerLink]=\"['ContactList']\">Contact List</a>\n        <router-outlet></router-outlet>\n    ",
+                        directives: [
+                            router_1.ROUTER_DIRECTIVES
+                        ],
+                        providers: [
+                            router_1.ROUTER_PROVIDERS,
+                            review_service_1.ReviewService
+                        ]
+                    }),
+                    router_1.RouteConfig([
+                        {
+                            path: '/reviewer-list',
+                            name: 'ReviewerList',
+                            component: reviewer_list_component_1.ReviewerListComponent,
+                            useAsDefault: true
+                        },
+                        {
+                            path: '/contact-list',
+                            name: 'ContactList',
+                            component: contact_list_component_1.ContactListComponent
+                        }
+                    ]), 
+                    __metadata('design:paramtypes', [])
                 ], AppComponent);
                 return AppComponent;
             })();
             exports_1("AppComponent", AppComponent);
-            hasSelectedTeam = function (teams) {
-                for (var i = 0; i < teams.length; i++) {
-                    if (teams[i].selected) {
-                        return true;
-                    }
-                }
-                return false;
-            };
-            getFirstSelectedTeam = function (teams) {
-                for (var i = 0; i < teams.length; i++) {
-                    if (teams[i].selected) {
-                        return teams[i];
-                    }
-                }
-                return null;
-            };
         }
     }
 });

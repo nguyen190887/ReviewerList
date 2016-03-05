@@ -1,6 +1,7 @@
 import {Injectable} from 'angular2/core';
 import {ReviewData} from './review-data';
 import {ReviewTeam} from './review-team';
+import {Reviewer} from './reviewer';
 
 @Injectable()
 export class ReviewService {
@@ -11,5 +12,15 @@ export class ReviewService {
         // );
 
         return Promise.resolve(ReviewData.REVIEWLIST);
+    }
+
+    getAllReviewers() {
+        var reviewers = [];
+        for(var team of ReviewData.REVIEWLIST) {
+            for(var reviewer of team.reviewers) {
+                reviewers.push(reviewer);
+            }
+        }
+        return Promise.resolve(reviewers);
     }
 }
