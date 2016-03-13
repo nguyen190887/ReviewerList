@@ -38,7 +38,7 @@ System.register(['angular2/core', 'angular2/router', './reviewer-list.component'
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'reviewer-list-app',
-                        template: "\n        <h1>{{title}}</h1>\n        <a [routerLink]=\"['ReviewerList']\">Reviewer List</a>\n        <span> | </span>\n        <a [routerLink]=\"['ContactList']\">Contact List</a>\n        <div>\n            <router-outlet></router-outlet>\n        </div>\n    ",
+                        template: "\n        <h1>{{title}}</h1>\n        <nav>\n            <a [routerLink]=\"['ReviewerList']\">Reviewer List</a>\n            <a [routerLink]=\"['ContactList']\">Contact List</a>\n        </nav>\n        <div>\n            <router-outlet></router-outlet>\n        </div>\n    ",
                         directives: [
                             router_1.ROUTER_DIRECTIVES
                         ],

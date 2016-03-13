@@ -9,9 +9,10 @@ import {ReviewService} from './review.service';
     selector: 'reviewer-list-app',
     template: `
         <h1>{{title}}</h1>
-        <a [routerLink]="['ReviewerList']">Reviewer List</a>
-        <span> | </span>
-        <a [routerLink]="['ContactList']">Contact List</a>
+        <nav>
+            <a [routerLink]="['ReviewerList']">Reviewer List</a>
+            <a [routerLink]="['ContactList']">Contact List</a>
+        </nav>
         <div>
             <router-outlet></router-outlet>
         </div>

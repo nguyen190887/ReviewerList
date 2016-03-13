@@ -9,6 +9,6 @@ th, td {
     padding: 5px;
 }
 tr:hover {
-    background-color: cyan;
+    background-color: #039be5;
     cursor: pointer;
 }
