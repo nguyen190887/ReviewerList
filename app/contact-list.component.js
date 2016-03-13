@@ -1,4 +1,4 @@
-System.register(['angular2/core', './review.service'], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', './review.service'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,19 +8,23 @@ System.register(['angular2/core', './review.service'], function(exports_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, review_service_1;
+    var core_1, router_1, review_service_1;
     var ContactListComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
+            function (router_1_1) {
+                router_1 = router_1_1;
+            },
             function (review_service_1_1) {
                 review_service_1 = review_service_1_1;
             }],
         execute: function() {
             ContactListComponent = (function () {
-                function ContactListComponent(_reviewService) {
+                function ContactListComponent(_router, _reviewService) {
+                    this._router = _router;
                     this._reviewService = _reviewService;
                     this.reviewers = [];
                 }
@@ -28,13 +32,17 @@ System.register(['angular2/core', './review.service'], function(exports_1) {
                     var _this = this;
                     this._reviewService.getAllReviewers().then(function (reviewrs) { return _this.reviewers = reviewrs; });
                 };
+                ContactListComponent.prototype.goToDetail = function (reviewer) {
+                    var link = ['ContactDetail', { id: reviewer.id }];
+                    this._router.navigate(link);
+                };
                 ContactListComponent = __decorate([
                     core_1.Component({
                         selector: 'contact-list',
-                        template: "\n        <h3>Contact List</h3>\n        <table class=\"table\">\n            <tr>\n                <th>Name</th>\n                <th>Email</th>\n            </tr>\n            <tr *ngFor=\"#reviewer of reviewers\">\n                <td>{{reviewer.name}}</td>\n                <td>{{reviewer.email}}</td>\n            </tr>\n        </table>\n    ",
-                        styles: ["\n        /* To remove once adding Bootstrap */\n        .table {\n            border-collapse: collapse;\n        }\n        .table, th, td {\n            border: solid 1px #dcdcdc;\n        }\n        th, td {\n            padding: 5px;\n        }\n    "]
+                        template: "\n        <h3>Contact List</h3>\n        <table class=\"table\">\n            <tr>\n                <th>Name</th>\n                <th>Email</th>\n            </tr>\n            <tr *ngFor=\"#reviewer of reviewers\"\n                (click)=\"goToDetail(reviewer)\">\n                <td>{{reviewer.name}}</td>\n                <td>{{reviewer.email}}</td>\n            </tr>\n        </table>\n    ",
+                        styles: ["\n        /* To remove once adding Bootstrap */\n        .table {\n            border-collapse: collapse;\n        }\n        .table, th, td {\n            border: solid 1px #dcdcdc;\n        }\n        th, td {\n            padding: 5px;\n        }\n        tr:hover {\n            background-color: cyan;\n            cursor: pointer;\n        }\n    "]
                     }), 
-                    __metadata('design:paramtypes', [review_service_1.ReviewService])
+                    __metadata('design:paramtypes', [router_1.Router, review_service_1.ReviewService])
                 ], ContactListComponent);
                 return ContactListComponent;
             })();

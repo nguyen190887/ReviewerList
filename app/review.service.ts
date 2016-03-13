@@ -5,7 +5,7 @@ import {Reviewer} from './reviewer';
 
 @Injectable()
 export class ReviewService {
-    getReviewTeams() {       
+    getReviewTeams() {
         // Just for test - delay 2 seconds
         // return new Promise<ReviewTeam[]>(resolve =>
         //     setTimeout(() => resolve(ReviewData.REVIEWLIST), 2000)
@@ -16,11 +16,17 @@ export class ReviewService {
 
     getAllReviewers() {
         var reviewers = [];
-        for(var team of ReviewData.REVIEWLIST) {
-            for(var reviewer of team.reviewers) {
+        for (var team of ReviewData.REVIEWLIST) {
+            for (var reviewer of team.reviewers) {
+                reviewer.teamName = team.name;
                 reviewers.push(reviewer);
             }
         }
         return Promise.resolve(reviewers);
+    }
+
+    getReviewer(id: number) {
+        return this.getAllReviewers()
+            .then(reviewers => reviewers[0]);
     }
 }

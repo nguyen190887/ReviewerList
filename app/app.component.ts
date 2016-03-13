@@ -2,6 +2,7 @@ import {Component} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from 'angular2/router';
 import {ReviewerListComponent} from './reviewer-list.component';
 import {ContactListComponent} from './contact-list.component';
+import {ContactDetailComponent} from './contact-detail.component';
 import {ReviewService} from './review.service';
 
 @Component({
@@ -11,7 +12,9 @@ import {ReviewService} from './review.service';
         <a [routerLink]="['ReviewerList']">Reviewer List</a>
         <span> | </span>
         <a [routerLink]="['ContactList']">Contact List</a>
-        <router-outlet></router-outlet>
+        <div>
+            <router-outlet></router-outlet>
+        </div>
     `,
     directives: [
         ROUTER_DIRECTIVES
@@ -33,6 +36,11 @@ import {ReviewService} from './review.service';
         path: '/contact-list',
         name: 'ContactList',
         component: ContactListComponent
+    },
+    {
+        path: '/contact-detail/:id',
+        name: 'ContactDetail',
+        component: ContactDetailComponent
     }
 ])
 

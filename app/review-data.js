@@ -20,8 +20,8 @@ System.register([], function(exports_1) {
                         id: 2,
                         name: 'Advertiser',
                         reviewers: [
-                            { id: 101, name: 'Valentyna', email: 'val@mail.com', devType: 'BEE' },
-                            { id: 102, name: 'Josh', email: 'josh@mail.com', devType: 'FED' }
+                            { id: 201, name: 'Valentyna', email: 'val@mail.com', devType: 'BEE' },
+                            { id: 203, name: 'Josh', email: 'josh@mail.com', devType: 'FED' }
                         ],
                         selected: false,
                         workingProduct: 'Ads',

@@ -1,4 +1,5 @@
 import {Component, OnInit} from 'angular2/core';
+import {Router} from 'angular2/router';
 import {ReviewService} from './review.service';
 import {Reviewer} from './reviewer';
 
@@ -11,7 +12,8 @@ import {Reviewer} from './reviewer';
                 <th>Name</th>
                 <th>Email</th>
             </tr>
-            <tr *ngFor="#reviewer of reviewers">
+            <tr *ngFor="#reviewer of reviewers"
+                (click)="goToDetail(reviewer)">
                 <td>{{reviewer.name}}</td>
                 <td>{{reviewer.email}}</td>
             </tr>
@@ -28,16 +30,27 @@ import {Reviewer} from './reviewer';
         th, td {
             padding: 5px;
         }
+        tr:hover {
+            background-color: cyan;
+            cursor: pointer;
+        }
     `]
 })
 
-export class ContactListComponent {
+export class ContactListComponent implements OnInit {
     reviewers = []; 
 
-    constructor(private _reviewService: ReviewService) {
+    constructor(
+        private _router: Router,
+        private _reviewService: ReviewService) {
     }
 
     ngOnInit() {
         this._reviewService.getAllReviewers().then(reviewrs => this.reviewers = reviewrs);
+    }
+    
+    goToDetail(reviewer: Reviewer) {
+        let link = ['ContactDetail', {id: reviewer.id }];
+        this._router.navigate(link);
     }
 }

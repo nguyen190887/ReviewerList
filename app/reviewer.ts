@@ -3,4 +3,5 @@ export interface Reviewer {
     name: string;
     email: string;
     devType: string; // BEE or FED
+    teamName: string;
 }

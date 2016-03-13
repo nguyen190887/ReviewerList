@@ -1,0 +1,8 @@
+<div *ngIf="contact">
+    <h2>Contact Detail</h2>
+    <div>Name: {{contact.name}}</div>
+    <div>Email: {{contact.email}}</div>
+    <div>Member of: {{contact.teamName}}</div>
+    <div>Dev type: {{contact.devType}}</div>
+</div>
+<button (click)="goBack()">Back</button>

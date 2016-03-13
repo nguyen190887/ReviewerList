@@ -35,10 +35,15 @@ System.register(['angular2/core', './review-data'], function(exports_1) {
                         var team = _a[_i];
                         for (var _b = 0, _c = team.reviewers; _b < _c.length; _b++) {
                             var reviewer = _c[_b];
+                            reviewer.teamName = team.name;
                             reviewers.push(reviewer);
                         }
                     }
                     return Promise.resolve(reviewers);
+                };
+                ReviewService.prototype.getReviewer = function (id) {
+                    return this.getAllReviewers()
+                        .then(function (reviewers) { return reviewers[0]; });
                 };
                 ReviewService = __decorate([
                     core_1.Injectable(), 
