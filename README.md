@@ -21,6 +21,8 @@ Just executes below commands:
   
   API - https://angular.io/docs/ts/latest/api/
   
+  Template Syntax - https://angular.io/docs/ts/latest/guide/template-syntax.html
+  
   Glossary - https://angular.io/docs/ts/latest/guide/glossary.html
   
   ES6 Promise - http://www.datchley.name/es6-promises/
