@@ -17,6 +17,12 @@ Just executes below commands:
   
   Pipe - https://angular.io/docs/ts/latest/guide/pipes.html
   
+  Cheatsheet - https://angular.io/docs/ts/latest/guide/cheatsheet.html
+  
+  API - https://angular.io/docs/ts/latest/api/
+  
+  Glossary - https://angular.io/docs/ts/latest/guide/glossary.html
+  
   ES6 Promise - http://www.datchley.name/es6-promises/
   
   ES6 Arrow Function - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
