@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './reviewer-list.component', './contact-list.component', './contact-detail.component', './review.service'], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', 'angular2/http', './reviewer-list.component', './contact-list.component', './contact-detail.component', './ticket-list.component', './review.service', './ticket.service'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', 'angular2/router', './reviewer-list.component'
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, reviewer_list_component_1, contact_list_component_1, contact_detail_component_1, review_service_1;
+    var core_1, router_1, http_1, reviewer_list_component_1, contact_list_component_1, contact_detail_component_1, ticket_list_component_1, review_service_1, ticket_service_1;
     var AppComponent;
     return {
         setters:[
@@ -17,6 +17,9 @@ System.register(['angular2/core', 'angular2/router', './reviewer-list.component'
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+            },
+            function (http_1_1) {
+                http_1 = http_1_1;
             },
             function (reviewer_list_component_1_1) {
                 reviewer_list_component_1 = reviewer_list_component_1_1;
@@ -27,8 +30,14 @@ System.register(['angular2/core', 'angular2/router', './reviewer-list.component'
             function (contact_detail_component_1_1) {
                 contact_detail_component_1 = contact_detail_component_1_1;
             },
+            function (ticket_list_component_1_1) {
+                ticket_list_component_1 = ticket_list_component_1_1;
+            },
             function (review_service_1_1) {
                 review_service_1 = review_service_1_1;
+            },
+            function (ticket_service_1_1) {
+                ticket_service_1 = ticket_service_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
@@ -38,13 +47,15 @@ System.register(['angular2/core', 'angular2/router', './reviewer-list.component'
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'reviewer-list-app',
-                        template: "\n        <h1>{{title}}</h1>\n        <nav>\n            <a [routerLink]=\"['ReviewerList']\">Reviewer List</a>\n            <a [routerLink]=\"['ContactList']\">Contact List</a>\n        </nav>\n        <div>\n            <router-outlet></router-outlet>\n        </div>\n    ",
+                        template: "\n        <h1>{{title}}</h1>\n        <nav>\n            <a [routerLink]=\"['ReviewerList']\">Reviewer List</a>\n            <a [routerLink]=\"['ContactList']\">Contact List</a>\n            <a [routerLink]=\"['Tickets']\">Ticket List</a>\n        </nav>\n        <div>\n            <router-outlet></router-outlet>\n        </div>\n    ",
                         directives: [
                             router_1.ROUTER_DIRECTIVES
                         ],
                         providers: [
                             router_1.ROUTER_PROVIDERS,
-                            review_service_1.ReviewService
+                            http_1.HTTP_PROVIDERS,
+                            review_service_1.ReviewService,
+                            ticket_service_1.TicketService
                         ]
                     }),
                     router_1.RouteConfig([
@@ -63,6 +74,11 @@ System.register(['angular2/core', 'angular2/router', './reviewer-list.component'
                             path: '/contact-detail/:id',
                             name: 'ContactDetail',
                             component: contact_detail_component_1.ContactDetailComponent
+                        },
+                        {
+                            path: '/tickets',
+                            name: 'Tickets',
+                            component: ticket_list_component_1.TicketListComponent
                         }
                     ]), 
                     __metadata('design:paramtypes', [])

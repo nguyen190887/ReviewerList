@@ -1,9 +1,12 @@
 import {Component} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from 'angular2/router';
+import {HTTP_PROVIDERS} from 'angular2/http';
 import {ReviewerListComponent} from './reviewer-list.component';
 import {ContactListComponent} from './contact-list.component';
 import {ContactDetailComponent} from './contact-detail.component';
+import {TicketListComponent} from './ticket-list.component';
 import {ReviewService} from './review.service';
+import {TicketService} from './ticket.service';
 
 @Component({
     selector: 'reviewer-list-app',
@@ -12,6 +15,7 @@ import {ReviewService} from './review.service';
         <nav>
             <a [routerLink]="['ReviewerList']">Reviewer List</a>
             <a [routerLink]="['ContactList']">Contact List</a>
+            <a [routerLink]="['Tickets']">Ticket List</a>
         </nav>
         <div>
             <router-outlet></router-outlet>
@@ -22,7 +26,9 @@ import {ReviewService} from './review.service';
     ],
     providers: [
         ROUTER_PROVIDERS,
-        ReviewService
+        HTTP_PROVIDERS,
+        ReviewService,
+        TicketService
     ]
 })
 
@@ -42,6 +48,11 @@ import {ReviewService} from './review.service';
         path: '/contact-detail/:id',
         name: 'ContactDetail',
         component: ContactDetailComponent
+    },
+    {
+        path: '/tickets',
+        name: 'Tickets',
+        component: TicketListComponent
     }
 ])
 
