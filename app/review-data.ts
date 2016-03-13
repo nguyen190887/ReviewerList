@@ -6,8 +6,8 @@ export module ReviewData {
             id: 1,
             name: 'Super women',
             reviewers: [
-                { id: 101, name: 'Tina', email: 'tina@mail.com', devType: 'BEE' },
-                { id: 102, name: 'Kym', email: 'kym@mail.com', devType: 'FED' }
+                { id: 101, name: 'Anna', email: 'Anna@mail.com', devType: 'BEE' },
+                { id: 102, name: 'Juliet', email: 'Juliet@mail.com', devType: 'FED' }
             ],
             selected: false,
             workingProduct: 'Vehicle',
@@ -17,7 +17,7 @@ export module ReviewData {
             id: 2,
             name: 'Advertiser',
             reviewers: [
-                { id: 201, name: 'Valentyna', email: 'val@mail.com', devType: 'BEE' },
+                { id: 201, name: 'Rafael', email: 'Rafael@mail.com', devType: 'BEE' },
                 { id: 203, name: 'Josh', email: 'josh@mail.com', devType: 'FED' }
             ],
             selected: false,

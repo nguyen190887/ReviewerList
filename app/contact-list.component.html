@@ -1,0 +1,11 @@
+<h3>Contact List</h3>
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+    </tr>
+    <tr *ngFor="#reviewer of reviewers" (click)="goToDetail(reviewer)">
+        <td>{{reviewer.name}}</td>
+        <td>{{reviewer.email | lowercase}}</td>
+    </tr>
+</table>

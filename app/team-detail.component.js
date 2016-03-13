@@ -22,8 +22,7 @@ System.register(['angular2/core'], function(exports_1) {
                 TeamDetailComponent = __decorate([
                     core_1.Component({
                         selector: 'team-detail',
-                        template: "\n        <h2>Details of {{team.name}}</h2>\n        <div>Working product: {{team.workingProduct}}</div>\n        <div>Manager: {{team.manager}}</div>\n    ",
-                        styles: ["\n\n    "],
+                        templateUrl: 'app/team-detail.component.html',
                         inputs: ['team']
                     }), 
                     __metadata('design:paramtypes', [])

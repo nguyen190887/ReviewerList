@@ -11,10 +11,10 @@ import {ReviewService} from './review.service';
 export class ContactDetailComponent implements OnInit {
     contact: Reviewer;
 
-    constructor(
+    constructor (
         private _reviewService: ReviewService,
         private _routeParams: RouteParams) {
-            //
+
     }
 
     ngOnInit() {

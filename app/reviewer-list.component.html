@@ -1,0 +1,36 @@
+<h3>Review Teams</h3>
+
+<div class="filter">
+    <label>Type your filter: </label>
+    <input [(ngModel)]="teamFilter" />
+</div>
+
+<div class="reviewTeam" *ngFor="#team of reviewTeams" [class.selected]="team.selected" (click)="onSelect(team)" [ngClass]="{hidden: teamFilter && team.name.toLowerCase().indexOf(teamFilter.toLowerCase()) < 0}">
+    <h3>{{team.id}} - {{team.name}}</h3>
+    <ul>
+        <li *ngFor="#reviewer of team.reviewers" [ngClass]="{
+                                    'the-fed': reviewer.devType === 'FED',
+                                    'the-bee': reviewer.devType === 'BEE'}">
+            {{reviewer.name}} ({{reviewer.devType}})
+        </li>
+    </ul>
+</div>
+
+<div class="clearfix"></div>
+
+<div *ngIf="lastSelectedTeam">
+    <div>
+        <team-detail [team]="lastSelectedTeam"></team-detail>
+    </div>
+    <div>
+        <!-- You selected: {{selectedTeam.name}} -->
+        <br/>
+    </div>
+    <div>
+        <button (click)="generateMailList()">Generate mail list</button>
+    </div>
+</div>
+
+<div *ngIf="mailList">
+    <textarea class="mail-list">{{mailList}}</textarea>
+</div>

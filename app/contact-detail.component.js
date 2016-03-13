@@ -26,7 +26,6 @@ System.register(['angular2/core', 'angular2/router', './review.service'], functi
                 function ContactDetailComponent(_reviewService, _routeParams) {
                     this._reviewService = _reviewService;
                     this._routeParams = _routeParams;
-                    //
                 }
                 ContactDetailComponent.prototype.ngOnInit = function () {
                     var _this = this;

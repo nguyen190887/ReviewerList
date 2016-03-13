@@ -39,8 +39,8 @@ System.register(['angular2/core', 'angular2/router', './review.service'], functi
                 ContactListComponent = __decorate([
                     core_1.Component({
                         selector: 'contact-list',
-                        template: "\n        <h3>Contact List</h3>\n        <table class=\"table\">\n            <tr>\n                <th>Name</th>\n                <th>Email</th>\n            </tr>\n            <tr *ngFor=\"#reviewer of reviewers\"\n                (click)=\"goToDetail(reviewer)\">\n                <td>{{reviewer.name}}</td>\n                <td>{{reviewer.email}}</td>\n            </tr>\n        </table>\n    ",
-                        styles: ["\n        /* To remove once adding Bootstrap */\n        .table {\n            border-collapse: collapse;\n        }\n        .table, th, td {\n            border: solid 1px #dcdcdc;\n        }\n        th, td {\n            padding: 5px;\n        }\n        tr:hover {\n            background-color: cyan;\n            cursor: pointer;\n        }\n    "]
+                        templateUrl: 'app/contact-list.component.html',
+                        styleUrls: ['app/contact-list.component.css']
                     }), 
                     __metadata('design:paramtypes', [router_1.Router, review_service_1.ReviewService])
                 ], ContactListComponent);

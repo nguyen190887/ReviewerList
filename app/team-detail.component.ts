@@ -3,14 +3,7 @@ import {ReviewTeam} from './review-team';
 
 @Component({
     selector: 'team-detail',
-    template: `
-        <h2>Details of {{team.name}}</h2>
-        <div>Working product: {{team.workingProduct}}</div>
-        <div>Manager: {{team.manager}}</div>
-    `,
-    styles: [`
-
-    `],
+    templateUrl: 'app/team-detail.component.html',
     inputs: ['team']
 })
 

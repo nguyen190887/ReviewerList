@@ -1,0 +1,42 @@
+.selected {
+    background-color: #ddcc00;
+    color: white;
+}
+
+.reviewTeam {
+    width: 200px;
+    float: left;
+    cursor: pointer;
+    margin-right: 10px;
+    padding: 5px;
+}
+
+.reviewTeam:hover {
+    background-color: yellow;
+}
+
+.filter {
+    margin-bottom: 20px;
+}
+
+.mail-list {
+    width: 600px;
+    height: 200px;
+    margin-top: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.clearfix {
+    clear: both;
+}
+
+.the-bee {
+    color: brown;
+}
+
+.the-fed {
+    color: green;
+}
