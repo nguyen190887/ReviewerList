@@ -5,15 +5,18 @@ import {TicketService} from './ticket.service';
 
 @Component({
     selector: 'ticket-list',
-    templateUrl: 'app/ticket-list.component.html'
+    templateUrl: 'app/ticket-list.component.html',
+    styleUrls: ['app/ticket-list.component.css']
 })
 
 export class TicketListComponent implements OnInit {
-    tickets = [];
+    tickets = {};
     
     constructor(private _ticketService: TicketService) {}
 
     ngOnInit() {
-        this._ticketService.ajaxGetTickets().subscribe(tickets => this.tickets = tickets);
+        this._ticketService.ajaxGetTickets().subscribe(tickets => {
+            this.tickets = this._ticketService.categorizeTickets(tickets);
+        });
     }
 }

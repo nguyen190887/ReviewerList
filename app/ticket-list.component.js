@@ -22,16 +22,19 @@ System.register(['angular2/core', './ticket.service'], function(exports_1) {
             TicketListComponent = (function () {
                 function TicketListComponent(_ticketService) {
                     this._ticketService = _ticketService;
-                    this.tickets = [];
+                    this.tickets = {};
                 }
                 TicketListComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this._ticketService.ajaxGetTickets().subscribe(function (tickets) { return _this.tickets = tickets; });
+                    this._ticketService.ajaxGetTickets().subscribe(function (tickets) {
+                        _this.tickets = _this._ticketService.categorizeTickets(tickets);
+                    });
                 };
                 TicketListComponent = __decorate([
                     core_1.Component({
                         selector: 'ticket-list',
-                        templateUrl: 'app/ticket-list.component.html'
+                        templateUrl: 'app/ticket-list.component.html',
+                        styleUrls: ['app/ticket-list.component.css']
                     }), 
                     __metadata('design:paramtypes', [ticket_service_1.TicketService])
                 ], TicketListComponent);

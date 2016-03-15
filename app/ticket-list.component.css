@@ -1,0 +1,23 @@
+.ticket {
+    border: solid 1px #333333;
+    width: 100%;
+    float: left;
+    min-height: 40px;
+    padding: 5px;
+    margin: 5px 0;
+}
+.row.header {
+    font-weight: 700;
+}
+.row [class^=col-]:nth-child(1) .ticket{
+    background-color: violet;
+}
+.row [class^=col-]:nth-child(2) .ticket{
+    background-color: orange;
+}
+.row [class^=col-]:nth-child(3) .ticket {
+    background-color: skyblue;
+}
+.row [class^=col-]:nth-child(4) .ticket{
+    background-color: aquamarine;
+}

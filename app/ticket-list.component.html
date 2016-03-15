@@ -1,8 +1,23 @@
 <h2>Ticket list</h2>
-<div>
-    <ul>
-        <li *ngFor="#ticket of tickets">
-            {{ticket.summary}}
-        </li>
-    </ul>
+<div class="container">
+    <div class="row header">
+        <div class="col-xs-6 col-sm-3 col-md-3">In Progress</div>
+        <div class="col-xs-6 col-sm-3 col-md-3">Onshore Pending</div>
+        <div class="col-xs-6 col-sm-3 col-md-3">Onshore Approved</div>
+        <div class="col-xs-6 col-sm-3 col-md-3">Complete</div>
+    </div>
+    <div class="row">
+        <div *ngFor="#index of [1,2,3,4]" class="col-xs-6 col-sm-3 col-md-3">
+            <template [ngIf]="!tickets[index]">
+                <div class="ticket">
+                    (No ticket)
+                </div>
+            </template>
+            <template [ngIf]="tickets[index]">
+                <div *ngFor="#ticket of tickets[index]" class="ticket">
+                    {{ticket.workId}} | {{ticket.summary}}
+                </div>
+            </template>
+        </div>
+    </div>
 </div>

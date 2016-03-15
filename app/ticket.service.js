@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'rxjs/Rx'], function(exports_1) {
+System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx', './ticket'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx'], function(exports_
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1;
+    var core_1, http_1, Observable_1, ticket_1;
     var TicketService;
     return {
         setters:[
@@ -18,17 +18,66 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx'], function(exports_
             function (http_1_1) {
                 http_1 = http_1_1;
             },
-            function (_1) {}],
+            function (Observable_1_1) {
+                Observable_1 = Observable_1_1;
+            },
+            function (_1) {},
+            function (ticket_1_1) {
+                ticket_1 = ticket_1_1;
+            }],
         execute: function() {
             TicketService = (function () {
+                // devStatusGroup: {[name: string] : number};
                 function TicketService(http) {
                     this.ticketApi = 'http://localhost:7044/api/tickets';
                     this.http = http;
                 }
                 TicketService.prototype.ajaxGetTickets = function () {
-                    return this.http.get(this.ticketApi).map(function (res) { return res.json(); });
+                    return this.http.get(this.ticketApi)
+                        .map(function (res) { return res.json(); })
+                        .do(function (data) { return console.log(data); })
+                        .catch(this.handleError);
                 };
                 TicketService.prototype.getAllTickets = function () {
+                };
+                TicketService.prototype.categorizeTickets = function (rawData) {
+                    var categoriedTickets = {};
+                    for (var _i = 0; _i < rawData.length; _i++) {
+                        var rawItem = rawData[_i];
+                        var ticket = this.mapToTicket(rawItem);
+                        if (ticket.devStatus === 'DEV In-progress' || ticket.devStatus === 'DEV In-progress' || ticket.devStatus === 'QA Passed') {
+                            this.pushTicketToGroup(categoriedTickets, 1, ticket);
+                        }
+                        else if (ticket.devStatus === 'Code Submitted' || ticket.devStatus === 'UAT Submitted') {
+                            this.pushTicketToGroup(categoriedTickets, 2, ticket);
+                        }
+                        else if (ticket.devStatus === 'Code Approved' || ticket.devStatus === 'UAT Approved') {
+                            this.pushTicketToGroup(categoriedTickets, 3, ticket);
+                        }
+                        else if (ticket.devStatus === 'Code Merged') {
+                            this.pushTicketToGroup(categoriedTickets, 4, ticket);
+                        }
+                    }
+                    return categoriedTickets;
+                };
+                TicketService.prototype.pushTicketToGroup = function (groups, groupNumber, ticket) {
+                    groups[groupNumber] = (groups[groupNumber] || []);
+                    groups[groupNumber].push(ticket);
+                };
+                TicketService.prototype.mapToTicket = function (rawObj) {
+                    var ticket = new ticket_1.Ticket();
+                    ticket.id = rawObj['id'];
+                    ticket.assignee = rawObj['assigned_to_id'];
+                    ticket.summary = rawObj['summary'];
+                    ticket.status = rawObj['status'];
+                    ticket.workId = rawObj['custom_fields']['Work ID'];
+                    ticket.kilnId = rawObj['custom_fields']['Kiln ID'];
+                    ticket.devStatus = rawObj['custom_fields']['DEV Status'];
+                    return ticket;
+                };
+                TicketService.prototype.handleError = function (error) {
+                    console.error(error);
+                    return Observable_1.Observable.throw(error.json().error || 'Server error');
                 };
                 TicketService = __decorate([
                     core_1.Injectable(), 
