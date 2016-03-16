@@ -1,4 +1,6 @@
-System.register(['angular2/core', './ticket.service'], function(exports_1) {
+System.register(['angular2/core', './ticket.service'], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -23,12 +25,20 @@ System.register(['angular2/core', './ticket.service'], function(exports_1) {
                 function TicketListComponent(_ticketService) {
                     this._ticketService = _ticketService;
                     this.tickets = {};
+                    this.config = {};
                 }
                 TicketListComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this._ticketService.ajaxGetTickets().subscribe(function (tickets) {
                         _this.tickets = _this._ticketService.categorizeTickets(tickets);
                     });
+                    this._ticketService.getTicketConfig().subscribe(function (config) {
+                        _this.config = config;
+                    });
+                    console.log('on init');
+                };
+                TicketListComponent.prototype.getTicketUrl = function (id) {
+                    return (this.config.UrlFormat || '').replace('{0}', id);
                 };
                 TicketListComponent = __decorate([
                     core_1.Component({
@@ -39,7 +49,7 @@ System.register(['angular2/core', './ticket.service'], function(exports_1) {
                     __metadata('design:paramtypes', [ticket_service_1.TicketService])
                 ], TicketListComponent);
                 return TicketListComponent;
-            })();
+            }());
             exports_1("TicketListComponent", TicketListComponent);
         }
     }

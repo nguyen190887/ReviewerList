@@ -15,7 +15,10 @@
             </template>
             <template [ngIf]="tickets[index]">
                 <div *ngFor="#ticket of tickets[index]" class="ticket">
-                    {{ticket.workId}} | {{ticket.summary}}
+                    <a [href]="getTicketUrl(ticket.number)" target="_blank">{{ticket.workId}} | {{ticket.summary}}</a>
+                    <hr/>
+                    <span class="pull-left dev-team">{{ticket.devTeam}}</span>
+                    <span class="pull-right review-team">{{ticket.reviewTeam ? ticket.reviewTeam : "(No review team)"}}</span>
                 </div>
             </template>
         </div>

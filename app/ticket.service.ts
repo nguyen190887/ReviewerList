@@ -7,7 +7,9 @@ import {Ticket} from './ticket';
 @Injectable()
 export class TicketService {
     http: Http;
-    ticketApi = 'http://localhost:7044/api/tickets';
+    config: {};
+    ticketApi = 'http://localhost:2149/api/ticket';
+    configApi = 'http://localhost:2149/api/configuration';
     // devStatusGroup: {[name: string] : number};
 
     constructor(http: Http) {
@@ -40,6 +42,13 @@ export class TicketService {
         }
         return categoriedTickets;
     }
+    
+    getTicketConfig() {
+        return this.http.get(this.configApi)
+            .map(res => res.json())
+            .do(data => console.log(data))
+            .catch(this.handleError);
+    }
 
     private pushTicketToGroup(groups: { [groupId: number]: Ticket[] }, groupNumber: number, ticket: Ticket) {
         groups[groupNumber] = (groups[groupNumber] || []);
@@ -49,12 +58,15 @@ export class TicketService {
     private mapToTicket(rawObj: Object) {
         let ticket = new Ticket();
         ticket.id = rawObj['id'];
+        ticket.number = rawObj['number'];
         ticket.assignee = rawObj['assigned_to_id'];
         ticket.summary = rawObj['summary'];
         ticket.status = rawObj['status'];
         ticket.workId = rawObj['custom_fields']['Work ID'];
         ticket.kilnId = rawObj['custom_fields']['Kiln ID'];
         ticket.devStatus = rawObj['custom_fields']['DEV Status'];
+        ticket.reviewTeam = rawObj['custom_fields']['Review Team'];
+        ticket.devTeam = rawObj['custom_fields']['DEV Team'];
         return ticket;
     }
 

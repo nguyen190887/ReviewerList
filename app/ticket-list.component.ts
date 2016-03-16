@@ -1,6 +1,5 @@
 import {Component, OnInit} from 'angular2/core';
-// import {Http, HTTP_PROVIDERS} from 'angular2/http';
-import {NgClass} from 'angular2/common'; 
+import {NgClass} from 'angular2/common';
 import {TicketService} from './ticket.service';
 
 @Component({
@@ -11,12 +10,22 @@ import {TicketService} from './ticket.service';
 
 export class TicketListComponent implements OnInit {
     tickets = {};
-    
-    constructor(private _ticketService: TicketService) {}
+    config = <any>{};
+
+    constructor(private _ticketService: TicketService) { }
 
     ngOnInit() {
         this._ticketService.ajaxGetTickets().subscribe(tickets => {
             this.tickets = this._ticketService.categorizeTickets(tickets);
         });
+
+        this._ticketService.getTicketConfig().subscribe(config => {
+            this.config = config;
+        });
+        console.log('on init');
+    }
+
+    getTicketUrl(id: number) {
+        return (this.config.UrlFormat || '').replace('{0}', id);
     }
 }

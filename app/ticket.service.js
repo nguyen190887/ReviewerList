@@ -1,4 +1,6 @@
-System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx', './ticket'], function(exports_1) {
+System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx', './ticket'], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -29,7 +31,8 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
             TicketService = (function () {
                 // devStatusGroup: {[name: string] : number};
                 function TicketService(http) {
-                    this.ticketApi = 'http://localhost:7044/api/tickets';
+                    this.ticketApi = 'http://localhost:2149/api/ticket';
+                    this.configApi = 'http://localhost:2149/api/configuration';
                     this.http = http;
                 }
                 TicketService.prototype.ajaxGetTickets = function () {
@@ -42,8 +45,8 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                 };
                 TicketService.prototype.categorizeTickets = function (rawData) {
                     var categoriedTickets = {};
-                    for (var _i = 0; _i < rawData.length; _i++) {
-                        var rawItem = rawData[_i];
+                    for (var _i = 0, rawData_1 = rawData; _i < rawData_1.length; _i++) {
+                        var rawItem = rawData_1[_i];
                         var ticket = this.mapToTicket(rawItem);
                         if (ticket.devStatus === 'DEV In-progress' || ticket.devStatus === 'DEV In-progress' || ticket.devStatus === 'QA Passed') {
                             this.pushTicketToGroup(categoriedTickets, 1, ticket);
@@ -60,6 +63,12 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                     }
                     return categoriedTickets;
                 };
+                TicketService.prototype.getTicketConfig = function () {
+                    return this.http.get(this.configApi)
+                        .map(function (res) { return res.json(); })
+                        .do(function (data) { return console.log(data); })
+                        .catch(this.handleError);
+                };
                 TicketService.prototype.pushTicketToGroup = function (groups, groupNumber, ticket) {
                     groups[groupNumber] = (groups[groupNumber] || []);
                     groups[groupNumber].push(ticket);
@@ -67,12 +76,15 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                 TicketService.prototype.mapToTicket = function (rawObj) {
                     var ticket = new ticket_1.Ticket();
                     ticket.id = rawObj['id'];
+                    ticket.number = rawObj['number'];
                     ticket.assignee = rawObj['assigned_to_id'];
                     ticket.summary = rawObj['summary'];
                     ticket.status = rawObj['status'];
                     ticket.workId = rawObj['custom_fields']['Work ID'];
                     ticket.kilnId = rawObj['custom_fields']['Kiln ID'];
                     ticket.devStatus = rawObj['custom_fields']['DEV Status'];
+                    ticket.reviewTeam = rawObj['custom_fields']['Review Team'];
+                    ticket.devTeam = rawObj['custom_fields']['DEV Team'];
                     return ticket;
                 };
                 TicketService.prototype.handleError = function (error) {
@@ -84,7 +96,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                     __metadata('design:paramtypes', [http_1.Http])
                 ], TicketService);
                 return TicketService;
-            })();
+            }());
             exports_1("TicketService", TicketService);
         }
     }
