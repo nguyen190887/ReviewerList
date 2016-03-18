@@ -3,6 +3,10 @@
     Loading...
 </div>
 <div class="container">
+    <div class="row not-started-tickets">
+        <div class="col-md-12 header">Not-Started</div>
+        <ticket-detail [ticketList]="tickets[0]" [config]="config"></ticket-detail>
+    </div>
     <div class="row header">
         <div class="col-xs-6 col-sm-3 col-md-3">In Progress</div>
         <div class="col-xs-6 col-sm-3 col-md-3">Onshore Pending</div>
@@ -11,34 +15,7 @@
     </div>
     <div class="row">
         <div *ngFor="#index of [1,2,3,4]" class="col-xs-6 col-sm-3 col-md-3">
-            <template [ngIf]="!tickets[index]">
-                <div class="ticket">
-                    (No ticket)
-                </div>
-            </template>
-            <template [ngIf]="tickets[index]">
-                <div *ngFor="#ticket of tickets[index]" class="ticket">
-                    <div class="clearfix">
-                        <span class="pull-left status">{{ticket.devStatus}}</span>
-                        <span class="pull-right links">
-                        <template [ngIf]="isDefectTicket(ticket) && ticket.workId">
-                            <a [href]="getDefectUrl(ticket)" [title]="ticket.workId" target="_blank">BugZilla</a>
-                        </template>
-                        <template [ngIf]="!isDefectTicket(ticket) && ticket.workId">
-                            <a [href]="getBacklogUrl(ticket)" [title]="ticket.workId" target="_blank">VersionOne</a>
-                        </template>
-                        <template [ngIf]="ticket.kilnId">
-                            &nbsp;|&nbsp;
-                            <a [href]="getCodeReviewUrl(ticket)" [title]="ticket.kilnId" target="_blank">Kiln</a>
-                        </template>
-                    </span>
-                    </div>
-                    <a [href]="getTicketUrl(ticket)" target="_blank">{{ticket.workId}} | {{ticket.summary}}</a>
-                    <hr/>
-                    <span class="pull-left dev-team">{{ticket.devTeam}}</span>
-                    <span class="pull-right review-team">{{ticket.reviewTeam ? ticket.reviewTeam : "(No review team)"}}</span>
-                </div>
-            </template>
+            <ticket-detail [ticketList]="tickets[index]" [config]="config"></ticket-detail>
         </div>
     </div>
 </div>

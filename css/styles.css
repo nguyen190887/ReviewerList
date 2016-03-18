@@ -1,3 +1,35 @@
+body, input[text], button { 
+  color: #333; 
+  font-family: Cambria, Georgia; 
+}
+h1 {
+  color: #369; 
+  font-family: Arial, Helvetica, sans-serif;   
+  font-size: 250%;
+}
+h2, h3 { 
+  color: #444;
+  font-family: Arial, Helvetica, sans-serif;   
+  font-weight: lighter;
+}
+nav a {
+  padding: 5px 10px;
+  text-decoration: none;
+  margin-top: 10px;
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 4px;
+}
+nav a:visited, a:link {
+  color: #607D8B;
+}
+nav a:hover {
+  color: #039be5;
+  background-color: #CFD8DC;
+}
+nav a.router-link-active {
+  color: #039be5;
+}
 .ticket {
     border: solid 1px #333333;
     width: 100%;
@@ -22,7 +54,7 @@
     font-weight: 700;
     color: saddlebrown;
 }
-.row.header {
+.row.header, .not-started-tickets .header {
     font-weight: 700;
 }
 .row [class^=col-]:nth-child(1) .ticket{
@@ -37,7 +69,11 @@
 .row [class^=col-]:nth-child(4) .ticket{
     background-color: aquamarine;
 }
-.loading{
+.not-started-tickets .ticket{
+    width: 250px;
+    margin: 15px;   
+}
+.loading {
     background-color: cyan;
     display: inline-block;
     padding: 3px;

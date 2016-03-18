@@ -1,4 +1,4 @@
-System.register(['angular2/core', './ticket.service'], function(exports_1, context_1) {
+System.register(['angular2/core', './ticket-detail.component', './ticket.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,12 +10,15 @@ System.register(['angular2/core', './ticket.service'], function(exports_1, conte
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, ticket_service_1;
+    var core_1, ticket_detail_component_1, ticket_service_1;
     var TicketListComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (ticket_detail_component_1_1) {
+                ticket_detail_component_1 = ticket_detail_component_1_1;
             },
             function (ticket_service_1_1) {
                 ticket_service_1 = ticket_service_1_1;
@@ -40,26 +43,12 @@ System.register(['angular2/core', './ticket.service'], function(exports_1, conte
                     });
                     console.log('on init');
                 };
-                TicketListComponent.prototype.getTicketUrl = function (ticket) {
-                    return (this.config.UrlFormat || '').replace('{0}', ticket.ticketNo);
-                };
-                TicketListComponent.prototype.getBacklogUrl = function (ticket) {
-                    return (this.config.BacklogUrlFormat || '').replace('{0}', ticket.workId);
-                };
-                TicketListComponent.prototype.getDefectUrl = function (ticket) {
-                    return (this.config.DefectUrlFormat || '').replace('{0}', ticket.workId.replace('Bug ', '').trim());
-                };
-                TicketListComponent.prototype.getCodeReviewUrl = function (ticket) {
-                    return (this.config.CodeReviewUrlFormat || '').replace('{0}', ticket.kilnId);
-                };
-                TicketListComponent.prototype.isDefectTicket = function (ticket) {
-                    return ticket.workId.trim().indexOf('Bug') === 0;
-                };
                 TicketListComponent = __decorate([
                     core_1.Component({
                         selector: 'ticket-list',
                         templateUrl: 'app/ticket-list.component.html',
-                        styleUrls: ['app/ticket-list.component.css']
+                        styleUrls: ['app/ticket-list.component.css'],
+                        directives: [ticket_detail_component_1.TicketDetailComponent]
                     }), 
                     __metadata('design:paramtypes', [ticket_service_1.TicketService])
                 ], TicketListComponent);

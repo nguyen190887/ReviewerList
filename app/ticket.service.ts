@@ -30,9 +30,11 @@ export class TicketService {
         let categoriedTickets: { [groupId: number]: Ticket[] } = {};
         for (var rawItem of rawData) {
             let ticket: Ticket = this.mapToTicket(rawItem);
-            if (ticket.devStatus === 'Dev In-progress' || ticket.devStatus === 'Internal Code Review' ||
+            if (ticket.devStatus === '' || ticket.devStatus === 'None') {
+                this.pushTicketToGroup(categoriedTickets, 0, ticket);
+            } else if (ticket.devStatus === 'Dev In-progress' || ticket.devStatus === 'Internal Code Review' ||
                 ticket.devStatus === 'QA In-progress' || ticket.devStatus === 'QA Passed' ||
-                ticket.devStatus === 'Internal Code Approved' || ticket.devStatus === '') {
+                ticket.devStatus === 'Internal Code Approved') {
                 this.pushTicketToGroup(categoriedTickets, 1, ticket);
             } else if (ticket.devStatus === 'Code Submitted' || ticket.devStatus === 'UAT Submitted') {
                 this.pushTicketToGroup(categoriedTickets, 2, ticket);
@@ -69,12 +71,12 @@ export class TicketService {
         ticket.devStatus = rawObj['custom_fields']['DEV Status'];
         ticket.reviewTeam = rawObj['custom_fields']['Review Team'];
         ticket.devTeam = rawObj['custom_fields']['DEV Team'];
-        
+
         // ensure devStatus not empty
-        if (ticket.devStatus && ticket.devStatus.trim() === '') {
+        if (ticket.devStatus != null && ticket.devStatus.trim() === '') {
             ticket.devStatus = 'None';
         }
-        
+
         return ticket;
     }
 

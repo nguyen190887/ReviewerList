@@ -1,12 +1,14 @@
 import {Component, OnInit} from 'angular2/core';
 import {NgClass} from 'angular2/common';
+import {TicketDetailComponent} from './ticket-detail.component';
 import {TicketService} from './ticket.service';
 import {Ticket} from './ticket';
 
 @Component({
     selector: 'ticket-list',
     templateUrl: 'app/ticket-list.component.html',
-    styleUrls: ['app/ticket-list.component.css']
+    styleUrls: ['app/ticket-list.component.css'],
+    directives: [TicketDetailComponent]
 })
 
 export class TicketListComponent implements OnInit {
@@ -29,25 +31,5 @@ export class TicketListComponent implements OnInit {
         });
                 
         console.log('on init');
-    }
-
-    getTicketUrl(ticket: Ticket) {
-        return (this.config.UrlFormat || '').replace('{0}', ticket.ticketNo);
-    }
-    
-    getBacklogUrl(ticket: Ticket) {
-        return (this.config.BacklogUrlFormat || '').replace('{0}', ticket.workId);
-    }
-
-    getDefectUrl(ticket: Ticket) {
-        return (this.config.DefectUrlFormat || '').replace('{0}', ticket.workId.replace('Bug ', '').trim());
-    }
-
-    getCodeReviewUrl(ticket: Ticket) {
-        return (this.config.CodeReviewUrlFormat || '').replace('{0}', ticket.kilnId);
-    }
-
-    isDefectTicket(ticket: Ticket) {
-        return ticket.workId.trim().indexOf('Bug') === 0;
     }
 }
