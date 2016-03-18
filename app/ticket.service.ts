@@ -69,6 +69,12 @@ export class TicketService {
         ticket.devStatus = rawObj['custom_fields']['DEV Status'];
         ticket.reviewTeam = rawObj['custom_fields']['Review Team'];
         ticket.devTeam = rawObj['custom_fields']['DEV Team'];
+        
+        // ensure devStatus not empty
+        if (ticket.devStatus && ticket.devStatus.trim() === '') {
+            ticket.devStatus = 'None';
+        }
+        
         return ticket;
     }
 
