@@ -15,27 +15,32 @@ export class TicketListComponent implements OnInit {
     tickets = {};
     config = <any>{};
     isLoading = false;
-    showNotStarted = false;
+    gridGroups = [];
+    collapsableGroups = [];
 
     constructor(private _ticketService: TicketService) { }
 
     ngOnInit() {
         this.isLoading = true;
-        
+
         this._ticketService.getTicketConfig().subscribe(config => {
             this.config = config;
+            if (config && config.StatusGroups) {
+                this.gridGroups = this._ticketService.getStatusGroups(config.StatusGroups, 'grid');
+                this.collapsableGroups = this._ticketService.getStatusGroups(config.StatusGroups, 'collapsable');
+            }
         });
-        
+
         this._ticketService.ajaxGetTickets().subscribe(tickets => {
-            this.tickets = this._ticketService.categorizeTickets(tickets);
+            this.tickets = this._ticketService.categorizeTickets(tickets, this.config.StatusGroups);
             this.isLoading = false;
         });
-                
+
         console.log('on init');
     }
-    
-    toggleNotStartedTickets() {
-        this.showNotStarted = !this.showNotStarted;
-        console.log('shownotstarted: ' + this.showNotStarted);
+
+    toggleNotStartedTickets(group: any) {
+        group.show = !group.show;
+        console.log(group.name + ' - shownotstarted: ' + group.show);
     }
 }

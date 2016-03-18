@@ -45,36 +45,40 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                 };
                 TicketService.prototype.getAllTickets = function () {
                 };
-                TicketService.prototype.categorizeTickets = function (rawData) {
+                TicketService.prototype.categorizeTickets = function (rawData, statusGroups) {
                     var categoriedTickets = {};
+                    var _loop_1 = function() {
+                        var ticket = this_1.mapToTicket(rawItem);
+                        var foundGroup = statusGroups.find(function (s) { return s.statuses.indexOf(ticket.devStatus.toLowerCase()) >= 0; });
+                        if (foundGroup) {
+                            this_1.pushTicketToGroup(categoriedTickets, foundGroup.groupId, ticket);
+                        }
+                    };
+                    var this_1 = this;
                     for (var _i = 0, rawData_1 = rawData; _i < rawData_1.length; _i++) {
                         var rawItem = rawData_1[_i];
-                        var ticket = this.mapToTicket(rawItem);
-                        if (ticket.devStatus === '' || ticket.devStatus === 'None') {
-                            this.pushTicketToGroup(categoriedTickets, 0, ticket);
-                        }
-                        else if (ticket.devStatus === 'Dev In-progress' || ticket.devStatus === 'Internal Code Review' ||
-                            ticket.devStatus === 'QA In-progress' || ticket.devStatus === 'QA Passed' ||
-                            ticket.devStatus === 'Internal Code Approved') {
-                            this.pushTicketToGroup(categoriedTickets, 1, ticket);
-                        }
-                        else if (ticket.devStatus === 'Code Submitted' || ticket.devStatus === 'UAT Submitted') {
-                            this.pushTicketToGroup(categoriedTickets, 2, ticket);
-                        }
-                        else if (ticket.devStatus === 'Code Approved' || ticket.devStatus === 'UAT Approved') {
-                            this.pushTicketToGroup(categoriedTickets, 3, ticket);
-                        }
-                        else if (ticket.devStatus === 'Code Merged') {
-                            this.pushTicketToGroup(categoriedTickets, 4, ticket);
-                        }
+                        _loop_1();
                     }
+                    console.log('categorized tickets: ' + JSON.stringify(categoriedTickets));
                     return categoriedTickets;
                 };
                 TicketService.prototype.getTicketConfig = function () {
                     return this.http.get(this.configApi)
                         .map(function (res) { return res.json(); })
-                        .do(function (data) { return console.log(data); })
                         .catch(this.handleError);
+                };
+                TicketService.prototype.getStatusGroups = function (statusGroups, filteredDisplay) {
+                    var groups = [];
+                    statusGroups.forEach(function (s) {
+                        if (s.display === filteredDisplay) {
+                            groups.push({
+                                id: s.groupId,
+                                name: s.groupName,
+                                show: s.showOnLoad || false });
+                        }
+                    });
+                    console.log('status group - ' + filteredDisplay + ': ' + JSON.stringify(groups));
+                    return groups;
                 };
                 TicketService.prototype.pushTicketToGroup = function (groups, groupNumber, ticket) {
                     groups[groupNumber] = (groups[groupNumber] || []);

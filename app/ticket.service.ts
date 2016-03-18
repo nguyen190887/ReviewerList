@@ -26,32 +26,38 @@ export class TicketService {
 
     }
 
-    categorizeTickets(rawData: Object[]) {
+    categorizeTickets(rawData: Object[], statusGroups: any[]) {
         let categoriedTickets: { [groupId: number]: Ticket[] } = {};
         for (var rawItem of rawData) {
             let ticket: Ticket = this.mapToTicket(rawItem);
-            if (ticket.devStatus === '' || ticket.devStatus === 'None') {
-                this.pushTicketToGroup(categoriedTickets, 0, ticket);
-            } else if (ticket.devStatus === 'Dev In-progress' || ticket.devStatus === 'Internal Code Review' ||
-                ticket.devStatus === 'QA In-progress' || ticket.devStatus === 'QA Passed' ||
-                ticket.devStatus === 'Internal Code Approved') {
-                this.pushTicketToGroup(categoriedTickets, 1, ticket);
-            } else if (ticket.devStatus === 'Code Submitted' || ticket.devStatus === 'UAT Submitted') {
-                this.pushTicketToGroup(categoriedTickets, 2, ticket);
-            } else if (ticket.devStatus === 'Code Approved' || ticket.devStatus === 'UAT Approved') {
-                this.pushTicketToGroup(categoriedTickets, 3, ticket);
-            } else if (ticket.devStatus === 'Code Merged') {
-                this.pushTicketToGroup(categoriedTickets, 4, ticket);
+            let foundGroup = statusGroups.find(s => s.statuses.indexOf(ticket.devStatus.toLowerCase()) >= 0);
+            if (foundGroup) {
+                this.pushTicketToGroup(categoriedTickets, foundGroup.groupId, ticket);
             }
         }
+        console.log('categorized tickets: ' + JSON.stringify(categoriedTickets));
         return categoriedTickets;
     }
 
     getTicketConfig() {
         return this.http.get(this.configApi)
             .map(res => res.json())
-            .do(data => console.log(data))
+            // .do(data => console.log(data))
             .catch(this.handleError);
+    }
+
+    getStatusGroups(statusGroups: any[], filteredDisplay: string) {
+        let groups = [];
+        statusGroups.forEach(s => {
+            if (s.display === filteredDisplay) {
+                groups.push({
+                    id: s.groupId, 
+                    name: s.groupName, 
+                    show: s.showOnLoad || false });
+            }
+        })
+        console.log('status group - ' + filteredDisplay + ': ' + JSON.stringify(groups));
+        return groups;
     }
 
     private pushTicketToGroup(groups: { [groupId: number]: Ticket[] }, groupNumber: number, ticket: Ticket) {

@@ -3,22 +3,19 @@
     Loading...
 </div>
 <div class="container">
-    <div class="row not-started-tickets">
+    <div *ngFor="#group of collapsableGroups" class="row not-started-tickets">
         <div class="col-md-12 header">
-            Not-Started
-            <a href="javascript:void(0);" (click)="toggleNotStartedTickets()">[{{showNotStarted ? "Hide" : "Show"}}]</a>
+            {{group.name}}
+            <a href="javascript:void(0);" (click)="toggleNotStartedTickets(group)">[{{group.show ? "Hide" : "Show"}}]</a>
         </div>
-        <ticket-detail *ngIf="showNotStarted" [ticketList]="tickets[0]" [config]="config"></ticket-detail>
+        <ticket-detail *ngIf="group.show" [ticketList]="tickets[group.id]" [config]="config"></ticket-detail>
     </div>
     <div class="row header">
-        <div class="col-xs-6 col-sm-3 col-md-3">In Progress</div>
-        <div class="col-xs-6 col-sm-3 col-md-3">Onshore Pending</div>
-        <div class="col-xs-6 col-sm-3 col-md-3">Onshore Approved</div>
-        <div class="col-xs-6 col-sm-3 col-md-3">Complete</div>
+        <div *ngFor="#group of gridGroups" class="col-xs-6 col-sm-3 col-md-3">{{group.name}}</div>
     </div>
     <div class="row">
-        <div *ngFor="#index of [1,2,3,4]" class="col-xs-6 col-sm-3 col-md-3">
-            <ticket-detail [ticketList]="tickets[index]" [config]="config"></ticket-detail>
+        <div *ngFor="#group of gridGroups" class="col-xs-6 col-sm-3 col-md-3">
+            <ticket-detail [ticketList]="tickets[group.id]" [config]="config"></ticket-detail>
         </div>
     </div>
 </div>
