@@ -30,6 +30,7 @@ System.register(['angular2/core', './ticket-detail.component', './ticket.service
                     this.tickets = {};
                     this.config = {};
                     this.isLoading = false;
+                    this.showNotStarted = false;
                 }
                 TicketListComponent.prototype.ngOnInit = function () {
                     var _this = this;
@@ -42,6 +43,10 @@ System.register(['angular2/core', './ticket-detail.component', './ticket.service
                         _this.isLoading = false;
                     });
                     console.log('on init');
+                };
+                TicketListComponent.prototype.toggleNotStartedTickets = function () {
+                    this.showNotStarted = !this.showNotStarted;
+                    console.log('shownotstarted: ' + this.showNotStarted);
                 };
                 TicketListComponent = __decorate([
                     core_1.Component({

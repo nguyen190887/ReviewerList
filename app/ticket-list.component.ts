@@ -15,6 +15,7 @@ export class TicketListComponent implements OnInit {
     tickets = {};
     config = <any>{};
     isLoading = false;
+    showNotStarted = false;
 
     constructor(private _ticketService: TicketService) { }
 
@@ -31,5 +32,10 @@ export class TicketListComponent implements OnInit {
         });
                 
         console.log('on init');
+    }
+    
+    toggleNotStartedTickets() {
+        this.showNotStarted = !this.showNotStarted;
+        console.log('shownotstarted: ' + this.showNotStarted);
     }
 }

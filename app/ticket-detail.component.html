@@ -9,10 +9,10 @@
             <span class="pull-left status">{{ticket.devStatus}}</span>
             <span class="pull-right links">
                 <template [ngIf]="isDefectTicket(ticket) && ticket.workId">
-                    <a [href]="getDefectUrl(ticket)" [title]="ticket.workId" target="_blank">BugZilla</a>
+                    <a [href]="getDefectUrl(ticket)" [title]="ticket.workId" target="_blank">BZ</a>
                 </template>
                 <template [ngIf]="!isDefectTicket(ticket) && ticket.workId">
-                    <a [href]="getBacklogUrl(ticket)" [title]="ticket.workId" target="_blank">VersionOne</a>
+                    <a [href]="getBacklogUrl(ticket)" [title]="ticket.workId" target="_blank">V1</a>
                 </template>
                 <template [ngIf]="ticket.kilnId">
                     &nbsp;|&nbsp;

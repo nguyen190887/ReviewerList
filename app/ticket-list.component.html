@@ -4,8 +4,11 @@
 </div>
 <div class="container">
     <div class="row not-started-tickets">
-        <div class="col-md-12 header">Not-Started</div>
-        <ticket-detail [ticketList]="tickets[0]" [config]="config"></ticket-detail>
+        <div class="col-md-12 header">
+            Not-Started
+            <a href="javascript:void(0);" (click)="toggleNotStartedTickets()">[{{showNotStarted ? "Hide" : "Show"}}]</a>
+        </div>
+        <ticket-detail *ngIf="showNotStarted" [ticketList]="tickets[0]" [config]="config"></ticket-detail>
     </div>
     <div class="row header">
         <div class="col-xs-6 col-sm-3 col-md-3">In Progress</div>

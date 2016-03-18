@@ -69,6 +69,9 @@ nav a.router-link-active {
 .row [class^=col-]:nth-child(4) .ticket{
     background-color: aquamarine;
 }
+.not-started-tickets {
+    margin-bottom: 10px;
+}
 .not-started-tickets .ticket{
     width: 250px;
     margin: 15px;   
