@@ -1,7 +1,7 @@
 System.register([], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var ReviewData;
+    var ReviewData, API;
     return {
         setters:[],
         execute: function() {
@@ -32,6 +32,10 @@ System.register([], function(exports_1, context_1) {
                 ];
             })(ReviewData = ReviewData || (ReviewData = {}));
             exports_1("ReviewData", ReviewData);
+            exports_1("API", API = {
+                ticketApi: 'http://localhost:2149/api/ticket',
+                configApi: 'http://localhost:2149/api/configuration'
+            });
         }
     }
 });

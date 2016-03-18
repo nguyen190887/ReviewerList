@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx', './ticket'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx', './ticket', './review-data'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, Observable_1, ticket_1;
+    var core_1, http_1, Observable_1, ticket_1, review_data_1;
     var TicketService;
     return {
         setters:[
@@ -26,13 +26,15 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
             function (_1) {},
             function (ticket_1_1) {
                 ticket_1 = ticket_1_1;
+            },
+            function (review_data_1_1) {
+                review_data_1 = review_data_1_1;
             }],
         execute: function() {
             TicketService = (function () {
-                // devStatusGroup: {[name: string] : number};
                 function TicketService(http) {
-                    this.ticketApi = 'http://localhost:2149/api/ticket';
-                    this.configApi = 'http://localhost:2149/api/configuration';
+                    this.ticketApi = review_data_1.API.ticketApi;
+                    this.configApi = review_data_1.API.configApi;
                     this.http = http;
                 }
                 TicketService.prototype.ajaxGetTickets = function () {

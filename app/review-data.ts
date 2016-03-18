@@ -26,3 +26,8 @@ export module ReviewData {
         }
     ];
 }
+
+export var API = {
+    ticketApi: 'http://localhost:2149/api/ticket',
+    configApi: 'http://localhost:2149/api/configuration'
+};

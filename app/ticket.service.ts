@@ -3,14 +3,14 @@ import {Http, Headers, Response} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/Rx';
 import {Ticket} from './ticket';
+import {API} from './review-data';
 
 @Injectable()
 export class TicketService {
     http: Http;
     config: {};
-    ticketApi = 'http://localhost:2149/api/ticket';
-    configApi = 'http://localhost:2149/api/configuration';
-    // devStatusGroup: {[name: string] : number};
+    ticketApi = API.ticketApi;
+    configApi = API.configApi;
 
     constructor(http: Http) {
         this.http = http;
