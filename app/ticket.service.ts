@@ -30,7 +30,9 @@ export class TicketService {
         let categoriedTickets: { [groupId: number]: Ticket[] } = {};
         for (var rawItem of rawData) {
             let ticket: Ticket = this.mapToTicket(rawItem);
-            if (ticket.devStatus === 'DEV In-progress' || ticket.devStatus === 'DEV In-progress' || ticket.devStatus === 'QA Passed') {
+            if (ticket.devStatus === 'Dev In-progress' || ticket.devStatus === 'Internal Code Review' ||
+                ticket.devStatus === 'QA In-progress' || ticket.devStatus === 'QA Passed' ||
+                ticket.devStatus === 'Internal Code Approved' || ticket.devStatus === '') {
                 this.pushTicketToGroup(categoriedTickets, 1, ticket);
             } else if (ticket.devStatus === 'Code Submitted' || ticket.devStatus === 'UAT Submitted') {
                 this.pushTicketToGroup(categoriedTickets, 2, ticket);
@@ -42,7 +44,7 @@ export class TicketService {
         }
         return categoriedTickets;
     }
-    
+
     getTicketConfig() {
         return this.http.get(this.configApi)
             .map(res => res.json())
@@ -58,7 +60,7 @@ export class TicketService {
     private mapToTicket(rawObj: Object) {
         let ticket = new Ticket();
         ticket.id = rawObj['id'];
-        ticket.number = rawObj['number'];
+        ticket.ticketNo = rawObj['number'];
         ticket.assignee = rawObj['assigned_to_id'];
         ticket.summary = rawObj['summary'];
         ticket.status = rawObj['status'];

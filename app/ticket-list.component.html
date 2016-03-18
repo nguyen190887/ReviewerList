@@ -1,4 +1,7 @@
 <h2>Ticket list</h2>
+<div *ngIf="isLoading" class="loading">
+    Loading...
+</div>
 <div class="container">
     <div class="row header">
         <div class="col-xs-6 col-sm-3 col-md-3">In Progress</div>
@@ -15,7 +18,22 @@
             </template>
             <template [ngIf]="tickets[index]">
                 <div *ngFor="#ticket of tickets[index]" class="ticket">
-                    <a [href]="getTicketUrl(ticket.number)" target="_blank">{{ticket.workId}} | {{ticket.summary}}</a>
+                    <div class="clearfix">
+                        <span class="pull-left status">{{ticket.devStatus}}</span>
+                        <span class="pull-right links">
+                        <template [ngIf]="isDefectTicket(ticket) && ticket.workId">
+                            <a [href]="getDefectUrl(ticket)" [title]="ticket.workId" target="_blank">BugZilla</a>
+                        </template>
+                        <template [ngIf]="!isDefectTicket(ticket) && ticket.workId">
+                            <a [href]="getBacklogUrl(ticket)" [title]="ticket.workId" target="_blank">VersionOne</a>
+                        </template>
+                        <template [ngIf]="ticket.kilnId">
+                            &nbsp;|&nbsp;
+                            <a [href]="getCodeReviewUrl(ticket)" [title]="ticket.kilnId" target="_blank">Kiln</a>
+                        </template>
+                    </span>
+                    </div>
+                    <a [href]="getTicketUrl(ticket)" target="_blank">{{ticket.workId}} | {{ticket.summary}}</a>
                     <hr/>
                     <span class="pull-left dev-team">{{ticket.devTeam}}</span>
                     <span class="pull-right review-team">{{ticket.reviewTeam ? ticket.reviewTeam : "(No review team)"}}</span>

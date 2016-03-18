@@ -76,7 +76,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                 TicketService.prototype.mapToTicket = function (rawObj) {
                     var ticket = new ticket_1.Ticket();
                     ticket.id = rawObj['id'];
-                    ticket.number = rawObj['number'];
+                    ticket.ticketNo = rawObj['number'];
                     ticket.assignee = rawObj['assigned_to_id'];
                     ticket.summary = rawObj['summary'];
                     ticket.status = rawObj['status'];

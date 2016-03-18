@@ -11,6 +11,17 @@
     margin-bottom: 5px;
     border-color: #333333;
 }
+.ticket .status {
+    background-color: yellow;
+    border-radius: 4px;
+    display: inline-block;
+    padding: 3px;
+    margin-bottom: 5px;
+}
+.ticket .links a, .ticket .links a:visited, .ticket .links a:hover, .ticket .links a:active {
+    font-weight: 700;
+    color: saddlebrown;
+}
 .row.header {
     font-weight: 700;
 }
@@ -25,4 +36,10 @@
 }
 .row [class^=col-]:nth-child(4) .ticket{
     background-color: aquamarine;
+}
+.loading{
+    background-color: cyan;
+    display: inline-block;
+    padding: 3px;
+    margin: 5px;
 }

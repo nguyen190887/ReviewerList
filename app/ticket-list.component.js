@@ -26,19 +26,34 @@ System.register(['angular2/core', './ticket.service'], function(exports_1, conte
                     this._ticketService = _ticketService;
                     this.tickets = {};
                     this.config = {};
+                    this.isLoading = false;
                 }
                 TicketListComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this._ticketService.ajaxGetTickets().subscribe(function (tickets) {
-                        _this.tickets = _this._ticketService.categorizeTickets(tickets);
-                    });
+                    this.isLoading = true;
                     this._ticketService.getTicketConfig().subscribe(function (config) {
                         _this.config = config;
                     });
+                    this._ticketService.ajaxGetTickets().subscribe(function (tickets) {
+                        _this.tickets = _this._ticketService.categorizeTickets(tickets);
+                        _this.isLoading = false;
+                    });
                     console.log('on init');
                 };
-                TicketListComponent.prototype.getTicketUrl = function (id) {
-                    return (this.config.UrlFormat || '').replace('{0}', id);
+                TicketListComponent.prototype.getTicketUrl = function (ticket) {
+                    return (this.config.UrlFormat || '').replace('{0}', ticket.ticketNo);
+                };
+                TicketListComponent.prototype.getBacklogUrl = function (ticket) {
+                    return (this.config.BacklogUrlFormat || '').replace('{0}', ticket.workId);
+                };
+                TicketListComponent.prototype.getDefectUrl = function (ticket) {
+                    return (this.config.DefectUrlFormat || '').replace('{0}', ticket.workId.replace('Bug ', '').trim());
+                };
+                TicketListComponent.prototype.getCodeReviewUrl = function (ticket) {
+                    return (this.config.CodeReviewUrlFormat || '').replace('{0}', ticket.kilnId);
+                };
+                TicketListComponent.prototype.isDefectTicket = function (ticket) {
+                    return ticket.workId.trim().indexOf('Bug') === 0;
                 };
                 TicketListComponent = __decorate([
                     core_1.Component({

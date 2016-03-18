@@ -1,6 +1,6 @@
 export class Ticket {
     id: number;
-    number: number;
+    ticketNo: string;
     summary: string;
     status: string;
     devStatus: string;
