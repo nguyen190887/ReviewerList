@@ -5,6 +5,7 @@ import {ReviewerListComponent} from './reviewer-list.component';
 import {ContactListComponent} from './contact-list.component';
 import {ContactDetailComponent} from './contact-detail.component';
 import {TicketListComponent} from './ticket-list.component';
+import {ReleaseNotesComponent} from './release-notes.component';
 import {ReviewService} from './review.service';
 import {TicketService} from './ticket.service';
 
@@ -16,6 +17,7 @@ import {TicketService} from './ticket.service';
             <a [routerLink]="['ReviewerList']">Reviewer List</a>
             <a [routerLink]="['ContactList']">Contact List</a>
             <a [routerLink]="['Tickets']">Ticket List</a>
+            <a [routerLink]="['ReleaseNotes']">Release Notes</a>
         </nav>
         <div>
             <router-outlet></router-outlet>
@@ -53,6 +55,11 @@ import {TicketService} from './ticket.service';
         path: '/tickets',
         name: 'Tickets',
         component: TicketListComponent
+    },
+    {
+        path: '/release-notes',
+        name: 'ReleaseNotes',
+        component: ReleaseNotesComponent
     }
 ])
 
