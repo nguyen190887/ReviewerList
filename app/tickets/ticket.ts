@@ -10,4 +10,7 @@ export class Ticket {
     displayedColumn: number; // the column this ticket will be put on UI
     reviewTeam: string;
     devTeam: string;
+    durableTeam: string;
+    comment: string;
+    codeReviewStartDate: Date;
 }

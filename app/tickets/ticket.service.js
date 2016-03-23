@@ -62,6 +62,17 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                     console.log('categorized tickets: ' + JSON.stringify(categoriedTickets));
                     return categoriedTickets;
                 };
+                TicketService.prototype.filterPendingCodeReviewTickets = function (rawData) {
+                    var pendingTickets = [];
+                    for (var _i = 0, rawData_2 = rawData; _i < rawData_2.length; _i++) {
+                        var rawItem = rawData_2[_i];
+                        var ticket = this.mapToTicket(rawItem);
+                        if (ticket.devStatus.toLowerCase() === 'code submitted') {
+                            pendingTickets.push(ticket);
+                        }
+                    }
+                    return pendingTickets;
+                };
                 TicketService.prototype.getTicketConfig = function () {
                     return this.http.get(this.configApi)
                         .map(function (res) { return res.json(); })
@@ -96,6 +107,11 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                     ticket.devStatus = rawObj['custom_fields']['DEV Status'];
                     ticket.reviewTeam = rawObj['custom_fields']['Review Team'];
                     ticket.devTeam = rawObj['custom_fields']['DEV Team'];
+                    ticket.durableTeam = rawObj['custom_fields']['Durable Team'];
+                    ticket.comment = rawObj['custom_fields']['Comment'];
+                    ticket.codeReviewStartDate = rawObj['custom_fields']['Code Review Start Date']
+                        ? new Date(rawObj['custom_fields']['Code Review Start Date'])
+                        : new Date(0);
                     // ensure devStatus not empty
                     if (ticket.devStatus != null && ticket.devStatus.trim() === '') {
                         ticket.devStatus = 'None';

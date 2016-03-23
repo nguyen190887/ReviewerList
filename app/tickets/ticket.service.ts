@@ -38,6 +38,17 @@ export class TicketService {
         console.log('categorized tickets: ' + JSON.stringify(categoriedTickets));
         return categoriedTickets;
     }
+    
+    filterPendingCodeReviewTickets(rawData: Object[]){
+        let pendingTickets = [];
+        for (var rawItem of rawData) {
+            let ticket: Ticket = this.mapToTicket(rawItem);
+            if (ticket.devStatus.toLowerCase()  === 'code submitted'){
+                pendingTickets.push(ticket);
+            }
+        }
+        return pendingTickets;
+    }
 
     getTicketConfig() {
         return this.http.get(this.configApi)
@@ -77,6 +88,11 @@ export class TicketService {
         ticket.devStatus = rawObj['custom_fields']['DEV Status'];
         ticket.reviewTeam = rawObj['custom_fields']['Review Team'];
         ticket.devTeam = rawObj['custom_fields']['DEV Team'];
+        ticket.durableTeam = rawObj['custom_fields']['Durable Team'];
+        ticket.comment = rawObj['custom_fields']['Comment'];
+        ticket.codeReviewStartDate = rawObj['custom_fields']['Code Review Start Date']
+                                        ? new Date(rawObj['custom_fields']['Code Review Start Date'])
+                                        : new Date(0);
 
         // ensure devStatus not empty
         if (ticket.devStatus != null && ticket.devStatus.trim() === '') {

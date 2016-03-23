@@ -7,6 +7,7 @@ import {ContactDetailComponent} from './reviewers/contact-detail.component';
 import {ReviewService} from './reviewers/review.service';
 import {TicketListComponent} from './tickets/ticket-list.component';
 import {TicketService} from './tickets/ticket.service';
+import {CodeNotifierComponent} from './tickets/code-notifier.component';
 import {ReleaseNotesComponent} from './release-notes.component';
 
 @Component({
@@ -17,6 +18,7 @@ import {ReleaseNotesComponent} from './release-notes.component';
             <a [routerLink]="['ReviewerList']">Reviewer List</a>
             <a [routerLink]="['ContactList']">Contact List</a>
             <a [routerLink]="['Tickets']">Ticket List</a>
+            <a [routerLink]="['CodeNotifier']">Code Review Notice</a>
             <a [routerLink]="['ReleaseNotes']">Release Notes</a>
         </nav>
         <div>
@@ -55,6 +57,11 @@ import {ReleaseNotesComponent} from './release-notes.component';
         path: '/tickets',
         name: 'Tickets',
         component: TicketListComponent
+    },
+    {
+        path: '/code-notifier',
+        name: 'CodeNotifier',
+        component: CodeNotifierComponent
     },
     {
         path: '/release-notes',

@@ -1,0 +1,22 @@
+<h2>Code Review Notice</h2>
+<div *ngIf="isLoading" class="loading">
+    Loading...
+</div>
+<table class="table table-bordered">
+    <tr>
+        <th>Story/Bug ID</th>
+        <th>Description</th>
+        <th>Code Review ID</th>
+        <th>Review Team</th>
+        <th>Durable Team</th>
+        <th>Comment</th>
+    </tr>
+    <tr *ngFor="#ticket of tickets">
+        <td>{{ticket.workId}}</td>
+        <td>{{ticket.summary}}</td>
+        <td>{{ticket.kilnId}}</td>
+        <td>{{ticket.reviewTeam}}</td>
+        <td>{{ticket.durableTeam}}</td>
+        <td>{{ticket.codeReviewStartDate | date:'M/d/yy'}}: 1st code review submitted</td>
+    </tr>
+</table>
