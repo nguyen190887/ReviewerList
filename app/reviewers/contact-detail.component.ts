@@ -5,7 +5,7 @@ import {ReviewService} from './review.service';
 
 @Component({
     selector: 'contact-detail',
-    templateUrl: 'app/contact-detail.component.html'
+    templateUrl: 'app/reviewers/contact-detail.component.html'
 })
 
 export class ContactDetailComponent implements OnInit {

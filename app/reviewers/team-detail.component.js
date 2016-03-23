@@ -24,7 +24,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 TeamDetailComponent = __decorate([
                     core_1.Component({
                         selector: 'team-detail',
-                        templateUrl: 'app/team-detail.component.html',
+                        templateUrl: 'app/reviewers/team-detail.component.html',
                         inputs: ['team']
                     }), 
                     __metadata('design:paramtypes', [])

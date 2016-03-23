@@ -3,7 +3,7 @@ import {Ticket} from './ticket';
 
 @Component({
     selector: 'ticket-detail',
-    templateUrl: 'app/ticket-detail.component.html',
+    templateUrl: 'app/tickets/ticket-detail.component.html',
     inputs: ['ticketList', 'config']
 })
 

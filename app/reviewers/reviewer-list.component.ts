@@ -7,8 +7,8 @@ import {ReviewService} from './review.service';
 
 @Component({
     selector: 'reviewer-list',
-    templateUrl: 'app/reviewer-list.component.html',
-    styleUrls: ['app/reviewer-list.component.css'],
+    templateUrl: 'app/reviewers/reviewer-list.component.html',
+    styleUrls: ['app/reviewers/reviewer-list.component.css'],
     directives: [TeamDetailComponent, NgClass]
 })
 export class ReviewerListComponent implements OnInit {

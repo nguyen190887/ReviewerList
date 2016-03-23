@@ -41,8 +41,8 @@ System.register(['angular2/core', 'angular2/router', './review.service'], functi
                 ContactListComponent = __decorate([
                     core_1.Component({
                         selector: 'contact-list',
-                        templateUrl: 'app/contact-list.component.html',
-                        styleUrls: ['app/contact-list.component.css']
+                        templateUrl: 'app/reviewers/contact-list.component.html',
+                        styleUrls: ['app/reviewers/contact-list.component.css']
                     }), 
                     __metadata('design:paramtypes', [router_1.Router, review_service_1.ReviewService])
                 ], ContactListComponent);

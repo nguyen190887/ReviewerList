@@ -1,4 +1,4 @@
-import {ReviewTeam} from './review-team';
+import {ReviewTeam} from './reviewers/review-team';
 
 export module ReviewData {
     export var REVIEWLIST: ReviewTeam[] = [
@@ -28,6 +28,6 @@ export module ReviewData {
 }
 
 export var API = {
-    ticketApi: 'http://localhost:2149/api/ticket',
-    configApi: 'http://localhost:2149/api/configuration'
+    ticketApi: 'http://localhost/reviewdata/api/ticket',
+    configApi: 'http://localhost/reviewdata/api/configuration'
 };

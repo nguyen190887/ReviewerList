@@ -3,7 +3,7 @@ import {ReviewTeam} from './review-team';
 
 @Component({
     selector: 'team-detail',
-    templateUrl: 'app/team-detail.component.html',
+    templateUrl: 'app/reviewers/team-detail.component.html',
     inputs: ['team']
 })
 

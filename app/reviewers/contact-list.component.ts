@@ -5,8 +5,8 @@ import {Reviewer} from './reviewer';
 
 @Component({
     selector: 'contact-list',
-    templateUrl: 'app/contact-list.component.html',
-    styleUrls: ['app/contact-list.component.css']
+    templateUrl: 'app/reviewers/contact-list.component.html',
+    styleUrls: ['app/reviewers/contact-list.component.css']
 })
 
 export class ContactListComponent implements OnInit {

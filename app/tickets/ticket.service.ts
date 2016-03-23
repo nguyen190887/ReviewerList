@@ -3,7 +3,7 @@ import {Http, Headers, Response} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/Rx';
 import {Ticket} from './ticket';
-import {API} from './review-data';
+import {API} from '../review-data';
 
 @Injectable()
 export class TicketService {

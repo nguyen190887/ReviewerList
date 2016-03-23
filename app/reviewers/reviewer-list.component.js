@@ -61,8 +61,8 @@ System.register(['angular2/core', 'angular2/common', './team-detail.component', 
                 ReviewerListComponent = __decorate([
                     core_1.Component({
                         selector: 'reviewer-list',
-                        templateUrl: 'app/reviewer-list.component.html',
-                        styleUrls: ['app/reviewer-list.component.css'],
+                        templateUrl: 'app/reviewers/reviewer-list.component.html',
+                        styleUrls: ['app/reviewers/reviewer-list.component.css'],
                         directives: [team_detail_component_1.TeamDetailComponent, common_1.NgClass]
                     }), 
                     __metadata('design:paramtypes', [review_service_1.ReviewService])

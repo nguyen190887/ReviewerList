@@ -41,7 +41,7 @@ System.register(['angular2/core', 'angular2/router', './review.service'], functi
                 ContactDetailComponent = __decorate([
                     core_1.Component({
                         selector: 'contact-detail',
-                        templateUrl: 'app/contact-detail.component.html'
+                        templateUrl: 'app/reviewers/contact-detail.component.html'
                     }), 
                     __metadata('design:paramtypes', [review_service_1.ReviewService, router_1.RouteParams])
                 ], ContactDetailComponent);

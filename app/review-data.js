@@ -33,8 +33,8 @@ System.register([], function(exports_1, context_1) {
             })(ReviewData = ReviewData || (ReviewData = {}));
             exports_1("ReviewData", ReviewData);
             exports_1("API", API = {
-                ticketApi: 'http://localhost:2149/api/ticket',
-                configApi: 'http://localhost:2149/api/configuration'
+                ticketApi: 'http://localhost/reviewdata/api/ticket',
+                configApi: 'http://localhost/reviewdata/api/configuration'
             });
         }
     }

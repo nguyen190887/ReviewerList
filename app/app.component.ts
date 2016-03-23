@@ -1,13 +1,13 @@
 import {Component} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from 'angular2/router';
 import {HTTP_PROVIDERS} from 'angular2/http';
-import {ReviewerListComponent} from './reviewer-list.component';
-import {ContactListComponent} from './contact-list.component';
-import {ContactDetailComponent} from './contact-detail.component';
-import {TicketListComponent} from './ticket-list.component';
+import {ReviewerListComponent} from './reviewers/reviewer-list.component';
+import {ContactListComponent} from './reviewers/contact-list.component';
+import {ContactDetailComponent} from './reviewers/contact-detail.component';
+import {ReviewService} from './reviewers/review.service';
+import {TicketListComponent} from './tickets/ticket-list.component';
+import {TicketService} from './tickets/ticket.service';
 import {ReleaseNotesComponent} from './release-notes.component';
-import {ReviewService} from './review.service';
-import {TicketService} from './ticket.service';
 
 @Component({
     selector: 'reviewer-list-app',

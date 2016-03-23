@@ -56,8 +56,8 @@ System.register(['angular2/core', './ticket-detail.component', './ticket.service
                 TicketListComponent = __decorate([
                     core_1.Component({
                         selector: 'ticket-list',
-                        templateUrl: 'app/ticket-list.component.html',
-                        styleUrls: ['app/ticket-list.component.css'],
+                        templateUrl: 'app/tickets/ticket-list.component.html',
+                        styleUrls: ['app/tickets/ticket-list.component.css'],
                         directives: [ticket_detail_component_1.TicketDetailComponent]
                     }), 
                     __metadata('design:paramtypes', [ticket_service_1.TicketService])

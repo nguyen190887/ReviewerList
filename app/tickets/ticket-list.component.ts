@@ -6,8 +6,8 @@ import {Ticket} from './ticket';
 
 @Component({
     selector: 'ticket-list',
-    templateUrl: 'app/ticket-list.component.html',
-    styleUrls: ['app/ticket-list.component.css'],
+    templateUrl: 'app/tickets/ticket-list.component.html',
+    styleUrls: ['app/tickets/ticket-list.component.css'],
     directives: [TicketDetailComponent]
 })
 
