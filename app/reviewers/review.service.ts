@@ -15,18 +15,23 @@ export class ReviewService {
     }
 
     getAllReviewers() {
-        var reviewers = [];
-        for (var team of ReviewData.REVIEWLIST) {
-            for (var reviewer of team.reviewers) {
-                reviewer.teamName = team.name;
-                reviewers.push(reviewer);
-            }
-        }
-        return Promise.resolve(reviewers);
+        return Promise.resolve(this.internalGetReviewers());
     }
 
     getReviewer(id: number) {
-        return this.getAllReviewers()
-            .then(reviewers => reviewers[0]);
+        return Promise.resolve(this.internalGetReviewers(reviewer => reviewer.id === id));
+    }
+
+    private internalGetReviewers(predicate?: (Reviewer) => boolean) {
+        let reviewers = [];
+        for (var team of ReviewData.REVIEWLIST) {
+            for (var reviewer of team.reviewers) {
+                if (!predicate || predicate(reviewer)) {
+                    reviewer.teamName = team.name;
+                    reviewers.push(reviewer);
+                }
+            }
+        }
+        return reviewers;
     }
 }

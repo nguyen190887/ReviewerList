@@ -33,7 +33,7 @@ System.register(['angular2/core', 'angular2/router', './review.service'], functi
                     var _this = this;
                     var id = +this._routeParams.get('id');
                     this._reviewService.getReviewer(id)
-                        .then(function (reviewer) { return _this.contact = reviewer; });
+                        .then(function (reviewers) { return _this.contact = reviewers.length ? reviewers[0] : null; });
                 };
                 ContactDetailComponent.prototype.goBack = function () {
                     return window.history.back();

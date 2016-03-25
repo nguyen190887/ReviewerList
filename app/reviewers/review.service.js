@@ -32,20 +32,24 @@ System.register(['angular2/core', '../review-data'], function(exports_1, context
                     return Promise.resolve(review_data_1.ReviewData.REVIEWLIST);
                 };
                 ReviewService.prototype.getAllReviewers = function () {
+                    return Promise.resolve(this.internalGetReviewers());
+                };
+                ReviewService.prototype.getReviewer = function (id) {
+                    return Promise.resolve(this.internalGetReviewers(function (reviewer) { return reviewer.id === id; }));
+                };
+                ReviewService.prototype.internalGetReviewers = function (predicate) {
                     var reviewers = [];
                     for (var _i = 0, _a = review_data_1.ReviewData.REVIEWLIST; _i < _a.length; _i++) {
                         var team = _a[_i];
                         for (var _b = 0, _c = team.reviewers; _b < _c.length; _b++) {
                             var reviewer = _c[_b];
-                            reviewer.teamName = team.name;
-                            reviewers.push(reviewer);
+                            if (!predicate || predicate(reviewer)) {
+                                reviewer.teamName = team.name;
+                                reviewers.push(reviewer);
+                            }
                         }
                     }
-                    return Promise.resolve(reviewers);
-                };
-                ReviewService.prototype.getReviewer = function (id) {
-                    return this.getAllReviewers()
-                        .then(function (reviewers) { return reviewers[0]; });
+                    return reviewers;
                 };
                 ReviewService = __decorate([
                     core_1.Injectable(), 

@@ -20,7 +20,7 @@ export class ContactDetailComponent implements OnInit {
     ngOnInit() {
         let id = +this._routeParams.get('id');
         this._reviewService.getReviewer(id)
-            .then(reviewer => this.contact = reviewer);
+            .then(reviewers => this.contact = reviewers.length ? reviewers[0] : null);
     }
 
     goBack() {
