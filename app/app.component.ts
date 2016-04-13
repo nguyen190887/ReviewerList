@@ -72,4 +72,10 @@ import {ReleaseNotesComponent} from './release-notes.component';
 
 export class AppComponent {
     title = 'Reviewer List App';
+    
+    // Cache ticket config
+    constructor(private _ticketService: TicketService) {
+        console.log('-- app.component: get ticket config');
+        _ticketService.pullTicketConfig();
+    }
 }

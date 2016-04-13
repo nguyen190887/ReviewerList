@@ -49,8 +49,12 @@ System.register(['angular2/core', 'angular2/router', 'angular2/http', './reviewe
             }],
         execute: function() {
             AppComponent = (function () {
-                function AppComponent() {
+                // Cache ticket config
+                function AppComponent(_ticketService) {
+                    this._ticketService = _ticketService;
                     this.title = 'Reviewer List App';
+                    console.log('-- app.component: get ticket config');
+                    _ticketService.pullTicketConfig();
                 }
                 AppComponent = __decorate([
                     core_1.Component({
@@ -99,7 +103,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2/http', './reviewe
                             component: release_notes_component_1.ReleaseNotesComponent
                         }
                     ]), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [ticket_service_1.TicketService])
                 ], AppComponent);
                 return AppComponent;
             }());

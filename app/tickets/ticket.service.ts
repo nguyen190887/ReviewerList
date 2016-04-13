@@ -8,7 +8,7 @@ import {API} from '../review-data';
 @Injectable()
 export class TicketService {
     http: Http;
-    config: {};
+    cachedConfig: {};
     ticketApi = API.ticketApi;
     configApi = API.configApi;
 
@@ -19,7 +19,7 @@ export class TicketService {
     ajaxGetTickets() {
         return this.http.get(this.ticketApi)
             .map(res => res.json())
-            .do(data => console.log(data))
+            // .do(data => console.log(data))
             .catch(this.handleError);
     }
     getAllTickets() {
@@ -35,7 +35,7 @@ export class TicketService {
                 this.pushTicketToGroup(categoriedTickets, foundGroup.groupId, ticket);
             }
         }
-        console.log('categorized tickets: ' + JSON.stringify(categoriedTickets));
+        // console.log('categorized tickets: ' + JSON.stringify(categoriedTickets));
         return categoriedTickets;
     }
     
@@ -50,11 +50,16 @@ export class TicketService {
         return pendingTickets;
     }
 
-    getTicketConfig() {
+    // This should only be called once when app is loaded to improve performance
+    pullTicketConfig() {
         return this.http.get(this.configApi)
             .map(res => res.json())
-            // .do(data => console.log(data))
+            .do(data => this.cachedConfig = data) // TODO: enhance this
             .catch(this.handleError);
+    }
+    
+    getTicketConfig() {
+        return this.cachedConfig;
     }
 
     getStatusGroups(statusGroups: any[], filteredDisplay: string) {
@@ -67,7 +72,7 @@ export class TicketService {
                     show: s.showOnLoad || false });
             }
         })
-        console.log('status group - ' + filteredDisplay + ': ' + JSON.stringify(groups));
+        // console.log('status group - ' + filteredDisplay + ': ' + JSON.stringify(groups));
         return groups;
     }
 

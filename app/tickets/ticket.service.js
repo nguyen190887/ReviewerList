@@ -40,7 +40,6 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                 TicketService.prototype.ajaxGetTickets = function () {
                     return this.http.get(this.ticketApi)
                         .map(function (res) { return res.json(); })
-                        .do(function (data) { return console.log(data); })
                         .catch(this.handleError);
                 };
                 TicketService.prototype.getAllTickets = function () {
@@ -59,7 +58,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                         var rawItem = rawData_1[_i];
                         _loop_1();
                     }
-                    console.log('categorized tickets: ' + JSON.stringify(categoriedTickets));
+                    // console.log('categorized tickets: ' + JSON.stringify(categoriedTickets));
                     return categoriedTickets;
                 };
                 TicketService.prototype.filterPendingCodeReviewTickets = function (rawData) {
@@ -73,10 +72,16 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                     }
                     return pendingTickets;
                 };
-                TicketService.prototype.getTicketConfig = function () {
+                // This should only be called once when app is loaded to improve performance
+                TicketService.prototype.pullTicketConfig = function () {
+                    var _this = this;
                     return this.http.get(this.configApi)
                         .map(function (res) { return res.json(); })
+                        .do(function (data) { return _this.cachedConfig = data; }) // TODO: enhance this
                         .catch(this.handleError);
+                };
+                TicketService.prototype.getTicketConfig = function () {
+                    return this.cachedConfig;
                 };
                 TicketService.prototype.getStatusGroups = function (statusGroups, filteredDisplay) {
                     var groups = [];
@@ -88,7 +93,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                                 show: s.showOnLoad || false });
                         }
                     });
-                    console.log('status group - ' + filteredDisplay + ': ' + JSON.stringify(groups));
+                    // console.log('status group - ' + filteredDisplay + ': ' + JSON.stringify(groups));
                     return groups;
                 };
                 TicketService.prototype.pushTicketToGroup = function (groups, groupNumber, ticket) {

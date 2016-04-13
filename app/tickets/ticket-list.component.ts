@@ -23,24 +23,30 @@ export class TicketListComponent implements OnInit {
     ngOnInit() {
         this.isLoading = true;
 
-        this._ticketService.getTicketConfig().subscribe(config => {
-            this.config = config;
-            if (config && config.StatusGroups) {
-                this.gridGroups = this._ticketService.getStatusGroups(config.StatusGroups, 'grid');
-                this.collapsableGroups = this._ticketService.getStatusGroups(config.StatusGroups, 'collapsable');
-            }
-        });
-
-        this._ticketService.ajaxGetTickets().subscribe(tickets => {
-            this.tickets = this._ticketService.categorizeTickets(tickets, this.config.StatusGroups);
-            this.isLoading = false;
-        });
-
-        console.log('on init');
+        this.config = this._ticketService.getTicketConfig();
+        if (this.config == null) { // if config is not ready yet, make pull it again
+            this._ticketService.pullTicketConfig().subscribe(config => {
+                this.config = config;
+                this.bindTickets(this.config);
+            });
+        } else {
+            this.bindTickets(this.config);
+        }
     }
 
     toggleNotStartedTickets(group: any) {
         group.show = !group.show;
-        console.log(group.name + ' - shownotstarted: ' + group.show);
+    }
+
+    bindTickets(config: any) {
+        if (config && config.StatusGroups) {
+            this.gridGroups = this._ticketService.getStatusGroups(config.StatusGroups, 'grid');
+            this.collapsableGroups = this._ticketService.getStatusGroups(config.StatusGroups, 'collapsable');
+
+            this._ticketService.ajaxGetTickets().subscribe(tickets => {
+                this.tickets = this._ticketService.categorizeTickets(tickets, this.config.StatusGroups);
+                this.isLoading = false;
+            });
+        }
     }
 }

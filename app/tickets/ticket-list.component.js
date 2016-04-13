@@ -36,22 +36,30 @@ System.register(['angular2/core', './ticket-detail.component', './ticket.service
                 TicketListComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this.isLoading = true;
-                    this._ticketService.getTicketConfig().subscribe(function (config) {
-                        _this.config = config;
-                        if (config && config.StatusGroups) {
-                            _this.gridGroups = _this._ticketService.getStatusGroups(config.StatusGroups, 'grid');
-                            _this.collapsableGroups = _this._ticketService.getStatusGroups(config.StatusGroups, 'collapsable');
-                        }
-                    });
-                    this._ticketService.ajaxGetTickets().subscribe(function (tickets) {
-                        _this.tickets = _this._ticketService.categorizeTickets(tickets, _this.config.StatusGroups);
-                        _this.isLoading = false;
-                    });
-                    console.log('on init');
+                    this.config = this._ticketService.getTicketConfig();
+                    if (this.config == null) {
+                        this._ticketService.pullTicketConfig().subscribe(function (config) {
+                            _this.config = config;
+                            _this.bindTickets(_this.config);
+                        });
+                    }
+                    else {
+                        this.bindTickets(this.config);
+                    }
                 };
                 TicketListComponent.prototype.toggleNotStartedTickets = function (group) {
                     group.show = !group.show;
-                    console.log(group.name + ' - shownotstarted: ' + group.show);
+                };
+                TicketListComponent.prototype.bindTickets = function (config) {
+                    var _this = this;
+                    if (config && config.StatusGroups) {
+                        this.gridGroups = this._ticketService.getStatusGroups(config.StatusGroups, 'grid');
+                        this.collapsableGroups = this._ticketService.getStatusGroups(config.StatusGroups, 'collapsable');
+                        this._ticketService.ajaxGetTickets().subscribe(function (tickets) {
+                            _this.tickets = _this._ticketService.categorizeTickets(tickets, _this.config.StatusGroups);
+                            _this.isLoading = false;
+                        });
+                    }
                 };
                 TicketListComponent = __decorate([
                     core_1.Component({

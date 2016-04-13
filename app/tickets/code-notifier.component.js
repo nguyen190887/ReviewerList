@@ -1,4 +1,4 @@
-System.register(['angular2/core', './ticket.service'], function(exports_1, context_1) {
+System.register(['angular2/core', './ticket.service', '../common/pipes/code-review-link'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', './ticket.service'], function(exports_1, conte
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, ticket_service_1;
+    var core_1, ticket_service_1, code_review_link_1;
     var CodeNotifierComponent;
     return {
         setters:[
@@ -19,6 +19,9 @@ System.register(['angular2/core', './ticket.service'], function(exports_1, conte
             },
             function (ticket_service_1_1) {
                 ticket_service_1 = ticket_service_1_1;
+            },
+            function (code_review_link_1_1) {
+                code_review_link_1 = code_review_link_1_1;
             }],
         execute: function() {
             CodeNotifierComponent = (function () {
@@ -37,7 +40,8 @@ System.register(['angular2/core', './ticket.service'], function(exports_1, conte
                 };
                 CodeNotifierComponent = __decorate([
                     core_1.Component({
-                        templateUrl: 'app/tickets/code-notifier.component.html'
+                        templateUrl: 'app/tickets/code-notifier.component.html',
+                        pipes: [code_review_link_1.CodeReviewLinkPipe]
                     }), 
                     __metadata('design:paramtypes', [ticket_service_1.TicketService])
                 ], CodeNotifierComponent);

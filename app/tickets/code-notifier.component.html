@@ -2,6 +2,7 @@
 <div *ngIf="isLoading" class="loading">
     Loading...
 </div>
+<div id="ticketTable">
 <table class="table table-bordered">
     <tr>
         <th>Story/Bug ID</th>
@@ -11,12 +12,13 @@
         <th>Durable Team</th>
         <th>Comment</th>
     </tr>
-    <tr *ngFor="#ticket of tickets">
+    <tr *ngFor="#ticket of tickets" class="line-height: 18px">
         <td>{{ticket.workId}}</td>
         <td>{{ticket.summary}}</td>
-        <td>{{ticket.kilnId}}</td>
+        <td><a href="{{ticket.kilnId | codeReviewLink}}" target="_blank" style="text-decoration: underline;">{{ticket.kilnId}}</a></td>
         <td>{{ticket.reviewTeam}}</td>
         <td>{{ticket.durableTeam}}</td>
         <td>{{ticket.codeReviewStartDate | date:'M/d/yy'}}: 1st code review submitted</td>
     </tr>
 </table>
+</div>
