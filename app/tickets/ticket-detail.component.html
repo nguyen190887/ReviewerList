@@ -6,7 +6,10 @@
 <template [ngIf]="ticketList">
     <div *ngFor="#ticket of ticketList" class="ticket">
         <div class="clearfix">
-            <span class="pull-left status">{{ticket.devStatus}}</span>
+            <span class="pull-left status-wrapper">
+                <p class="dev-status">{{ticket.devStatus}}</p>
+                <p class="status">({{ticket.status}})</p>
+            </span>
             <span class="pull-right links">
                 <template [ngIf]="isDefectTicket(ticket) && ticket.workId">
                     <a [href]="getDefectUrl(ticket)" [title]="ticket.workId" target="_blank">BZ</a>

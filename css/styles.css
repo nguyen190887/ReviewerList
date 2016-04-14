@@ -43,12 +43,20 @@ nav a.router-link-active {
     margin-bottom: 5px;
     border-color: #333333;
 }
-.ticket .status {
+.ticket .status-wrapper p {
+    margin-top: 0;
+    margin-bottom: 2px;
+}
+.ticket .dev-status {
     background-color: yellow;
     border-radius: 4px;
     display: inline-block;
     padding: 3px;
-    margin-bottom: 5px;
+}
+.ticket .status {
+    font-size: 0.9em;
+    font-style: italic;
+    margin-bottom: 2px;
 }
 .ticket .links a, .ticket .links a:visited, .ticket .links a:hover, .ticket .links a:active {
     font-weight: 700;
@@ -58,16 +66,16 @@ nav a.router-link-active {
     font-weight: 700;
 }
 .row [class^=col-]:nth-child(1) .ticket{
-    background-color: violet;
+    background-color: #ffccff;
 }
 .row [class^=col-]:nth-child(2) .ticket{
-    background-color: orange;
+    background-color: #ffcc66;
 }
 .row [class^=col-]:nth-child(3) .ticket {
-    background-color: skyblue;
+    background-color: #ccffff;
 }
 .row [class^=col-]:nth-child(4) .ticket{
-    background-color: aquamarine;
+    background-color: #99ff99;
 }
 .not-started-tickets {
     margin-bottom: 10px;
