@@ -6,6 +6,7 @@ System.register([], function(exports_1, context_1) {
         setters:[],
         execute: function() {
             (function (ReviewData) {
+                ReviewData.DEV_TEAMS = ['team1', 'team2'];
                 ReviewData.REVIEWLIST = [
                     {
                         id: 1,

@@ -28,10 +28,13 @@ System.register(['angular2/core', './ticket-detail.component', './ticket.service
                 function TicketListComponent(_ticketService) {
                     this._ticketService = _ticketService;
                     this.tickets = {};
+                    this.cachedData = [];
                     this.config = {};
                     this.isLoading = false;
                     this.gridGroups = [];
                     this.collapsableGroups = [];
+                    this.allDevTeams = [];
+                    this.devTeam = '';
                 }
                 TicketListComponent.prototype.ngOnInit = function () {
                     var _this = this;
@@ -40,26 +43,46 @@ System.register(['angular2/core', './ticket-detail.component', './ticket.service
                     if (this.config == null) {
                         this._ticketService.pullTicketConfig().subscribe(function (config) {
                             _this.config = config;
-                            _this.bindTickets(_this.config);
+                            _this.bindTicketData(_this.config);
                         });
                     }
                     else {
-                        this.bindTickets(this.config);
+                        this.bindTicketData(this.config);
                     }
                 };
                 TicketListComponent.prototype.toggleNotStartedTickets = function (group) {
                     group.show = !group.show;
                 };
-                TicketListComponent.prototype.bindTickets = function (config) {
+                TicketListComponent.prototype.bindTicketData = function (config) {
                     var _this = this;
                     if (config && config.StatusGroups) {
                         this.gridGroups = this._ticketService.getStatusGroups(config.StatusGroups, 'grid');
                         this.collapsableGroups = this._ticketService.getStatusGroups(config.StatusGroups, 'collapsable');
-                        this._ticketService.ajaxGetTickets().subscribe(function (tickets) {
-                            _this.tickets = _this._ticketService.categorizeTickets(tickets, _this.config.StatusGroups);
-                            _this.isLoading = false;
+                        this._ticketService.getAllDevTeams().then(function (teams) {
+                            _this.allDevTeams = teams;
                         });
+                        this._ticketService.ajaxGetTickets(true).subscribe(function (tickets) { return _this.onTicketLoaded(tickets); });
                     }
+                };
+                TicketListComponent.prototype.filterByTeam = function () {
+                    var _this = this;
+                    setTimeout(function () {
+                        _this.isLoading = true;
+                        _this.onTicketLoaded(_this.cachedData, true);
+                    });
+                };
+                TicketListComponent.prototype.refreshTickets = function () {
+                    var _this = this;
+                    this.isLoading = true;
+                    this._ticketService.ajaxGetTickets(true).subscribe(function (tickets) { return _this.onTicketLoaded(tickets); });
+                };
+                TicketListComponent.prototype.onTicketLoaded = function (tickets, noCache) {
+                    if (noCache === void 0) { noCache = false; }
+                    if (!noCache) {
+                        this.cachedData = tickets;
+                    }
+                    this.tickets = this._ticketService.categorizeTickets(tickets, this.config.StatusGroups, this.devTeam);
+                    this.isLoading = false;
                 };
                 TicketListComponent = __decorate([
                     core_1.Component({

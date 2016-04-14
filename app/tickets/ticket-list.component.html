@@ -1,4 +1,12 @@
-<h2>Ticket list</h2>
+<h2>Ticket list <a class="refresh-link" href="javascript:void(0);" (click)="refreshTickets(devTeam)">[refresh]</a></h2>
+<div class="team-selection">
+    Select your team 
+    <select [(ngModel)]="devTeam" (change)="filterByTeam(devTeam)">
+        <option value="">All</option>
+        <option *ngFor="#team of allDevTeams" [value]="team">{{team}}</option>
+    </select>
+    <!--<button class="btn btn-primary" (click)="filterByTeam(devTeam)">Filter</button>-->
+</div>
 <div *ngIf="isLoading" class="loading">
     Loading...
 </div>

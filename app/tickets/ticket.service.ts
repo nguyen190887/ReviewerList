@@ -3,7 +3,7 @@ import {Http, Headers, Response} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/Rx';
 import {Ticket} from './ticket';
-import {API} from '../review-data';
+import {API, ReviewData} from '../review-data';
 
 @Injectable()
 export class TicketService {
@@ -16,23 +16,22 @@ export class TicketService {
         this.http = http;
     }
 
-    ajaxGetTickets() {
-        return this.http.get(this.ticketApi)
+    ajaxGetTickets(noCache: boolean = false) {
+        return this.http.get(this.ticketApi + (noCache ? '?noCache=true' : ''))
             .map(res => res.json())
             // .do(data => console.log(data))
             .catch(this.handleError);
     }
-    getAllTickets() {
 
-    }
-
-    categorizeTickets(rawData: Object[], statusGroups: any[]) {
+    categorizeTickets(rawData: Object[], statusGroups: any[], devTeam: string) {
         let categoriedTickets: { [groupId: number]: Ticket[] } = {};
         for (var rawItem of rawData) {
             let ticket: Ticket = this.mapToTicket(rawItem);
-            let foundGroup = statusGroups.find(s => s.statuses.indexOf(ticket.devStatus.toLowerCase()) >= 0);
-            if (foundGroup) {
-                this.pushTicketToGroup(categoriedTickets, foundGroup.groupId, ticket);
+            if (devTeam == '' || devTeam == ticket.devTeam) {
+                let foundGroup = statusGroups.find(s => s.statuses.indexOf(ticket.devStatus.toLowerCase()) >= 0);
+                if (foundGroup) {
+                    this.pushTicketToGroup(categoriedTickets, foundGroup.groupId, ticket);
+                }
             }
         }
         // console.log('categorized tickets: ' + JSON.stringify(categoriedTickets));
@@ -74,6 +73,10 @@ export class TicketService {
         })
         // console.log('status group - ' + filteredDisplay + ': ' + JSON.stringify(groups));
         return groups;
+    }
+    
+    getAllDevTeams() {
+        return Promise.resolve(ReviewData.DEV_TEAMS);
     }
 
     private pushTicketToGroup(groups: { [groupId: number]: Ticket[] }, groupNumber: number, ticket: Ticket) {

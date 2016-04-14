@@ -37,20 +37,21 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                     this.configApi = review_data_1.API.configApi;
                     this.http = http;
                 }
-                TicketService.prototype.ajaxGetTickets = function () {
-                    return this.http.get(this.ticketApi)
+                TicketService.prototype.ajaxGetTickets = function (noCache) {
+                    if (noCache === void 0) { noCache = false; }
+                    return this.http.get(this.ticketApi + (noCache ? '?noCache=true' : ''))
                         .map(function (res) { return res.json(); })
                         .catch(this.handleError);
                 };
-                TicketService.prototype.getAllTickets = function () {
-                };
-                TicketService.prototype.categorizeTickets = function (rawData, statusGroups) {
+                TicketService.prototype.categorizeTickets = function (rawData, statusGroups, devTeam) {
                     var categoriedTickets = {};
                     var _loop_1 = function() {
                         var ticket = this_1.mapToTicket(rawItem);
-                        var foundGroup = statusGroups.find(function (s) { return s.statuses.indexOf(ticket.devStatus.toLowerCase()) >= 0; });
-                        if (foundGroup) {
-                            this_1.pushTicketToGroup(categoriedTickets, foundGroup.groupId, ticket);
+                        if (devTeam == '' || devTeam == ticket.devTeam) {
+                            var foundGroup = statusGroups.find(function (s) { return s.statuses.indexOf(ticket.devStatus.toLowerCase()) >= 0; });
+                            if (foundGroup) {
+                                this_1.pushTicketToGroup(categoriedTickets, foundGroup.groupId, ticket);
+                            }
                         }
                     };
                     var this_1 = this;
@@ -95,6 +96,9 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                     });
                     // console.log('status group - ' + filteredDisplay + ': ' + JSON.stringify(groups));
                     return groups;
+                };
+                TicketService.prototype.getAllDevTeams = function () {
+                    return Promise.resolve(review_data_1.ReviewData.DEV_TEAMS);
                 };
                 TicketService.prototype.pushTicketToGroup = function (groups, groupNumber, ticket) {
                     groups[groupNumber] = (groups[groupNumber] || []);

@@ -90,3 +90,11 @@ nav a.router-link-active {
     padding: 3px;
     margin: 5px;
 }
+.team-selection {
+    padding: 5px;
+    margin-bottom: 5px;
+}
+.refresh-link {
+    font-size: 13px;
+    font-weight: 400;
+}

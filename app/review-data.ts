@@ -1,6 +1,8 @@
 import {ReviewTeam} from './reviewers/review-team';
 
 export module ReviewData {
+    export var DEV_TEAMS = ['team1', 'team2'];
+    
     export var REVIEWLIST: ReviewTeam[] = [
         {
             id: 1,
@@ -24,7 +26,7 @@ export module ReviewData {
             workingProduct: 'Ads',
             manager: 'Cowboys'
         }
-    ];
+    ];    
 }
 
 export var API = {

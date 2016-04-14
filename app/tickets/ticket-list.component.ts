@@ -13,10 +13,13 @@ import {Ticket} from './ticket';
 
 export class TicketListComponent implements OnInit {
     tickets = {};
+    cachedData = [];
     config = <any>{};
     isLoading = false;
     gridGroups = [];
     collapsableGroups = [];
+    allDevTeams = [];
+    devTeam = '';
 
     constructor(private _ticketService: TicketService) { }
 
@@ -27,10 +30,10 @@ export class TicketListComponent implements OnInit {
         if (this.config == null) { // if config is not ready yet, make pull it again
             this._ticketService.pullTicketConfig().subscribe(config => {
                 this.config = config;
-                this.bindTickets(this.config);
+                this.bindTicketData(this.config);
             });
         } else {
-            this.bindTickets(this.config);
+            this.bindTicketData(this.config);
         }
     }
 
@@ -38,15 +41,36 @@ export class TicketListComponent implements OnInit {
         group.show = !group.show;
     }
 
-    bindTickets(config: any) {
+    bindTicketData(config: any) {
         if (config && config.StatusGroups) {
             this.gridGroups = this._ticketService.getStatusGroups(config.StatusGroups, 'grid');
             this.collapsableGroups = this._ticketService.getStatusGroups(config.StatusGroups, 'collapsable');
 
-            this._ticketService.ajaxGetTickets().subscribe(tickets => {
-                this.tickets = this._ticketService.categorizeTickets(tickets, this.config.StatusGroups);
-                this.isLoading = false;
+            this._ticketService.getAllDevTeams().then(teams => {
+                this.allDevTeams = teams;
             });
+
+            this._ticketService.ajaxGetTickets(true).subscribe(tickets => this.onTicketLoaded(tickets));
         }
+    }
+
+    filterByTeam() {
+        setTimeout(() => {
+            this.isLoading = true;
+            this.onTicketLoaded(this.cachedData, true);
+        });
+    }
+
+    refreshTickets() {
+        this.isLoading = true;
+        this._ticketService.ajaxGetTickets(true).subscribe(tickets => this.onTicketLoaded(tickets));
+    }
+
+    private onTicketLoaded(tickets: Array<Object>, noCache:boolean = false) {
+        if (!noCache) {
+            this.cachedData = tickets;
+        }
+        this.tickets = this._ticketService.categorizeTickets(tickets, this.config.StatusGroups, this.devTeam);
+        this.isLoading = false;
     }
 }
