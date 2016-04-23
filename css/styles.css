@@ -98,3 +98,6 @@ nav a.router-link-active {
     font-size: 13px;
     font-weight: 400;
 }
+.ticket-count {
+    color: #ff6600;
+}

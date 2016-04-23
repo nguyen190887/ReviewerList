@@ -13,16 +13,19 @@
 <div *ngIf="isLoading" class="loading">
     Loading...
 </div>
-<div class="container">
+<div *ngIf="tickets" class="container">
     <div *ngFor="#group of collapsableGroups" class="row not-started-tickets">
         <div class="col-md-12 header">
             {{group.name}}
+            <span class="ticket-count">({{getTicketGroupCount(group.id)}})</span>
             <a href="javascript:void(0);" (click)="toggleNotStartedTickets(group)">[{{group.show ? "Hide" : "Show"}}]</a>
         </div>
         <ticket-detail *ngIf="group.show" [ticketList]="tickets[group.id]" [config]="config"></ticket-detail>
     </div>
     <div class="row header">
-        <div *ngFor="#group of gridGroups" class="col-xs-6 col-sm-3 col-md-3">{{group.name}}</div>
+        <div *ngFor="#group of gridGroups" class="col-xs-6 col-sm-3 col-md-3">{{group.name}}
+            <span class="ticket-count">({{getTicketGroupCount(group.id)}})</span>
+        </div>
     </div>
     <div class="row">
         <div *ngFor="#group of gridGroups" class="col-xs-6 col-sm-3 col-md-3">

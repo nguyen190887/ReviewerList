@@ -12,7 +12,7 @@ import {Ticket} from './ticket';
 })
 
 export class TicketListComponent implements OnInit {
-    tickets = {};
+    tickets: {};
     cachedData = [];
     config = <any>{};
     isLoading = false;
@@ -64,6 +64,13 @@ export class TicketListComponent implements OnInit {
     refreshTickets() {
         this.isLoading = true;
         this._ticketService.ajaxGetTickets(true).subscribe(tickets => this.onTicketLoaded(tickets));
+    }
+    
+    getTicketGroupCount(groupId: number) {
+        if (this.tickets && this.tickets[groupId]) {
+            return this.tickets[groupId].length;
+        }
+        return 0;
     }
 
     private onTicketLoaded(tickets: Array<Object>, noCache:boolean = false) {

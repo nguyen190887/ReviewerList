@@ -25,7 +25,6 @@ System.register(['angular2/core', './ticket-detail.component', './ticket.service
             TicketListComponent = (function () {
                 function TicketListComponent(_ticketService) {
                     this._ticketService = _ticketService;
-                    this.tickets = {};
                     this.cachedData = [];
                     this.config = {};
                     this.isLoading = false;
@@ -73,6 +72,12 @@ System.register(['angular2/core', './ticket-detail.component', './ticket.service
                     var _this = this;
                     this.isLoading = true;
                     this._ticketService.ajaxGetTickets(true).subscribe(function (tickets) { return _this.onTicketLoaded(tickets); });
+                };
+                TicketListComponent.prototype.getTicketGroupCount = function (groupId) {
+                    if (this.tickets && this.tickets[groupId]) {
+                        return this.tickets[groupId].length;
+                    }
+                    return 0;
                 };
                 TicketListComponent.prototype.onTicketLoaded = function (tickets, noCache) {
                     if (noCache === void 0) { noCache = false; }

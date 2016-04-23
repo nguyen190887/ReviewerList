@@ -10,7 +10,7 @@ import {Ticket} from './ticket';
 export class TicketDetailComponent {
     ticketList: Ticket[];
     config: any;
-    
+      
     getTicketUrl(ticket: Ticket) {
         return (this.config.UrlFormat || '').replace('{0}', ticket.ticketNo);
     }
