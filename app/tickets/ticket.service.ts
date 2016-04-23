@@ -27,7 +27,7 @@ export class TicketService {
         let categoriedTickets: { [groupId: number]: Ticket[] } = {};
         for (var rawItem of rawData) {
             let ticket: Ticket = this.mapToTicket(rawItem);
-            if (devTeam == '' || devTeam == ticket.devTeam) {
+            if (devTeam == '' || devTeam.toLowerCase() == ticket.devTeam.toLowerCase()) {
                 let foundGroup = statusGroups.find(s => s.statuses.indexOf(ticket.devStatus.toLowerCase()) >= 0);
                 if (foundGroup) {
                     this.pushTicketToGroup(categoriedTickets, foundGroup.groupId, ticket);
@@ -83,6 +83,11 @@ export class TicketService {
         groups[groupNumber] = (groups[groupNumber] || []);
         groups[groupNumber].push(ticket);
     }
+    
+    private removeWorkIdFromSummary(summary: string){
+        let re = new RegExp('^(B-|Bug\\s)[0-9]+\\s((\\|\\s)|(-\\s))?');
+        return summary.replace(re, '');
+    }
 
     private mapToTicket(rawObj: Object) {
         let ticket = new Ticket();
@@ -106,6 +111,9 @@ export class TicketService {
         if (ticket.devStatus != null && ticket.devStatus.trim() === '') {
             ticket.devStatus = 'None';
         }
+        
+        // remove workId at beginning of summary
+        ticket.summary = this.removeWorkIdFromSummary(ticket.summary);
 
         return ticket;
     }

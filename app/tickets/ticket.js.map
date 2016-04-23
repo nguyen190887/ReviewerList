@@ -1,1 +1,1 @@
-{"version":3,"file":"ticket.js","sourceRoot":"","sources":["ticket.ts"],"names":[],"mappings":";;;;;;;YAAA;gBAAA;gBAeA,CAAC;gBAAD,aAAC;YAAD,CAAC,AAfD,IAeC;YAfD,2BAeC,CAAA"}
+{"version":3,"file":"ticket.js","sourceRoot":"","sources":["ticket.ts"],"names":["Ticket","Ticket.constructor"],"mappings":";;;;;YAAA;gBAAAA;gBAeAC,CAACA;gBAADD,aAACA;YAADA,CAACA,AAfD,IAeC;YAfD,2BAeC,CAAA"}
