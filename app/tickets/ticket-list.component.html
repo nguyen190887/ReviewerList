@@ -1,4 +1,7 @@
-<h2>Ticket list <a class="refresh-link" href="javascript:void(0);" (click)="refreshTickets(devTeam)">[refresh]</a></h2>
+<h2>Ticket list 
+    <a class="heading-link" href="javascript:void(0);" (click)="refreshTickets(devTeam)">[refresh]</a>
+    <a *ngIf="config" class="heading-link" [href]="config.TicketWebUrl" target="_blank">[open web]</a>
+</h2>
 <div class="team-selection">
     Select your team 
     <select [(ngModel)]="devTeam" (change)="filterByTeam(devTeam)">
