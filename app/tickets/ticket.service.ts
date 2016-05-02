@@ -1,5 +1,6 @@
 import {Injectable} from 'angular2/core';
 import {Http, Headers, Response} from 'angular2/http';
+import {DatePipe} from 'angular2/common';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/Rx';
 import {Ticket} from './ticket';
@@ -37,12 +38,12 @@ export class TicketService {
         // console.log('categorized tickets: ' + JSON.stringify(categoriedTickets));
         return categoriedTickets;
     }
-    
-    filterPendingCodeReviewTickets(rawData: Object[]){
+
+    filterPendingCodeReviewTickets(rawData: Object[]) {
         let pendingTickets = [];
         for (var rawItem of rawData) {
             let ticket: Ticket = this.mapToTicket(rawItem);
-            if (ticket.devStatus.toLowerCase()  === 'code submitted'){
+            if (ticket.devStatus.toLowerCase() === 'code submitted') {
                 pendingTickets.push(ticket);
             }
         }
@@ -56,7 +57,7 @@ export class TicketService {
             .do(data => this.cachedConfig = data) // TODO: enhance this
             .catch(this.handleError);
     }
-    
+
     getTicketConfig() {
         return this.cachedConfig;
     }
@@ -66,25 +67,45 @@ export class TicketService {
         statusGroups.forEach(s => {
             if (s.display === filteredDisplay) {
                 groups.push({
-                    id: s.groupId, 
-                    name: s.groupName, 
-                    show: s.showOnLoad || false });
+                    id: s.groupId,
+                    name: s.groupName,
+                    show: s.showOnLoad || false
+                });
             }
         })
         // console.log('status group - ' + filteredDisplay + ': ' + JSON.stringify(groups));
         return groups;
     }
-    
+
     getAllDevTeams() {
         return Promise.resolve(ReviewData.DEV_TEAMS);
+    }
+
+    getTicketById(id: number) {
+        let ticket = new Ticket(); // TODO: retrieve ticket from server
+        ticket.workId = '12345';
+        ticket.summary = 'Test ticket';
+        ticket.kilnId = 'K12345';
+        ticket.reviewTeam = 'BEE';
+        ticket.durableTeam = 'Team A';
+        ticket.codeReviewStartDate = new Date(2016, 1, 1);
+        
+        // set default comment if empty
+        if (ticket.codeComment == null) {
+            ticket.codeComment = 
+                new DatePipe().transform(ticket.codeReviewStartDate, ['M/d/yyyy']) +
+                ': 1st code submitted';
+        }
+        
+        return Promise.resolve(ticket);
     }
 
     private pushTicketToGroup(groups: { [groupId: number]: Ticket[] }, groupNumber: number, ticket: Ticket) {
         groups[groupNumber] = (groups[groupNumber] || []);
         groups[groupNumber].push(ticket);
     }
-    
-    private removeWorkIdFromSummary(summary: string){
+
+    private removeWorkIdFromSummary(summary: string) {
         let re = new RegExp('^(B-|Bug\\s)[0-9]+\\s((\\|\\s)|(-\\s))?');
         return summary.replace(re, '');
     }
@@ -104,14 +125,14 @@ export class TicketService {
         ticket.durableTeam = rawObj['custom_fields']['Durable Team'];
         ticket.comment = rawObj['custom_fields']['Comment'];
         ticket.codeReviewStartDate = rawObj['custom_fields']['Code Review Start Date']
-                                        ? new Date(rawObj['custom_fields']['Code Review Start Date'])
-                                        : new Date(0);
+            ? new Date(rawObj['custom_fields']['Code Review Start Date'])
+            : new Date(0);
 
         // ensure devStatus not empty
         if (ticket.devStatus != null && ticket.devStatus.trim() === '') {
             ticket.devStatus = 'None';
         }
-        
+
         // remove workId at beginning of summary
         ticket.summary = this.removeWorkIdFromSummary(ticket.summary);
 

@@ -8,6 +8,7 @@ import {ReviewService} from './reviewers/review.service';
 import {TicketListComponent} from './tickets/ticket-list.component';
 import {TicketService} from './tickets/ticket.service';
 import {CodeNotifierComponent} from './tickets/code-notifier.component';
+import {CodeCommentEditComponent} from './tickets/code-comment-edit.component';
 import {ReleaseNotesComponent} from './release-notes.component';
 
 @Component({
@@ -64,6 +65,11 @@ import {ReleaseNotesComponent} from './release-notes.component';
         component: CodeNotifierComponent
     },
     {
+        path: '/code-notifier/edit-comment/:id',
+        name: 'CodeCommentEdit',
+        component: CodeCommentEditComponent
+    },
+    {   
         path: '/release-notes',
         name: 'ReleaseNotes',
         component: ReleaseNotesComponent

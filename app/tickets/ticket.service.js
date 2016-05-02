@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx', './ticket', '../review-data'], function(exports_1) {
+System.register(['angular2/core', 'angular2/http', 'angular2/common', 'rxjs/Observable', 'rxjs/Rx', './ticket', '../review-data'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, Observable_1, ticket_1, review_data_1;
+    var core_1, http_1, common_1, Observable_1, ticket_1, review_data_1;
     var TicketService;
     return {
         setters:[
@@ -17,6 +17,9 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
             },
             function (http_1_1) {
                 http_1 = http_1_1;
+            },
+            function (common_1_1) {
+                common_1 = common_1_1;
             },
             function (Observable_1_1) {
                 Observable_1 = Observable_1_1;
@@ -85,7 +88,8 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                             groups.push({
                                 id: s.groupId,
                                 name: s.groupName,
-                                show: s.showOnLoad || false });
+                                show: s.showOnLoad || false
+                            });
                         }
                     });
                     // console.log('status group - ' + filteredDisplay + ': ' + JSON.stringify(groups));
@@ -93,6 +97,22 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                 };
                 TicketService.prototype.getAllDevTeams = function () {
                     return Promise.resolve(review_data_1.ReviewData.DEV_TEAMS);
+                };
+                TicketService.prototype.getTicketById = function (id) {
+                    var ticket = new ticket_1.Ticket(); // TODO: retrieve ticket from server
+                    ticket.workId = '12345';
+                    ticket.summary = 'Test ticket';
+                    ticket.kilnId = 'K12345';
+                    ticket.reviewTeam = 'BEE';
+                    ticket.durableTeam = 'Team A';
+                    ticket.codeReviewStartDate = new Date(2016, 1, 1);
+                    // set default comment if empty
+                    if (ticket.codeComment == null) {
+                        ticket.codeComment =
+                            new common_1.DatePipe().transform(ticket.codeReviewStartDate, ['M/d/yyyy']) +
+                                ': 1st code submitted';
+                    }
+                    return Promise.resolve(ticket);
                 };
                 TicketService.prototype.pushTicketToGroup = function (groups, groupNumber, ticket) {
                     groups[groupNumber] = (groups[groupNumber] || []);

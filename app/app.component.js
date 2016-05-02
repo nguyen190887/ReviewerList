@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', 'angular2/http', './reviewers/reviewer-list.component', './reviewers/contact-list.component', './reviewers/contact-detail.component', './reviewers/review.service', './tickets/ticket-list.component', './tickets/ticket.service', './tickets/code-notifier.component', './release-notes.component'], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', 'angular2/http', './reviewers/reviewer-list.component', './reviewers/contact-list.component', './reviewers/contact-detail.component', './reviewers/review.service', './tickets/ticket-list.component', './tickets/ticket.service', './tickets/code-notifier.component', './tickets/code-comment-edit.component', './release-notes.component'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2/http', './reviewe
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, http_1, reviewer_list_component_1, contact_list_component_1, contact_detail_component_1, review_service_1, ticket_list_component_1, ticket_service_1, code_notifier_component_1, release_notes_component_1;
+    var core_1, router_1, http_1, reviewer_list_component_1, contact_list_component_1, contact_detail_component_1, review_service_1, ticket_list_component_1, ticket_service_1, code_notifier_component_1, code_comment_edit_component_1, release_notes_component_1;
     var AppComponent;
     return {
         setters:[
@@ -41,6 +41,9 @@ System.register(['angular2/core', 'angular2/router', 'angular2/http', './reviewe
             },
             function (code_notifier_component_1_1) {
                 code_notifier_component_1 = code_notifier_component_1_1;
+            },
+            function (code_comment_edit_component_1_1) {
+                code_comment_edit_component_1 = code_comment_edit_component_1_1;
             },
             function (release_notes_component_1_1) {
                 release_notes_component_1 = release_notes_component_1_1;
@@ -94,6 +97,11 @@ System.register(['angular2/core', 'angular2/router', 'angular2/http', './reviewe
                             path: '/code-notifier',
                             name: 'CodeNotifier',
                             component: code_notifier_component_1.CodeNotifierComponent
+                        },
+                        {
+                            path: '/code-notifier/edit-comment/:id',
+                            name: 'CodeCommentEdit',
+                            component: code_comment_edit_component_1.CodeCommentEditComponent
                         },
                         {
                             path: '/release-notes',

@@ -13,4 +13,5 @@ export class Ticket {
     durableTeam: string;
     comment: string;
     codeReviewStartDate: Date;
+    codeComment: string;
 }
