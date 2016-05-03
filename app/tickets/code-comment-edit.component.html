@@ -1,45 +1,48 @@
-<form *ngIf="model" class="form-horizontal" #theForm="ngForm">
-    <div class="form-group">
-        <label class="col-sm-3 control-label">Story/Bug ID</label>
-        <div class="col-sm-9">
-            <span>{{model.workId}}</span>
+<div *ngIf="model">
+    <h2>Edit Code Comment</h2>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+    <form class="form-horizontal" #theForm="ngForm">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Story/Bug ID</label>
+            <div class="col-sm-9">
+                <span>{{model.workId}}</span>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-3 control-label">Description</label>
-        <div class="col-sm-9">
-            <span>{{model.summary}}</span>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Description</label>
+            <div class="col-sm-9">
+                <span>{{model.summary}}</span>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-3 control-label">Code Review ID</label>
-        <div class="col-sm-9">
-            <span>{{model.kilnId}}</span>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Code Review ID</label>
+            <div class="col-sm-9">
+                <span>{{model.kilnId}}</span>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-3 control-label">Review Team</label>
-        <div class="col-sm-9">
-            <span>{{model.reviewTeam}}</span>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Review Team</label>
+            <div class="col-sm-9">
+                <span>{{model.reviewTeam}}</span>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-3 control-label">Durable Team</label>
-        <div class="col-sm-9">
-            <span>{{model.durableTeam}}</span>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Durable Team</label>
+            <div class="col-sm-9">
+                <span>{{model.durableTeam}}</span>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-3 control-label">Comment</label>
-        <div class="col-sm-9">
-            <textarea class="form-control" row="3" required 
-                [(ngModel)]="model.codeComment" ngControl="codeComment"></textarea>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Comment</label>
+            <div class="col-sm-9">
+                <textarea class="form-control" row="3" required [(ngModel)]="model.codeComment" ngControl="codeComment"></textarea>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-9">
-            <a class="btn btn-default" (click)="goBack()">Back</a>
-            <button type="submit" class="btn btn-primary" [disabled]="!theForm.form.valid">Save</button>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <a class="btn btn-default" (click)="goBack()">Back</a>
+                <button type="submit" class="btn btn-primary" [disabled]="!theForm.form.valid" (click)="save()">Save</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>

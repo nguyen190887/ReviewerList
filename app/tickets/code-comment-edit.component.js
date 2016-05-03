@@ -31,14 +31,24 @@ System.register(['angular2/core', 'angular2/router', './ticket.service'], functi
                 CodeCommentEditComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     var id = +this._routeParams.get('id');
-                    this._ticketService.getTicketById(id)
-                        .then(function (ticket) {
+                    this._ticketService.getTicketById(id).subscribe(function (ticket) {
                         _this.model = ticket;
-                        console.log(_this.model);
                     });
                 };
                 CodeCommentEditComponent.prototype.goBack = function () {
                     this._router.parent.navigate(['CodeNotifier']);
+                };
+                CodeCommentEditComponent.prototype.save = function () {
+                    var _this = this;
+                    this._ticketService.updateTicketComment(this.model.ticketNo, this.model.codeComment)
+                        .subscribe(function (data) {
+                        if (data.result == 'OK') {
+                            _this.goBack();
+                        }
+                        else {
+                            _this.errorMessage = 'Error: ' + data.error;
+                        }
+                    });
                 };
                 CodeCommentEditComponent = __decorate([
                     core_1.Component({

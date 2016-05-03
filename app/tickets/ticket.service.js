@@ -99,20 +99,25 @@ System.register(['angular2/core', 'angular2/http', 'angular2/common', 'rxjs/Obse
                     return Promise.resolve(review_data_1.ReviewData.DEV_TEAMS);
                 };
                 TicketService.prototype.getTicketById = function (id) {
-                    var ticket = new ticket_1.Ticket(); // TODO: retrieve ticket from server
-                    ticket.workId = '12345';
-                    ticket.summary = 'Test ticket';
-                    ticket.kilnId = 'K12345';
-                    ticket.reviewTeam = 'BEE';
-                    ticket.durableTeam = 'Team A';
-                    ticket.codeReviewStartDate = new Date(2016, 1, 1);
-                    // set default comment if empty
-                    if (ticket.codeComment == null) {
-                        ticket.codeComment =
-                            new common_1.DatePipe().transform(ticket.codeReviewStartDate, ['M/d/yyyy']) +
-                                ': 1st code submitted';
-                    }
-                    return Promise.resolve(ticket);
+                    var _this = this;
+                    return this.http.get(this.ticketApi + '/' + id)
+                        .map(function (res) { return res.json(); })
+                        .map(function (data) {
+                        var ticket = _this.mapToTicket(data);
+                        // set default comment if empty
+                        if (ticket.codeComment == null) {
+                            ticket.codeComment =
+                                new common_1.DatePipe().transform(ticket.codeReviewStartDate, ['M/d/yyyy']) +
+                                    ': 1st code submitted';
+                        }
+                        return ticket;
+                    })
+                        .catch(this.handleError);
+                };
+                TicketService.prototype.updateTicketComment = function (id, comment) {
+                    return this.http.put(this.ticketApi + '/putcomment?id=' + id + '&comment=' + comment, '')
+                        .map(function (res) { return res.json(); })
+                        .catch(this.handleError);
                 };
                 TicketService.prototype.pushTicketToGroup = function (groups, groupNumber, ticket) {
                     groups[groupNumber] = (groups[groupNumber] || []);
@@ -136,6 +141,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/common', 'rxjs/Obse
                     ticket.devTeam = rawObj['custom_fields']['DEV Team'];
                     ticket.durableTeam = rawObj['custom_fields']['Durable Team'];
                     ticket.comment = rawObj['custom_fields']['Comment'];
+                    ticket.codeComment = rawObj['custom_fields']['Code Comment'];
                     ticket.codeReviewStartDate = rawObj['custom_fields']['Code Review Start Date']
                         ? new Date(rawObj['custom_fields']['Code Review Start Date'])
                         : new Date(0);

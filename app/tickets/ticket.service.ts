@@ -82,22 +82,25 @@ export class TicketService {
     }
 
     getTicketById(id: number) {
-        let ticket = new Ticket(); // TODO: retrieve ticket from server
-        ticket.workId = '12345';
-        ticket.summary = 'Test ticket';
-        ticket.kilnId = 'K12345';
-        ticket.reviewTeam = 'BEE';
-        ticket.durableTeam = 'Team A';
-        ticket.codeReviewStartDate = new Date(2016, 1, 1);
-        
-        // set default comment if empty
-        if (ticket.codeComment == null) {
-            ticket.codeComment = 
-                new DatePipe().transform(ticket.codeReviewStartDate, ['M/d/yyyy']) +
-                ': 1st code submitted';
-        }
-        
-        return Promise.resolve(ticket);
+        return this.http.get(this.ticketApi + '/' + id)
+            .map(res => res.json())
+            .map(data => {
+                let ticket = this.mapToTicket(data);
+                // set default comment if empty
+                if (ticket.codeComment == null) {
+                    ticket.codeComment =
+                        new DatePipe().transform(ticket.codeReviewStartDate, ['M/d/yyyy']) +
+                        ': 1st code submitted';
+                }
+                return ticket;
+            })
+            .catch(this.handleError);
+    }
+
+    updateTicketComment(id: string, comment: string) {
+        return this.http.put(this.ticketApi + '/putcomment?id=' + id + '&comment=' + comment, '')
+            .map(res => res.json())
+            .catch(this.handleError);
     }
 
     private pushTicketToGroup(groups: { [groupId: number]: Ticket[] }, groupNumber: number, ticket: Ticket) {
@@ -124,6 +127,7 @@ export class TicketService {
         ticket.devTeam = rawObj['custom_fields']['DEV Team'];
         ticket.durableTeam = rawObj['custom_fields']['Durable Team'];
         ticket.comment = rawObj['custom_fields']['Comment'];
+        ticket.codeComment = rawObj['custom_fields']['Code Comment'];
         ticket.codeReviewStartDate = rawObj['custom_fields']['Code Review Start Date']
             ? new Date(rawObj['custom_fields']['Code Review Start Date'])
             : new Date(0);

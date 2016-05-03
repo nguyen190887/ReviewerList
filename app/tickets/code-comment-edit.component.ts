@@ -9,6 +9,7 @@ import {TicketService} from './ticket.service';
 
 export class CodeCommentEditComponent implements OnInit {
     model: Ticket;
+    errorMessage: string;
 
     constructor(
         private _ticketService: TicketService,
@@ -19,14 +20,23 @@ export class CodeCommentEditComponent implements OnInit {
 
     ngOnInit() {
         let id = +this._routeParams.get('id');
-        this._ticketService.getTicketById(id)
-            .then(ticket => {
-                this.model = ticket;
-                console.log(this.model);
-            });
+        this._ticketService.getTicketById(id).subscribe(ticket => {
+            this.model = ticket;
+        });
     }
 
     goBack() {
         this._router.parent.navigate(['CodeNotifier']);
+    }
+
+    save() {
+        this._ticketService.updateTicketComment(this.model.ticketNo, this.model.codeComment)
+            .subscribe(data => {
+                if (data.result == 'OK') {
+                    this.goBack();
+                } else {
+                    this.errorMessage = 'Error: ' + data.error;
+                }
+            });
     }
 }
