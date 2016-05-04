@@ -3,7 +3,7 @@
     Loading...
 </div>
 <div id="ticketTable">
-<table class="table table-bordered">
+<table class="table table-bordered code-notice-list">
     <tr>
         <th>Story/Bug ID</th>
         <th>Description</th>
@@ -15,9 +15,9 @@
     <tr *ngFor="#ticket of tickets" class="line-height: 18px">
         <td>{{ticket.workId}}</td>
         <td>{{ticket.summary}}</td>
-        <td><a href="{{ticket.kilnId | codeReviewLink}}" target="_blank" style="text-decoration: underline;">{{ticket.kilnId}}</a></td>
-        <td>{{ticket.reviewTeam}}</td>
-        <td>{{ticket.durableTeam}}</td>
+        <td class="text-center"><a href="{{ticket.kilnId | codeReviewLink}}" target="_blank" style="text-decoration: underline;">{{ticket.kilnId}}</a></td>
+        <td class="text-center">{{ticket.reviewTeam}}</td>
+        <td class="text-center">{{ticket.durableTeam}}</td>
         <td>{{ticket.codeReviewStartDate | date:'M/d/yy'}}: 1st code review submitted</td>
     </tr>
 </table>

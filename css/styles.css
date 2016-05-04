@@ -101,3 +101,11 @@ nav a.router-link-active {
 .ticket-count {
     color: #ff6600;
 }
+.code-notice-list {
+    font-family: Calibri, Tahoma, Arial;
+    font-size: 11pt;
+}
+.code-notice-list>tbody>tr>th, .code-notice-list>tbody>tr>td {
+    padding: 5px;
+    line-height: 18px;
+}

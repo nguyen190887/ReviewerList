@@ -18,7 +18,7 @@ export class CodeNotifierComponent implements OnInit {
     ngOnInit() {
         this.isLoading = true;
         
-        this._ticketService.ajaxGetTickets().subscribe(tickets => {
+        this._ticketService.ajaxGetTickets(true).subscribe(tickets => {
             this.tickets = this._ticketService.filterPendingCodeReviewTickets(tickets);
             this.isLoading = false;
         });
