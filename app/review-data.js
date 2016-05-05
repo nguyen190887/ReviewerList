@@ -1,12 +1,10 @@
-System.register([], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
+System.register([], function(exports_1) {
     var ReviewData, API;
     return {
         setters:[],
         execute: function() {
             (function (ReviewData) {
-                ReviewData.DEV_TEAMS = ['team1', 'team2'];
+                ReviewData.DEV_TEAMS = ['hurricane', 'tornado']; // TODO: move to server side
                 ReviewData.REVIEWLIST = [
                     {
                         id: 1,
@@ -35,7 +33,8 @@ System.register([], function(exports_1, context_1) {
             exports_1("ReviewData", ReviewData);
             exports_1("API", API = {
                 ticketApi: 'http://localhost/reviewdata/api/ticket',
-                configApi: 'http://localhost/reviewdata/api/configuration'
+                configApi: 'http://localhost/reviewdata/api/configuration',
+                timesheetApi: 'http://localhost/reviewdata/api/timesheet'
             });
         }
     }

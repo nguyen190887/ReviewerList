@@ -31,5 +31,6 @@ export module ReviewData {
 
 export var API = {
     ticketApi: 'http://localhost/reviewdata/api/ticket',
-    configApi: 'http://localhost/reviewdata/api/configuration'
+    configApi: 'http://localhost/reviewdata/api/configuration',
+    timesheetApi: 'http://localhost/reviewdata/api/timesheet'
 };
