@@ -1,6 +1,4 @@
-System.register(['angular2/core', 'angular2/common', './team-detail.component', './review.service'], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
+System.register(['angular2/core', 'angular2/common', './team-detail.component', './review.service'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -68,7 +66,7 @@ System.register(['angular2/core', 'angular2/common', './team-detail.component', 
                     __metadata('design:paramtypes', [review_service_1.ReviewService])
                 ], ReviewerListComponent);
                 return ReviewerListComponent;
-            }());
+            })();
             exports_1("ReviewerListComponent", ReviewerListComponent);
             hasSelectedTeam = function (teams) {
                 for (var i = 0; i < teams.length; i++) {

@@ -1,0 +1,54 @@
+<div class="container-fluid" *ngIf="model">
+    <h2>Timesheet Sync</h2>
+    <div *ngIf="alert.message" class="alert"
+        [ngClass]="{'alert-danger': alert.type === 'error', 'alert-success': alert.type !== 'error'}">{{alert.message}}</div>
+    <div class="row">
+        <div class="col-md-8">
+            <form class="form-horizontal" #theForm="ngForm">
+                <fieldset>
+                    <legend>V1</legend>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">V1 Username</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" [(ngModel)]="model.v1Username" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">V1 Password</label>
+                        <div class="col-sm-9">
+                            <input type="password" class="form-control" [(ngModel)]="model.v1Password" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">V1 Display Name</label>
+                        <div class="col-sm-9">
+                            <input type="password" class="form-control" [(ngModel)]="model.v1DisplayName" />
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Timesheet</legend>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Timesheet Username</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" [(ngModel)]="model.tsUsername" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Timesheet Password</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" [(ngModel)]="model.tsPassword" />
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <button type="submit" class="btn btn-primary" [disabled]="!theForm.form.valid" (click)="sync()">Sync</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

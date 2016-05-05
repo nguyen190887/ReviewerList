@@ -10,6 +10,8 @@ import {TicketService} from './tickets/ticket.service';
 import {CodeNotifierComponent} from './tickets/code-notifier.component';
 import {CodeCommentEditComponent} from './tickets/code-comment-edit.component';
 import {ReleaseNotesComponent} from './release-notes.component';
+import {TimesheetSyncComponent} from './timesheet/timesheet-sync.component';
+import {TimesheetService} from './timesheet/timesheet-service';
 
 @Component({
     selector: 'reviewer-list-app',
@@ -20,6 +22,7 @@ import {ReleaseNotesComponent} from './release-notes.component';
             <a [routerLink]="['ContactList']">Contact List</a>
             <a [routerLink]="['Tickets']">Ticket List</a>
             <a [routerLink]="['CodeNotifier']">Code Review Notice</a>
+            <a [routerLink]="['TimesheetSync']">Timesheet Sync</a>
             <a [routerLink]="['ReleaseNotes']">Release Notes</a>
         </nav>
         <div>
@@ -33,7 +36,8 @@ import {ReleaseNotesComponent} from './release-notes.component';
         ROUTER_PROVIDERS,
         HTTP_PROVIDERS,
         ReviewService,
-        TicketService
+        TicketService,
+        TimesheetService
     ]
 })
 
@@ -68,6 +72,11 @@ import {ReleaseNotesComponent} from './release-notes.component';
         path: '/code-notifier/edit-comment/:id',
         name: 'CodeCommentEdit',
         component: CodeCommentEditComponent
+    },
+    {
+        path: '/timesheet-sync',
+        name: 'TimesheetSync',
+        component: TimesheetSyncComponent
     },
     {   
         path: '/release-notes',

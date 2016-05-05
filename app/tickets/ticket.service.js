@@ -1,6 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'angular2/common', 'rxjs/Observable', 'rxjs/Rx', './ticket', '../review-data'], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
+System.register(['angular2/core', 'angular2/http', 'angular2/common', 'rxjs/Observable', 'rxjs/Rx', './ticket', '../review-data'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -48,27 +46,23 @@ System.register(['angular2/core', 'angular2/http', 'angular2/common', 'rxjs/Obse
                 };
                 TicketService.prototype.categorizeTickets = function (rawData, statusGroups, devTeam) {
                     var categoriedTickets = {};
-                    var _loop_1 = function() {
-                        var ticket = this_1.mapToTicket(rawItem);
+                    for (var _i = 0; _i < rawData.length; _i++) {
+                        var rawItem = rawData[_i];
+                        var ticket = this.mapToTicket(rawItem);
                         if (devTeam == '' || devTeam.toLowerCase() == ticket.devTeam.toLowerCase()) {
                             var foundGroup = statusGroups.find(function (s) { return s.statuses.indexOf(ticket.devStatus.toLowerCase()) >= 0; });
                             if (foundGroup) {
-                                this_1.pushTicketToGroup(categoriedTickets, foundGroup.groupId, ticket);
+                                this.pushTicketToGroup(categoriedTickets, foundGroup.groupId, ticket);
                             }
                         }
-                    };
-                    var this_1 = this;
-                    for (var _i = 0, rawData_1 = rawData; _i < rawData_1.length; _i++) {
-                        var rawItem = rawData_1[_i];
-                        _loop_1();
                     }
                     // console.log('categorized tickets: ' + JSON.stringify(categoriedTickets));
                     return categoriedTickets;
                 };
                 TicketService.prototype.filterPendingCodeReviewTickets = function (rawData) {
                     var pendingTickets = [];
-                    for (var _i = 0, rawData_2 = rawData; _i < rawData_2.length; _i++) {
-                        var rawItem = rawData_2[_i];
+                    for (var _i = 0; _i < rawData.length; _i++) {
+                        var rawItem = rawData[_i];
                         var ticket = this.mapToTicket(rawItem);
                         if (ticket.devStatus.toLowerCase() === 'code submitted') {
                             pendingTickets.push(ticket);
@@ -168,7 +162,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/common', 'rxjs/Obse
                     __metadata('design:paramtypes', [http_1.Http])
                 ], TicketService);
                 return TicketService;
-            }());
+            })();
             exports_1("TicketService", TicketService);
         }
     }
