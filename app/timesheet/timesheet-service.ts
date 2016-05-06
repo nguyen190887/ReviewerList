@@ -16,7 +16,10 @@ export class TimesheetService {
     }
 
     sync(model: TimesheetLogin) {
-        return this.http.post(API.timesheetApi, JSON.stringify(model))
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        return this.http.put(API.timesheetApi, JSON.stringify(model), { headers: headers })
             .map(res => res.json())
             .catch(this.handleError);
     }

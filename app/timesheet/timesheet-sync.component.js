@@ -1,4 +1,6 @@
-System.register(['angular2/core', './timesheet-data', './timesheet-service'], function(exports_1) {
+System.register(['angular2/core', './timesheet-data', './timesheet-service'], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -25,6 +27,8 @@ System.register(['angular2/core', './timesheet-data', './timesheet-service'], fu
             TimesheetSyncComponent = (function () {
                 function TimesheetSyncComponent(_timesheetService) {
                     this._timesheetService = _timesheetService;
+                    this.isProcessing = false;
+                    this.showWarning = true;
                     this.alert = {
                         message: '',
                         type: ''
@@ -35,17 +39,27 @@ System.register(['angular2/core', './timesheet-data', './timesheet-service'], fu
                 };
                 TimesheetSyncComponent.prototype.sync = function () {
                     var _this = this;
+                    this.resetAlert();
+                    this.isProcessing = true;
                     this._timesheetService.sync(this.model)
                         .subscribe(function (data) {
                         if (data.result == 'OK') {
-                            _this.setAlert('Sync successfully!');
+                            _this.setAlert('Sync successfully! Let open your timesheet to see the magic :)');
                         }
                         else {
                             _this.setAlert('Failed to sync :(', 'error');
                         }
+                        _this.isProcessing = false;
                     }, function (err) {
                         _this.setAlert('Error: ' + err, 'error');
+                        _this.isProcessing = false;
                     });
+                };
+                TimesheetSyncComponent.prototype.toggleWarning = function () {
+                    this.showWarning = !this.showWarning;
+                };
+                TimesheetSyncComponent.prototype.resetAlert = function () {
+                    this.setAlert('', '');
                 };
                 TimesheetSyncComponent.prototype.setAlert = function (msg, type) {
                     this.alert.message = msg;
@@ -59,7 +73,7 @@ System.register(['angular2/core', './timesheet-data', './timesheet-service'], fu
                     __metadata('design:paramtypes', [timesheet_service_1.TimesheetService])
                 ], TimesheetSyncComponent);
                 return TimesheetSyncComponent;
-            })();
+            }());
             exports_1("TimesheetSyncComponent", TimesheetSyncComponent);
         }
     }

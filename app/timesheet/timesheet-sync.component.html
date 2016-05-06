@@ -1,28 +1,47 @@
 <div class="container-fluid" *ngIf="model">
     <h2>Timesheet Sync</h2>
-    <div *ngIf="alert.message" class="alert"
-        [ngClass]="{'alert-danger': alert.type === 'error', 'alert-success': alert.type !== 'error'}">{{alert.message}}</div>
     <div class="row">
         <div class="col-md-8">
+            <div style="margin: 10px;">
+                <input type="checkbox" [checked]="!showWarning" (click)="toggleWarning()" /> Thanks! I know what I do ...
+            </div>
+            <div *ngIf="showWarning">
+                <div class="alert alert-info">
+                    <h4>What we do?</h4>
+                    <ol>
+                        <li>Get data from V1</li>
+                        <li>Open timesheet of current week, then delete all</li>
+                        <li>Copy V1 data to timesheet, then Save</li>
+                    </ol>
+                </div>
+                <div class="alert alert-warning"><b>*Important: make sure you DO NOT use any proxy in other PC (e.g. Fiddler) to avoid leaking sensitive info !!!</b></div>
+            </div>
+            <div *ngIf="alert.message" class="alert" [ngClass]="{'alert-danger': alert.type === 'error', 'alert-success': alert.type !== 'error'}">{{alert.message}}</div>
+            <div *ngIf="isProcessing" class="loading">
+                Sync in progress ...
+            </div>
+
             <form class="form-horizontal" #theForm="ngForm">
                 <fieldset>
                     <legend>V1</legend>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">V1 Username</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" [(ngModel)]="model.v1Username" />
+                            <input type="text" class="form-control" ngControl [(ngModel)]="model.v1Username" placeholder="e.g. tringuyen, quannguyen"
+                                required />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">V1 Password</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" [(ngModel)]="model.v1Password" />
+                            <input type="password" class="form-control" ngControl [(ngModel)]="model.v1Password" required />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">V1 Display Name</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" [(ngModel)]="model.v1DisplayName" />
+                            <input type="text" class="form-control" ngControl [(ngModel)]="model.v1DisplayName" placeholder="e.g. Tri Nguyen, Quan Nguyen"
+                                required />
                         </div>
                     </div>
                 </fieldset>
@@ -32,20 +51,21 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Timesheet Username</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" [(ngModel)]="model.tsUsername" />
+                            <input type="text" class="form-control" ngControl [(ngModel)]="model.tsUsername" placeholder="(username to login to your pc)"
+                                required />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Timesheet Password</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" [(ngModel)]="model.tsPassword" />
+                            <input type="password" class="form-control" ngControl [(ngModel)]="model.tsPassword" required />
                         </div>
                     </div>
                 </fieldset>
 
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-                        <button type="submit" class="btn btn-primary" [disabled]="!theForm.form.valid" (click)="sync()">Sync</button>
+                        <button type="submit" class="btn btn-primary" [disabled]="!theForm.form.valid || isProcessing" (click)="sync()">Sync</button>
                     </div>
                 </div>
             </form>

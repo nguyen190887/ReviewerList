@@ -12,6 +12,9 @@ h2, h3 {
   font-family: Arial, Helvetica, sans-serif;   
   font-weight: lighter;
 }
+.alert h4 {
+  font-weight: 600;
+}
 nav a {
   padding: 5px 10px;
   text-decoration: none;

@@ -9,6 +9,8 @@ import {TimesheetService} from './timesheet-service';
 
 export class TimesheetSyncComponent implements OnInit {
     model: TimesheetLogin;
+    isProcessing = false;
+    showWarning = true;
     alert = {
         message: '',
         type: ''
@@ -22,18 +24,30 @@ export class TimesheetSyncComponent implements OnInit {
     }
 
     sync() {
+        this.resetAlert();
+        this.isProcessing = true;
         this._timesheetService.sync(this.model)
             .subscribe(
-                data => {
-                    if (data.result == 'OK') {
-                        this.setAlert('Sync successfully!');
-                    } else {
-                        this.setAlert('Failed to sync :(', 'error');
-                    }
-                },
-                err => {
-                    this.setAlert('Error: ' + err, 'error');
-                });
+            data => {
+                if (data.result == 'OK') {
+                    this.setAlert('Sync successfully! Let open your timesheet to see the magic :)');
+                } else {
+                    this.setAlert('Failed to sync :(', 'error');
+                }
+                this.isProcessing = false;
+            },
+            err => {
+                this.setAlert('Error: ' + err, 'error');
+                this.isProcessing = false;
+            });
+    }
+    
+    toggleWarning() {
+        this.showWarning = !this.showWarning;
+    }
+
+    private resetAlert() {
+        this.setAlert('', '');
     }
 
     private setAlert(msg: string, type?: string) {
