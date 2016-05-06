@@ -1,10 +1,7 @@
 import {Injectable} from 'angular2/core';
 import {Http, Headers, Response} from 'angular2/http';
-// import {DatePipe} from 'angular2/common';
 import {Observable} from 'rxjs/Observable';
 import {TimesheetLogin} from './timesheet-data';
-// import 'rxjs/Rx';
-// import {Ticket} from './ticket';
 import {API} from '../review-data';
 import {TicketService} from '../tickets/ticket.service';
 
