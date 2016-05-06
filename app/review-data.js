@@ -1,10 +1,12 @@
-System.register([], function(exports_1) {
+System.register([], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
     var ReviewData, API;
     return {
         setters:[],
         execute: function() {
             (function (ReviewData) {
-                ReviewData.DEV_TEAMS = ['hurricane', 'tornado']; // TODO: move to server side
+                ReviewData.DEV_TEAMS = ['team1', 'team2'];
                 ReviewData.REVIEWLIST = [
                     {
                         id: 1,
