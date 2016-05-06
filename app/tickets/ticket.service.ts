@@ -9,7 +9,7 @@ import {API, ReviewData} from '../review-data';
 @Injectable()
 export class TicketService {
     http: Http;
-    cachedConfig: {};
+    cachedConfig: any;
     ticketApi = API.ticketApi;
     configApi = API.configApi;
 

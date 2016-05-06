@@ -6,22 +6,37 @@ import {TimesheetLogin} from './timesheet-data';
 // import 'rxjs/Rx';
 // import {Ticket} from './ticket';
 import {API} from '../review-data';
+import {TicketService} from '../tickets/ticket.service';
 
 @Injectable()
 export class TimesheetService {
-    http: Http;
+    constructor(
+        private _http: Http,
+        private _ticketService: TicketService) {
 
-    constructor(http: Http) {
-        this.http = http;
     }
 
     sync(model: TimesheetLogin) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        return this.http.put(API.timesheetApi, JSON.stringify(model), { headers: headers })
+        return this._http.put(API.timesheetApi, JSON.stringify(model), { headers: headers })
             .map(res => res.json())
             .catch(this.handleError);
+    }
+
+    getWorkflow() {
+        let p = new Promise((resolve, reject) => {
+            var cachedConfig = this._ticketService.getTicketConfig();
+            if (cachedConfig) {
+                resolve(cachedConfig.TimesheetWorkflow);
+            } else {
+                this._ticketService.pullTicketConfig().subscribe(config => {
+                    resolve(config.TimesheetWorkflow);
+                });
+            }
+        });
+        return p;
     }
 
     private handleError(error: Response) {

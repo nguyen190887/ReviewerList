@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', '../review-data'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', '../review-data', '../tickets/ticket.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', '../review
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, Observable_1, review_data_1;
+    var core_1, http_1, Observable_1, review_data_1, ticket_service_1;
     var TimesheetService;
     return {
         setters:[
@@ -25,18 +25,37 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', '../review
             },
             function (review_data_1_1) {
                 review_data_1 = review_data_1_1;
+            },
+            function (ticket_service_1_1) {
+                ticket_service_1 = ticket_service_1_1;
             }],
         execute: function() {
             TimesheetService = (function () {
-                function TimesheetService(http) {
-                    this.http = http;
+                function TimesheetService(_http, _ticketService) {
+                    this._http = _http;
+                    this._ticketService = _ticketService;
                 }
                 TimesheetService.prototype.sync = function (model) {
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/json');
-                    return this.http.put(review_data_1.API.timesheetApi, JSON.stringify(model), { headers: headers })
+                    return this._http.put(review_data_1.API.timesheetApi, JSON.stringify(model), { headers: headers })
                         .map(function (res) { return res.json(); })
                         .catch(this.handleError);
+                };
+                TimesheetService.prototype.getWorkflow = function () {
+                    var _this = this;
+                    var p = new Promise(function (resolve, reject) {
+                        var cachedConfig = _this._ticketService.getTicketConfig();
+                        if (cachedConfig) {
+                            resolve(cachedConfig.TimesheetWorkflow);
+                        }
+                        else {
+                            _this._ticketService.pullTicketConfig().subscribe(function (config) {
+                                resolve(config.TimesheetWorkflow);
+                            });
+                        }
+                    });
+                    return p;
                 };
                 TimesheetService.prototype.handleError = function (error) {
                     console.error(error);
@@ -44,7 +63,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', '../review
                 };
                 TimesheetService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [http_1.Http])
+                    __metadata('design:paramtypes', [http_1.Http, ticket_service_1.TicketService])
                 ], TimesheetService);
                 return TimesheetService;
             }());

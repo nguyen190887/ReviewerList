@@ -1,5 +1,6 @@
 <div class="container-fluid" *ngIf="model">
     <h2>Timesheet Sync</h2>
+
     <div class="row">
         <div class="col-md-8">
             <div style="margin: 10px;">
@@ -46,6 +47,34 @@
                         <label class="col-sm-3 control-label">Timesheet Password</label>
                         <div class="col-sm-9">
                             <input type="password" class="form-control" ngControl [(ngModel)]="model.tsPassword" required />
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Default data</legend>
+                    <div class="form-group">
+                        <label for="project" class="col-sm-3 control-label">Project</label>
+                        <div class="col-sm-9">
+                            <select name="project" class="form-control" (change)="onProjectChanged(true)" [(ngModel)]="currentProject">
+                                <option *ngFor="#project of availableProjects">{{project.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="workflow" class="col-sm-3 control-label">Workflow</label>
+                        <div class="col-sm-9">
+                            <select name="workflow" class="form-control" (change)="onWorkflowChanged(true)" [(ngModel)]="currentWorkflow">
+                                <option *ngFor="#workflow of availableWorkflows">{{workflow.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="task" class="col-sm-3 control-label">Task Prefix</label>
+                        <div class="col-sm-9">
+                            <select name="task" class="form-control" [(ngModel)]="currentTask">
+                                <option *ngFor="#task of availableTasks">{{task}}</option>
+                            </select>
                         </div>
                     </div>
                 </fieldset>

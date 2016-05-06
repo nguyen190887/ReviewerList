@@ -27,6 +27,13 @@ System.register(['angular2/core', './timesheet-data', './timesheet-service'], fu
             TimesheetSyncComponent = (function () {
                 function TimesheetSyncComponent(_timesheetService) {
                     this._timesheetService = _timesheetService;
+                    // timesheetWorkflow: TimesheetWorkflow;
+                    this.availableProjects = [];
+                    this.availableWorkflows = [];
+                    this.availableTasks = [];
+                    this.currentProject = 'Development Dev';
+                    this.currentWorkflow = 'Implementation';
+                    this.currentTask = 'Implementation';
                     this.isProcessing = false;
                     this.showWarning = true;
                     this.alert = {
@@ -36,6 +43,12 @@ System.register(['angular2/core', './timesheet-data', './timesheet-service'], fu
                     this.model = new timesheet_data_1.TimesheetLogin();
                 }
                 TimesheetSyncComponent.prototype.ngOnInit = function () {
+                    var _this = this;
+                    this._timesheetService.getWorkflow().then(function (workflow) {
+                        var timesheetWorkflow = workflow;
+                        _this.availableProjects = timesheetWorkflow.projects;
+                        _this.onProjectChanged();
+                    });
                 };
                 TimesheetSyncComponent.prototype.sync = function () {
                     var _this = this;
@@ -45,6 +58,7 @@ System.register(['angular2/core', './timesheet-data', './timesheet-service'], fu
                         .subscribe(function (data) {
                         if (data.result == 'OK') {
                             _this.setAlert('Sync successfully! Let open your timesheet to see the magic :)');
+                            _this.model.tsPassword = '';
                         }
                         else {
                             _this.setAlert('Failed to sync :(', 'error');
@@ -57,6 +71,45 @@ System.register(['angular2/core', './timesheet-data', './timesheet-service'], fu
                 };
                 TimesheetSyncComponent.prototype.toggleWarning = function () {
                     this.showWarning = !this.showWarning;
+                };
+                TimesheetSyncComponent.prototype.onProjectChanged = function (setDefaultValue) {
+                    var _this = this;
+                    if (setDefaultValue === void 0) { setDefaultValue = false; }
+                    setTimeout(function () {
+                        _this.availableWorkflows = _this.getWorkflows(_this.availableProjects, _this.currentProject);
+                        if (setDefaultValue) {
+                            _this.currentWorkflow = _this.availableWorkflows.length ? _this.availableWorkflows[0].name : '';
+                        }
+                        _this.onWorkflowChanged(setDefaultValue);
+                    });
+                };
+                TimesheetSyncComponent.prototype.onWorkflowChanged = function (setDefaultValue) {
+                    var _this = this;
+                    if (setDefaultValue === void 0) { setDefaultValue = false; }
+                    setTimeout(function () {
+                        _this.availableTasks = _this.getTasks(_this.availableWorkflows, _this.currentWorkflow);
+                        if (setDefaultValue) {
+                            _this.currentTask = _this.availableTasks.length ? _this.availableTasks[0] : '';
+                        }
+                    });
+                };
+                TimesheetSyncComponent.prototype.getWorkflows = function (projects, filter) {
+                    for (var _i = 0, projects_1 = projects; _i < projects_1.length; _i++) {
+                        var project = projects_1[_i];
+                        if (project.name === filter) {
+                            return project.workflows;
+                        }
+                    }
+                    return [];
+                };
+                TimesheetSyncComponent.prototype.getTasks = function (workflows, filter) {
+                    for (var _i = 0, workflows_1 = workflows; _i < workflows_1.length; _i++) {
+                        var workflow = workflows_1[_i];
+                        if (workflow.name === filter) {
+                            return workflow.tasks;
+                        }
+                    }
+                    return [];
                 };
                 TimesheetSyncComponent.prototype.resetAlert = function () {
                     this.setAlert('', '');
