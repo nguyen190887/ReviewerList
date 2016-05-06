@@ -27,20 +27,24 @@ System.register(['angular2/core', './timesheet-data', './timesheet-service'], fu
             TimesheetSyncComponent = (function () {
                 function TimesheetSyncComponent(_timesheetService) {
                     this._timesheetService = _timesheetService;
-                    // timesheetWorkflow: TimesheetWorkflow;
                     this.availableProjects = [];
                     this.availableWorkflows = [];
                     this.availableTasks = [];
-                    this.currentProject = 'Development Dev';
-                    this.currentWorkflow = 'Implementation';
-                    this.currentTask = 'Implementation';
                     this.isProcessing = false;
                     this.showWarning = true;
                     this.alert = {
                         message: '',
                         type: ''
                     };
-                    this.model = new timesheet_data_1.TimesheetLogin();
+                    this.defaultData = {
+                        project: 'Development Dev',
+                        workflow: 'Implementation',
+                        task: 'Implementation'
+                    };
+                    this.model = new timesheet_data_1.TimesheetSyncEntry();
+                    this.model.defaultProject = this.defaultData.project;
+                    this.model.defaultWorkflow = this.defaultData.workflow;
+                    this.model.defaultTask = this.defaultData.task;
                 }
                 TimesheetSyncComponent.prototype.ngOnInit = function () {
                     var _this = this;
@@ -54,6 +58,13 @@ System.register(['angular2/core', './timesheet-data', './timesheet-service'], fu
                     var _this = this;
                     this.resetAlert();
                     this.isProcessing = true;
+                    // set default data in fallback case
+                    if (!this.model.defaultProject)
+                        this.model.defaultProject = this.defaultData.project;
+                    if (!this.model.defaultWorkflow)
+                        this.model.defaultWorkflow = this.defaultData.workflow;
+                    if (!this.model.defaultTask)
+                        this.model.defaultTask = this.defaultData.task;
                     this._timesheetService.sync(this.model)
                         .subscribe(function (data) {
                         if (data.result == 'OK') {
@@ -76,9 +87,9 @@ System.register(['angular2/core', './timesheet-data', './timesheet-service'], fu
                     var _this = this;
                     if (setDefaultValue === void 0) { setDefaultValue = false; }
                     setTimeout(function () {
-                        _this.availableWorkflows = _this.getWorkflows(_this.availableProjects, _this.currentProject);
+                        _this.availableWorkflows = _this.getWorkflows(_this.availableProjects, _this.model.defaultProject);
                         if (setDefaultValue) {
-                            _this.currentWorkflow = _this.availableWorkflows.length ? _this.availableWorkflows[0].name : '';
+                            _this.model.defaultWorkflow = _this.availableWorkflows.length ? _this.availableWorkflows[0].name : '';
                         }
                         _this.onWorkflowChanged(setDefaultValue);
                     });
@@ -87,9 +98,9 @@ System.register(['angular2/core', './timesheet-data', './timesheet-service'], fu
                     var _this = this;
                     if (setDefaultValue === void 0) { setDefaultValue = false; }
                     setTimeout(function () {
-                        _this.availableTasks = _this.getTasks(_this.availableWorkflows, _this.currentWorkflow);
+                        _this.availableTasks = _this.getTasks(_this.availableWorkflows, _this.model.defaultWorkflow);
                         if (setDefaultValue) {
-                            _this.currentTask = _this.availableTasks.length ? _this.availableTasks[0] : '';
+                            _this.model.defaultTask = _this.availableTasks.length ? _this.availableTasks[0] : '';
                         }
                     });
                 };

@@ -1,5 +1,5 @@
 import {Component, OnInit} from 'angular2/core';
-import {TimesheetLogin, TimesheetWorkflow, Workflow, Project} from './timesheet-data';
+import {TimesheetSyncEntry, TimesheetWorkflow, Workflow, Project} from './timesheet-data';
 import {TimesheetService} from './timesheet-service';
 
 @Component({
@@ -8,24 +8,29 @@ import {TimesheetService} from './timesheet-service';
 })
 
 export class TimesheetSyncComponent implements OnInit {
-    model: TimesheetLogin;
-    // timesheetWorkflow: TimesheetWorkflow;
+    model: TimesheetSyncEntry;
     availableProjects: Project[] = [];
     availableWorkflows: Workflow[] = [];
     availableTasks: string[] = [];
-    currentProject = 'Development Dev';
-    currentWorkflow = 'Implementation';
-    currentTask = 'Implementation';
-
     isProcessing = false;
     showWarning = true;
+    
     alert = {
         message: '',
         type: ''
     };
+    
+    defaultData = {
+        project: 'Development Dev',
+        workflow: 'Implementation',
+        task: 'Implementation'
+    };
 
     constructor(private _timesheetService: TimesheetService) {
-        this.model = new TimesheetLogin();
+        this.model = new TimesheetSyncEntry();
+        this.model.defaultProject = this.defaultData.project;
+        this.model.defaultWorkflow = this.defaultData.workflow;
+        this.model.defaultTask = this.defaultData.task;
     }
 
     ngOnInit() {
@@ -39,6 +44,12 @@ export class TimesheetSyncComponent implements OnInit {
     sync() {
         this.resetAlert();
         this.isProcessing = true;
+
+        // set default data in fallback case
+        if (!this.model.defaultProject) this.model.defaultProject = this.defaultData.project;
+        if (!this.model.defaultWorkflow) this.model.defaultWorkflow = this.defaultData.workflow;
+        if (!this.model.defaultTask) this.model.defaultTask = this.defaultData.task;
+
         this._timesheetService.sync(this.model)
             .subscribe(
             data => {
@@ -62,9 +73,9 @@ export class TimesheetSyncComponent implements OnInit {
 
     onProjectChanged(setDefaultValue = false) {
         setTimeout(() => {
-            this.availableWorkflows = this.getWorkflows(this.availableProjects, this.currentProject);
+            this.availableWorkflows = this.getWorkflows(this.availableProjects, this.model.defaultProject);
             if (setDefaultValue) {
-                this.currentWorkflow = this.availableWorkflows.length ? this.availableWorkflows[0].name : '';
+                this.model.defaultWorkflow = this.availableWorkflows.length ? this.availableWorkflows[0].name : '';
             }
             this.onWorkflowChanged(setDefaultValue);
         });
@@ -72,9 +83,9 @@ export class TimesheetSyncComponent implements OnInit {
 
     onWorkflowChanged(setDefaultValue = false) {
         setTimeout(() => {
-            this.availableTasks = this.getTasks(this.availableWorkflows, this.currentWorkflow);
+            this.availableTasks = this.getTasks(this.availableWorkflows, this.model.defaultWorkflow);
             if (setDefaultValue) {
-                this.currentTask = this.availableTasks.length ? this.availableTasks[0] : '';
+                this.model.defaultTask = this.availableTasks.length ? this.availableTasks[0] : '';
             }
         });
     }

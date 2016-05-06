@@ -1,7 +1,7 @@
 import {Injectable} from 'angular2/core';
 import {Http, Headers, Response} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
-import {TimesheetLogin} from './timesheet-data';
+import {TimesheetSyncEntry} from './timesheet-data';
 import {API} from '../review-data';
 import {TicketService} from '../tickets/ticket.service';
 
@@ -13,7 +13,7 @@ export class TimesheetService {
 
     }
 
-    sync(model: TimesheetLogin) {
+    sync(model: TimesheetSyncEntry) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 

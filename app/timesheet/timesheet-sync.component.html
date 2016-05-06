@@ -4,9 +4,17 @@
     <div class="row">
         <div class="col-md-8">
             <div style="margin: 10px;">
-                <input type="checkbox" [checked]="!showWarning" (click)="toggleWarning()" /> Thanks! I know what I do ...
+                <div class="checkbox">
+                    <label>
+                        <input id="warning" type="checkbox" [checked]="!showWarning" (click)="toggleWarning()" />
+                        Thanks! I know what I do ...
+                    </label>
+                </div>
             </div>
             <div *ngIf="showWarning">
+                <div class="alert alert-warning">
+                    <b>*Important: make sure you DO NOT use any proxy in other PC (e.g. Fiddler) to avoid leaking sensitive info !!!</b>
+                </div>
                 <div class="alert alert-info">
                     <h4>What we do?</h4>
                     <ol>
@@ -15,7 +23,6 @@
                         <li>Copy V1 data to timesheet, then Save</li>
                     </ol>
                 </div>
-                <div class="alert alert-warning"><b>*Important: make sure you DO NOT use any proxy in other PC (e.g. Fiddler) to avoid leaking sensitive info !!!</b></div>
             </div>
             <div *ngIf="alert.message" class="alert" [ngClass]="{'alert-danger': alert.type === 'error', 'alert-success': alert.type !== 'error'}">{{alert.message}}</div>
             <div *ngIf="isProcessing" class="loading">
@@ -52,11 +59,11 @@
                 </fieldset>
 
                 <fieldset>
-                    <legend>Default data</legend>
+                    <legend>Default timesheet data</legend>
                     <div class="form-group">
                         <label for="project" class="col-sm-3 control-label">Project</label>
                         <div class="col-sm-9">
-                            <select name="project" class="form-control" (change)="onProjectChanged(true)" [(ngModel)]="currentProject">
+                            <select id="project" class="form-control" (change)="onProjectChanged(true)" [(ngModel)]="model.defaultProject">
                                 <option *ngFor="#project of availableProjects">{{project.name}}</option>
                             </select>
                         </div>
@@ -64,7 +71,7 @@
                     <div class="form-group">
                         <label for="workflow" class="col-sm-3 control-label">Workflow</label>
                         <div class="col-sm-9">
-                            <select name="workflow" class="form-control" (change)="onWorkflowChanged(true)" [(ngModel)]="currentWorkflow">
+                            <select id="workflow" class="form-control" (change)="onWorkflowChanged(true)" [(ngModel)]="model.defaultWorkflow">
                                 <option *ngFor="#workflow of availableWorkflows">{{workflow.name}}</option>
                             </select>
                         </div>
@@ -72,7 +79,7 @@
                     <div class="form-group">
                         <label for="task" class="col-sm-3 control-label">Task Prefix</label>
                         <div class="col-sm-9">
-                            <select name="task" class="form-control" [(ngModel)]="currentTask">
+                            <select id="task" class="form-control" [(ngModel)]="model.defaultTask">
                                 <option *ngFor="#task of availableTasks">{{task}}</option>
                             </select>
                         </div>

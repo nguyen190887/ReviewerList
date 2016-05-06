@@ -1,16 +1,16 @@
 System.register([], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var TimesheetLogin, TimesheetWorkflow, Project, Workflow;
+    var TimesheetSyncEntry, TimesheetWorkflow, Project, Workflow;
     return {
         setters:[],
         execute: function() {
-            TimesheetLogin = (function () {
-                function TimesheetLogin() {
+            TimesheetSyncEntry = (function () {
+                function TimesheetSyncEntry() {
                 }
-                return TimesheetLogin;
+                return TimesheetSyncEntry;
             }());
-            exports_1("TimesheetLogin", TimesheetLogin);
+            exports_1("TimesheetSyncEntry", TimesheetSyncEntry);
             TimesheetWorkflow = (function () {
                 function TimesheetWorkflow() {
                 }
