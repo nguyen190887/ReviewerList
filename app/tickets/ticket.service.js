@@ -110,12 +110,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/common', 'rxjs/Obse
                         .map(function (res) { return res.json(); })
                         .map(function (data) {
                         var ticket = _this.mapToTicket(data);
-                        // set default comment if empty
-                        if (ticket.codeComment == null) {
-                            ticket.codeComment =
-                                new common_1.DatePipe().transform(ticket.codeReviewStartDate, ['M/d/yyyy']) +
-                                    ': 1st code submitted';
-                        }
+                        ticket.codeComment = _this.getCodeComment(ticket);
                         return ticket;
                     })
                         .catch(this.handleError);
@@ -124,6 +119,11 @@ System.register(['angular2/core', 'angular2/http', 'angular2/common', 'rxjs/Obse
                     return this.http.put(this.ticketApi + '/putcomment?id=' + id + '&comment=' + comment, '')
                         .map(function (res) { return res.json(); })
                         .catch(this.handleError);
+                };
+                TicketService.prototype.getCodeComment = function (ticket) {
+                    return ticket.codeComment
+                        ? ticket.codeComment
+                        : new common_1.DatePipe().transform(ticket.codeReviewStartDate, ['M/d/yy']) + ': 1st code review submitted';
                 };
                 TicketService.prototype.pushTicketToGroup = function (groups, groupNumber, ticket) {
                     groups[groupNumber] = (groups[groupNumber] || []);

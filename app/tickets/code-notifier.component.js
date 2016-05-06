@@ -1,4 +1,4 @@
-System.register(['angular2/core', './ticket.service', '../common/pipes/code-review-link'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', './ticket.service', '../common/pipes/code-review-link'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,12 +10,15 @@ System.register(['angular2/core', './ticket.service', '../common/pipes/code-revi
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, ticket_service_1, code_review_link_1;
+    var core_1, router_1, ticket_service_1, code_review_link_1;
     var CodeNotifierComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
             },
             function (ticket_service_1_1) {
                 ticket_service_1 = ticket_service_1_1;
@@ -25,7 +28,8 @@ System.register(['angular2/core', './ticket.service', '../common/pipes/code-revi
             }],
         execute: function() {
             CodeNotifierComponent = (function () {
-                function CodeNotifierComponent(_ticketService) {
+                function CodeNotifierComponent(_router, _ticketService) {
+                    this._router = _router;
                     this._ticketService = _ticketService;
                     this.tickets = [];
                     this.isLoading = true;
@@ -38,12 +42,19 @@ System.register(['angular2/core', './ticket.service', '../common/pipes/code-revi
                         _this.isLoading = false;
                     });
                 };
+                CodeNotifierComponent.prototype.getCodeComment = function (ticket) {
+                    return this._ticketService.getCodeComment(ticket);
+                };
+                CodeNotifierComponent.prototype.editComment = function (ticket) {
+                    var link = ['CodeCommentEdit', { id: ticket.ticketNo }];
+                    this._router.navigate(link);
+                };
                 CodeNotifierComponent = __decorate([
                     core_1.Component({
                         templateUrl: 'app/tickets/code-notifier.component.html',
                         pipes: [code_review_link_1.CodeReviewLinkPipe]
                     }), 
-                    __metadata('design:paramtypes', [ticket_service_1.TicketService])
+                    __metadata('design:paramtypes', [router_1.Router, ticket_service_1.TicketService])
                 ], CodeNotifierComponent);
                 return CodeNotifierComponent;
             }());
