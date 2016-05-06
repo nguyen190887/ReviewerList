@@ -25,9 +25,12 @@ import {TimesheetService} from './timesheet/timesheet-service';
             <a [routerLink]="['TimesheetSync']">Timesheet Sync</a>
             <a [routerLink]="['ReleaseNotes']">Release Notes</a>
         </nav>
-        <div>
+        <div *ngIf="!loading">
             <router-outlet></router-outlet>
         </div>
+
+        <div *ngIf="loading">Please wait...</div>
+        <div *ngIf="message">{{message}}</div>
     `,
     directives: [
         ROUTER_DIRECTIVES
@@ -78,7 +81,7 @@ import {TimesheetService} from './timesheet/timesheet-service';
         name: 'TimesheetSync',
         component: TimesheetSyncComponent
     },
-    {   
+    {
         path: '/release-notes',
         name: 'ReleaseNotes',
         component: ReleaseNotesComponent
@@ -87,10 +90,20 @@ import {TimesheetService} from './timesheet/timesheet-service';
 
 export class AppComponent {
     title = 'Reviewer List App';
-    
+    loading = true;
+    message = '';
+
     // Cache ticket config
     constructor(private _ticketService: TicketService) {
         console.log('-- app.component: get ticket config');
-        _ticketService.pullTicketConfig();
+        _ticketService.pullTicketConfig().subscribe(
+            () => {
+                this.loading = false;
+                this.message = '';
+            },
+            err => {
+                this.loading = false;
+                this.message = 'Failed to pull data from server. Press F5 to retry please!';
+            });
     }
 }

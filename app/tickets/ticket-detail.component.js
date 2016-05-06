@@ -1,4 +1,4 @@
-System.register(['angular2/core'], function(exports_1, context_1) {
+System.register(['angular2/core', '../common/pipes/ticket-link'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,29 +10,20 @@ System.register(['angular2/core'], function(exports_1, context_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1;
+    var core_1, ticket_link_1;
     var TicketDetailComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (ticket_link_1_1) {
+                ticket_link_1 = ticket_link_1_1;
             }],
         execute: function() {
             TicketDetailComponent = (function () {
                 function TicketDetailComponent() {
                 }
-                TicketDetailComponent.prototype.getTicketUrl = function (ticket) {
-                    return (this.config.UrlFormat || '').replace('{0}', ticket.ticketNo);
-                };
-                TicketDetailComponent.prototype.getBacklogUrl = function (ticket) {
-                    return (this.config.BacklogUrlFormat || '').replace('{0}', ticket.workId);
-                };
-                TicketDetailComponent.prototype.getDefectUrl = function (ticket) {
-                    return (this.config.DefectUrlFormat || '').replace('{0}', ticket.workId.replace('Bug ', '').trim());
-                };
-                TicketDetailComponent.prototype.getCodeReviewUrl = function (ticket) {
-                    return (this.config.CodeReviewUrlFormat || '').replace('{0}', ticket.kilnId);
-                };
                 TicketDetailComponent.prototype.isDefectTicket = function (ticket) {
                     return ticket.workId.trim().indexOf('Bug') === 0;
                 };
@@ -40,7 +31,8 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                     core_1.Component({
                         selector: 'ticket-detail',
                         templateUrl: 'app/tickets/ticket-detail.component.html',
-                        inputs: ['ticketList', 'config']
+                        inputs: ['ticketList', 'config'],
+                        pipes: [ticket_link_1.TicketLinkPipe]
                     }), 
                     __metadata('design:paramtypes', [])
                 ], TicketDetailComponent);

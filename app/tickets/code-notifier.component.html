@@ -2,28 +2,36 @@
 <div *ngIf="isLoading" class="loading">
     Loading...
 </div>
-<div id="ticketTable" class="col-md-9">
-    <table class="table table-bordered code-notice-list">
-        <tr>
-            <th>Story/Bug ID</th>
-            <th>Description</th>
-            <th>Code Review ID</th>
-            <th>Review Team</th>
-            <th>Durable Team</th>
-            <th>Comment</th>
-            <th></th>
-        </tr>
-        <tr *ngFor="#ticket of tickets" class="line-height: 18px">
-            <td>{{ticket.workId}}</td>
-            <td>{{ticket.summary}}</td>
-            <td class="text-center"><a href="{{ticket.kilnId | codeReviewLink}}" target="_blank" style="text-decoration: underline;">{{ticket.kilnId}}</a></td>
-            <td class="text-center">{{ticket.reviewTeam}}</td>
-            <td class="text-center">{{ticket.durableTeam}}</td>
-            <td>{{getCodeComment(ticket)}}</td>
-            <td>
-                <a href="javascript:;" (click)="editComment(ticket)" title="Edit comment"><i class="glyphicon glyphicon-edit"></i></a>
-                <a href="javascript:;" target="_blank" title="Open ticket"><i class="glyphicon glyphicon-link"></i></a>
-            </td>
-        </tr>
-    </table>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10">
+            <div id="ticketTable">
+                <table class="table table-bordered code-notice-list">
+                    <tr>
+                        <th>Story/Bug ID</th>
+                        <th>Description</th>
+                        <th>Code Review ID</th>
+                        <th>Review Team</th>
+                        <th>Durable Team</th>
+                        <th>Comment</th>
+                        <th></th>
+                    </tr>
+                    <tr *ngFor="#ticket of tickets" class="line-height: 18px">
+                        <td>{{ticket.workId}}</td>
+                        <td>{{ticket.summary}}</td>
+                        <td class="text-center">
+                            <a href="{{ticket | ticketLink : 'codereview'}}" target="_blank" style="text-decoration: underline;">{{ticket.kilnId}}</a>
+                        </td>
+                        <td class="text-center">{{ticket.reviewTeam}}</td>
+                        <td class="text-center">{{ticket.durableTeam}}</td>
+                        <td>{{getCodeComment(ticket)}}</td>
+                        <td style="width: 45px">
+                            <a href="javascript:;" (click)="editComment(ticket)" title="Edit comment"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a href="{{ticket | ticketLink}}" target="_blank" title="Open ticket"><i class="glyphicon glyphicon-link"></i></a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>

@@ -60,15 +60,24 @@ System.register(['angular2/core', 'angular2/router', 'angular2/http', './reviewe
             AppComponent = (function () {
                 // Cache ticket config
                 function AppComponent(_ticketService) {
+                    var _this = this;
                     this._ticketService = _ticketService;
                     this.title = 'Reviewer List App';
+                    this.loading = true;
+                    this.message = '';
                     console.log('-- app.component: get ticket config');
-                    _ticketService.pullTicketConfig();
+                    _ticketService.pullTicketConfig().subscribe(function () {
+                        _this.loading = false;
+                        _this.message = '';
+                    }, function (err) {
+                        _this.loading = false;
+                        _this.message = 'Failed to pull data from server. Press F5 to retry please!';
+                    });
                 }
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'reviewer-list-app',
-                        template: "\n        <h1>{{title}}</h1>\n        <nav>\n            <a [routerLink]=\"['ReviewerList']\">Reviewer List</a>\n            <a [routerLink]=\"['ContactList']\">Contact List</a>\n            <a [routerLink]=\"['Tickets']\">Ticket List</a>\n            <a [routerLink]=\"['CodeNotifier']\">Code Review Notice</a>\n            <a [routerLink]=\"['TimesheetSync']\">Timesheet Sync</a>\n            <a [routerLink]=\"['ReleaseNotes']\">Release Notes</a>\n        </nav>\n        <div>\n            <router-outlet></router-outlet>\n        </div>\n    ",
+                        template: "\n        <h1>{{title}}</h1>\n        <nav>\n            <a [routerLink]=\"['ReviewerList']\">Reviewer List</a>\n            <a [routerLink]=\"['ContactList']\">Contact List</a>\n            <a [routerLink]=\"['Tickets']\">Ticket List</a>\n            <a [routerLink]=\"['CodeNotifier']\">Code Review Notice</a>\n            <a [routerLink]=\"['TimesheetSync']\">Timesheet Sync</a>\n            <a [routerLink]=\"['ReleaseNotes']\">Release Notes</a>\n        </nav>\n        <div *ngIf=\"!loading\">\n            <router-outlet></router-outlet>\n        </div>\n\n        <div *ngIf=\"loading\">Please wait...</div>\n        <div *ngIf=\"message\">{{message}}</div>\n    ",
                         directives: [
                             router_1.ROUTER_DIRECTIVES
                         ],

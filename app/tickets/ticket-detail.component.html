@@ -12,18 +12,18 @@
             </span>
             <span class="pull-right links">
                 <template [ngIf]="isDefectTicket(ticket) && ticket.workId">
-                    <a [href]="getDefectUrl(ticket)" [title]="ticket.workId" target="_blank">BZ</a>
+                    <a [href]="ticket | ticketLink : 'defect'" [title]="ticket.workId" target="_blank">BZ</a>
                 </template>
                 <template [ngIf]="!isDefectTicket(ticket) && ticket.workId">
-                    <a [href]="getBacklogUrl(ticket)" [title]="ticket.workId" target="_blank">V1</a>
+                    <a [href]="ticket | ticketLink : 'backlog'" [title]="ticket.workId" target="_blank">V1</a>
                 </template>
                 <template [ngIf]="ticket.kilnId">
                     &nbsp;|&nbsp;
-                    <a [href]="getCodeReviewUrl(ticket)" [title]="ticket.kilnId" target="_blank">Kiln</a>
+                    <a [href]="ticket | ticketLink : 'codereview'" [title]="ticket.kilnId" target="_blank">Kiln</a>
                 </template>
             </span>
         </div>
-        <a [href]="getTicketUrl(ticket)" target="_blank">{{ticket.workId}} | {{ticket.summary}}</a>
+        <a [href]="ticket | ticketLink" target="_blank">{{ticket.workId}} | {{ticket.summary}}</a>
         <hr/>
         <span class="pull-left dev-team">{{ticket.devTeam}}</span>
         <span class="pull-right review-team">{{ticket.reviewTeam ? ticket.reviewTeam : "(No review team)"}}</span>

@@ -2,11 +2,11 @@ import {Component, OnInit} from 'angular2/core';
 import {Router} from 'angular2/router';
 import {Ticket} from './ticket';
 import {TicketService} from './ticket.service';
-import {CodeReviewLinkPipe} from '../common/pipes/code-review-link';
+import {TicketLinkPipe} from '../common/pipes/ticket-link';
 
 @Component({
     templateUrl: 'app/tickets/code-notifier.component.html',
-    pipes: [CodeReviewLinkPipe]
+    pipes: [TicketLinkPipe]
 })
 
 export class CodeNotifierComponent implements OnInit {

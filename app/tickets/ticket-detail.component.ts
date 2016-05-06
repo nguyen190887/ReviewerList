@@ -1,32 +1,18 @@
 import {Component} from 'angular2/core';
 import {Ticket} from './ticket';
+import {TicketLinkPipe} from '../common/pipes/ticket-link';
 
 @Component({
     selector: 'ticket-detail',
     templateUrl: 'app/tickets/ticket-detail.component.html',
-    inputs: ['ticketList', 'config']
+    inputs: ['ticketList', 'config'],
+    pipes: [TicketLinkPipe]    
 })
 
 export class TicketDetailComponent {
     ticketList: Ticket[];
     config: any;
       
-    getTicketUrl(ticket: Ticket) {
-        return (this.config.UrlFormat || '').replace('{0}', ticket.ticketNo);
-    }
-    
-    getBacklogUrl(ticket: Ticket) {
-        return (this.config.BacklogUrlFormat || '').replace('{0}', ticket.workId);
-    }
-
-    getDefectUrl(ticket: Ticket) {
-        return (this.config.DefectUrlFormat || '').replace('{0}', ticket.workId.replace('Bug ', '').trim());
-    }
-
-    getCodeReviewUrl(ticket: Ticket) {
-        return (this.config.CodeReviewUrlFormat || '').replace('{0}', ticket.kilnId);
-    }
-
     isDefectTicket(ticket: Ticket) {
         return ticket.workId.trim().indexOf('Bug') === 0;
     }
