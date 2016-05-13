@@ -2,9 +2,9 @@ export class TimesheetSyncEntry {
     v1DisplayName: string;
     tsUsername: string;
     tsPassword: string;
-    defaultProject: string;
-    defaultWorkflow: string;
-    defaultTask:string;
+    tsDefaultProject: string;
+    tsDefaultWorkflow: string;
+    tsDefaultTask:string;
 }
 
 export class TimesheetWorkflow {

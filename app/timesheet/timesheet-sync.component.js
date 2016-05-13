@@ -42,9 +42,9 @@ System.register(['angular2/core', './timesheet-data', './timesheet-service'], fu
                         task: 'Implementation'
                     };
                     this.model = new timesheet_data_1.TimesheetSyncEntry();
-                    this.model.defaultProject = this.defaultData.project;
-                    this.model.defaultWorkflow = this.defaultData.workflow;
-                    this.model.defaultTask = this.defaultData.task;
+                    this.model.tsDefaultProject = this.defaultData.project;
+                    this.model.tsDefaultWorkflow = this.defaultData.workflow;
+                    this.model.tsDefaultTask = this.defaultData.task;
                 }
                 TimesheetSyncComponent.prototype.ngOnInit = function () {
                     var _this = this;
@@ -59,12 +59,12 @@ System.register(['angular2/core', './timesheet-data', './timesheet-service'], fu
                     this.resetAlert();
                     this.isProcessing = true;
                     // set default data in fallback case
-                    if (!this.model.defaultProject)
-                        this.model.defaultProject = this.defaultData.project;
-                    if (!this.model.defaultWorkflow)
-                        this.model.defaultWorkflow = this.defaultData.workflow;
-                    if (!this.model.defaultTask)
-                        this.model.defaultTask = this.defaultData.task;
+                    if (!this.model.tsDefaultProject)
+                        this.model.tsDefaultProject = this.defaultData.project;
+                    if (!this.model.tsDefaultWorkflow)
+                        this.model.tsDefaultWorkflow = this.defaultData.workflow;
+                    if (!this.model.tsDefaultTask)
+                        this.model.tsDefaultTask = this.defaultData.task;
                     this._timesheetService.sync(this.model)
                         .subscribe(function (data) {
                         if (data.result == 'OK') {
@@ -87,9 +87,9 @@ System.register(['angular2/core', './timesheet-data', './timesheet-service'], fu
                     var _this = this;
                     if (setDefaultValue === void 0) { setDefaultValue = false; }
                     setTimeout(function () {
-                        _this.availableWorkflows = _this.getWorkflows(_this.availableProjects, _this.model.defaultProject);
+                        _this.availableWorkflows = _this.getWorkflows(_this.availableProjects, _this.model.tsDefaultProject);
                         if (setDefaultValue) {
-                            _this.model.defaultWorkflow = _this.availableWorkflows.length ? _this.availableWorkflows[0].name : '';
+                            _this.model.tsDefaultWorkflow = _this.availableWorkflows.length ? _this.availableWorkflows[0].name : '';
                         }
                         _this.onWorkflowChanged(setDefaultValue);
                     });
@@ -98,9 +98,9 @@ System.register(['angular2/core', './timesheet-data', './timesheet-service'], fu
                     var _this = this;
                     if (setDefaultValue === void 0) { setDefaultValue = false; }
                     setTimeout(function () {
-                        _this.availableTasks = _this.getTasks(_this.availableWorkflows, _this.model.defaultWorkflow);
+                        _this.availableTasks = _this.getTasks(_this.availableWorkflows, _this.model.tsDefaultWorkflow);
                         if (setDefaultValue) {
-                            _this.model.defaultTask = _this.availableTasks.length ? _this.availableTasks[0] : '';
+                            _this.model.tsDefaultTask = _this.availableTasks.length ? _this.availableTasks[0] : '';
                         }
                     });
                 };

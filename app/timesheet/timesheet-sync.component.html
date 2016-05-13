@@ -63,7 +63,7 @@
                     <div class="form-group">
                         <label for="project" class="col-sm-3 control-label">Project</label>
                         <div class="col-sm-9">
-                            <select id="project" class="form-control" (change)="onProjectChanged(true)" [(ngModel)]="model.defaultProject">
+                            <select id="project" class="form-control" (change)="onProjectChanged(true)" [(ngModel)]="model.tsDefaultProject">
                                 <option *ngFor="#project of availableProjects">{{project.name}}</option>
                             </select>
                         </div>
@@ -71,7 +71,7 @@
                     <div class="form-group">
                         <label for="workflow" class="col-sm-3 control-label">Workflow</label>
                         <div class="col-sm-9">
-                            <select id="workflow" class="form-control" (change)="onWorkflowChanged(true)" [(ngModel)]="model.defaultWorkflow">
+                            <select id="workflow" class="form-control" (change)="onWorkflowChanged(true)" [(ngModel)]="model.tsDefaultWorkflow">
                                 <option *ngFor="#workflow of availableWorkflows">{{workflow.name}}</option>
                             </select>
                         </div>
@@ -79,7 +79,7 @@
                     <div class="form-group">
                         <label for="task" class="col-sm-3 control-label">Task Prefix</label>
                         <div class="col-sm-9">
-                            <select id="task" class="form-control" [(ngModel)]="model.defaultTask">
+                            <select id="task" class="form-control" [(ngModel)]="model.tsDefaultTask">
                                 <option *ngFor="#task of availableTasks">{{task}}</option>
                             </select>
                         </div>
