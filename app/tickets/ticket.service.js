@@ -148,9 +148,8 @@ System.register(['angular2/core', 'angular2/http', 'angular2/common', 'rxjs/Obse
                     ticket.durableTeam = rawObj['custom_fields']['Durable Team'];
                     ticket.comment = rawObj['custom_fields']['Comment'];
                     ticket.codeComment = rawObj['custom_fields']['Code Comment'];
-                    ticket.codeReviewStartDate = rawObj['custom_fields']['Code Review Start Date']
-                        ? new Date(rawObj['custom_fields']['Code Review Start Date'])
-                        : new Date(0);
+                    ticket.codeReviewStartDate = this.getDateField(rawObj['custom_fields']['Code Review Start Date'], new Date(0));
+                    ticket.codeMergeDate = this.getDateField(rawObj['custom_fields']['Code Merge Date'], null);
                     // ensure devStatus not empty
                     if (ticket.devStatus != null && ticket.devStatus.trim() === '') {
                         ticket.devStatus = 'None';
@@ -158,6 +157,11 @@ System.register(['angular2/core', 'angular2/http', 'angular2/common', 'rxjs/Obse
                     // remove workId at beginning of summary
                     ticket.summary = this.removeWorkIdFromSummary(ticket.summary);
                     return ticket;
+                };
+                TicketService.prototype.getDateField = function (dateString, defaultValue) {
+                    return dateString
+                        ? new Date(dateString)
+                        : defaultValue;
                 };
                 TicketService.prototype.handleError = function (error) {
                     console.error(error);

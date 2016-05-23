@@ -7,7 +7,9 @@
     <div *ngFor="#ticket of ticketList" class="ticket">
         <div class="clearfix">
             <span class="pull-left status-wrapper">
-                <p class="dev-status">{{ticket.devStatus}}</p>
+                <p class="dev-status">{{ticket.devStatus}}
+                    <span *ngIf="ticket.codeMergeDate">({{ticket.codeMergeDate | date: 'M/d'}})</span>
+                </p>
                 <p class="status">({{ticket.status}})</p>
             </span>
             <span class="pull-right links">

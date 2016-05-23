@@ -14,4 +14,5 @@ export class Ticket {
     comment: string;
     codeReviewStartDate: Date;
     codeComment: string;
+    codeMergeDate: Date;
 }

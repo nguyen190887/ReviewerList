@@ -129,9 +129,8 @@ export class TicketService {
         ticket.durableTeam = rawObj['custom_fields']['Durable Team'];
         ticket.comment = rawObj['custom_fields']['Comment'];
         ticket.codeComment = rawObj['custom_fields']['Code Comment'];
-        ticket.codeReviewStartDate = rawObj['custom_fields']['Code Review Start Date']
-            ? new Date(rawObj['custom_fields']['Code Review Start Date'])
-            : new Date(0);
+        ticket.codeReviewStartDate = this.getDateField(rawObj['custom_fields']['Code Review Start Date'], new Date(0));
+        ticket.codeMergeDate =this.getDateField(rawObj['custom_fields']['Code Merge Date'], null);
 
         // ensure devStatus not empty
         if (ticket.devStatus != null && ticket.devStatus.trim() === '') {
@@ -142,6 +141,12 @@ export class TicketService {
         ticket.summary = this.removeWorkIdFromSummary(ticket.summary);
 
         return ticket;
+    }
+    
+    private getDateField(dateString: string, defaultValue: Date){
+        return dateString 
+            ? new Date(dateString) 
+            : defaultValue;
     }
 
     private handleError(error: Response) {
