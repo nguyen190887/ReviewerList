@@ -28,7 +28,7 @@ export class TicketDetailComponent {
         } else if (status.endsWith(qaInProgress)) {
             status = qaInProgress;
         } else {
-            status = ticket.devStatus
+            status = this.getCssClass(ticket.devStatus);
         }
         return status;
     }

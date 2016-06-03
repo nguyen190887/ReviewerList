@@ -39,7 +39,7 @@ System.register(['angular2/core', '../common/pipes/ticket-link'], function(expor
                         status = qaInProgress;
                     }
                     else {
-                        status = ticket.devStatus;
+                        status = this.getCssClass(ticket.devStatus);
                     }
                     return status;
                 };
