@@ -27,6 +27,25 @@ System.register(['angular2/core', '../common/pipes/ticket-link'], function(expor
                 TicketDetailComponent.prototype.isDefectTicket = function (ticket) {
                     return ticket.workId.trim().indexOf('Bug') === 0;
                 };
+                TicketDetailComponent.prototype.getDevStatusCss = function (ticket) {
+                    var uatSubmitted = 'uat-submitted';
+                    var qaInProgress = 'qa-in-progress';
+                    // treat qa & uat as special case
+                    var status = this.getCssClass(ticket.status);
+                    if (status.endsWith(uatSubmitted)) {
+                        status = uatSubmitted;
+                    }
+                    else if (status.endsWith(qaInProgress)) {
+                        status = qaInProgress;
+                    }
+                    else {
+                        status = ticket.devStatus;
+                    }
+                    return status;
+                };
+                TicketDetailComponent.prototype.getCssClass = function (value) {
+                    return value.toLowerCase().replace(/ /g, '-');
+                };
                 TicketDetailComponent = __decorate([
                     core_1.Component({
                         selector: 'ticket-detail',

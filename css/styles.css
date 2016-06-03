@@ -71,14 +71,23 @@ nav a.router-link-active {
 .row [class^=col-]:nth-child(1) .ticket{
     background-color: #ffccff;
 }
+.row [class^=col-]:nth-child(1) .ticket.qa-in-progress{
+    background-color: #ccccff;
+}
 .row [class^=col-]:nth-child(2) .ticket{
     background-color: #ffcc66;
 }
 .row [class^=col-]:nth-child(3) .ticket {
-    background-color: #ccffff;
+    background-color: #e6ffff;
+}
+.row [class^=col-]:nth-child(3) .ticket.uat-submitted {
+    background-color: #66ffff;
 }
 .row [class^=col-]:nth-child(4) .ticket{
-    background-color: #99ff99;
+    background-color: #b3ffb3;
+}
+.row [class^=col-]:nth-child(4) .ticket.uat-approved{
+    background-color: #ccff66;
 }
 .not-started-tickets {
     margin-bottom: 10px;

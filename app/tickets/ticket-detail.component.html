@@ -4,7 +4,7 @@
     </div>
 </template>
 <template [ngIf]="ticketList">
-    <div *ngFor="#ticket of ticketList" class="ticket">
+    <div *ngFor="#ticket of ticketList" [class]="'ticket ' + getDevStatusCss(ticket)">
         <div class="clearfix">
             <span class="pull-left status-wrapper">
                 <p class="dev-status">{{ticket.devStatus}}
