@@ -110,7 +110,7 @@ export class TicketService {
     }
 
     private removeWorkIdFromSummary(summary: string) {
-        let re = new RegExp('^(B-|Bug\\s)[0-9]+\\s((\\|\\s)|(-\\s))?');
+        let re = new RegExp('^([A-Z]-|Bug\\s)[0-9]+\\s((\\|\\s)|(-\\s))?');
         return summary.replace(re, '');
     }
 

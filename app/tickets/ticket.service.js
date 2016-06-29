@@ -130,7 +130,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/common', 'rxjs/Obse
                     groups[groupNumber].push(ticket);
                 };
                 TicketService.prototype.removeWorkIdFromSummary = function (summary) {
-                    var re = new RegExp('^(B-|Bug\\s)[0-9]+\\s((\\|\\s)|(-\\s))?');
+                    var re = new RegExp('^([A-Z]-|Bug\\s)[0-9]+\\s((\\|\\s)|(-\\s))?');
                     return summary.replace(re, '');
                 };
                 TicketService.prototype.mapToTicket = function (rawObj) {
