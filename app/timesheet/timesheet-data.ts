@@ -4,7 +4,8 @@ export class TimesheetSyncEntry {
     tsPassword: string;
     tsDefaultProject: string;
     tsDefaultWorkflow: string;
-    tsDefaultTask:string;
+    tsDefaultTask: string;
+    WeekStartDate: Date;
 }
 
 export class TimesheetWorkflow {

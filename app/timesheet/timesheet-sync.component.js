@@ -30,6 +30,7 @@ System.register(['angular2/core', './timesheet-data', './timesheet-service'], fu
                     this.availableProjects = [];
                     this.availableWorkflows = [];
                     this.availableTasks = [];
+                    this.availableWeekStartDates = [];
                     this.isProcessing = false;
                     this.showWarning = true;
                     this.alert = {
@@ -51,6 +52,7 @@ System.register(['angular2/core', './timesheet-data', './timesheet-service'], fu
                     this._timesheetService.getWorkflow().then(function (workflow) {
                         var timesheetWorkflow = workflow;
                         _this.availableProjects = timesheetWorkflow.projects;
+                        _this.availableWeekStartDates = _this.getWeekStartDates(5); // 5 weeks
                         _this.onProjectChanged();
                     });
                 };
@@ -65,11 +67,12 @@ System.register(['angular2/core', './timesheet-data', './timesheet-service'], fu
                         this.model.tsDefaultWorkflow = this.defaultData.workflow;
                     if (!this.model.tsDefaultTask)
                         this.model.tsDefaultTask = this.defaultData.task;
+                    this.model.WeekStartDate = (this.model.WeekStartDate || this.availableWeekStartDates[0]);
                     this._timesheetService.sync(this.model)
                         .subscribe(function (data) {
                         if (data.result == 'OK') {
-                            _this.setAlert('Sync successfully! Let open your timesheet to see the magic :)');
                             _this.model.tsPassword = '';
+                            _this.setAlert('Sync successfully! Let open your timesheet to see the magic :)');
                         }
                         else {
                             _this.setAlert('Failed to sync :(', 'error');
@@ -121,6 +124,17 @@ System.register(['angular2/core', './timesheet-data', './timesheet-service'], fu
                         }
                     }
                     return [];
+                };
+                TimesheetSyncComponent.prototype.getWeekStartDates = function (numOfWeeks) {
+                    var days = [];
+                    var startWeekDate = new Date();
+                    startWeekDate.setDate(startWeekDate.getDate() - startWeekDate.getDay() + 1); // get Monday
+                    days.push(new Date(startWeekDate.getTime()));
+                    for (var i = 1; i < numOfWeeks; i++) {
+                        startWeekDate.setDate(startWeekDate.getDate() - 7); // back 1 week
+                        days.push(new Date(startWeekDate.getTime()));
+                    }
+                    return days;
                 };
                 TimesheetSyncComponent.prototype.resetAlert = function () {
                     this.setAlert('', '');
