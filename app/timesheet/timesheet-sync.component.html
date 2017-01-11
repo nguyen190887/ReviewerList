@@ -56,6 +56,15 @@
                             <input type="password" class="form-control" ngControl [(ngModel)]="model.tsPassword" required />
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Week Start Date</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" [(ngModel)]="model.WeekStartDate">
+                                <option *ngFor="#startDate of availableWeekStartDates" [value]="startDate.toISOString()">{{startDate | date:'shortDate'}}</option>
+                            </select>
+                            <span>('empty' means current week)</span>
+                        </div>
+                    </div>
                 </fieldset>
 
                 <fieldset>

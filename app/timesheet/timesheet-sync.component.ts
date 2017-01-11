@@ -12,6 +12,7 @@ export class TimesheetSyncComponent implements OnInit {
     availableProjects: Project[] = [];
     availableWorkflows: Workflow[] = [];
     availableTasks: string[] = [];
+    availableWeekStartDates: Date[] = [];
     isProcessing = false;
     showWarning = true;
     
@@ -37,6 +38,7 @@ export class TimesheetSyncComponent implements OnInit {
         this._timesheetService.getWorkflow().then(workflow => {
             let timesheetWorkflow = <TimesheetWorkflow>workflow;
             this.availableProjects = timesheetWorkflow.projects;
+            this.availableWeekStartDates = this.getWeekStartDates(5); // 5 weeks
             this.onProjectChanged();
         });
     }
@@ -49,13 +51,14 @@ export class TimesheetSyncComponent implements OnInit {
         if (!this.model.tsDefaultProject) this.model.tsDefaultProject = this.defaultData.project;
         if (!this.model.tsDefaultWorkflow) this.model.tsDefaultWorkflow = this.defaultData.workflow;
         if (!this.model.tsDefaultTask) this.model.tsDefaultTask = this.defaultData.task;
+        this.model.WeekStartDate = (this.model.WeekStartDate || this.availableWeekStartDates[0]);
 
         this._timesheetService.sync(this.model)
             .subscribe(
             data => {
                 if (data.result == 'OK') {
-                    this.setAlert('Sync successfully! Let open your timesheet to see the magic :)');
                     this.model.tsPassword = '';
+                    this.setAlert('Sync successfully! Let open your timesheet to see the magic :)');
                 } else {
                     this.setAlert('Failed to sync :(', 'error');
                 }
@@ -106,6 +109,19 @@ export class TimesheetSyncComponent implements OnInit {
             }
         }
         return [];
+    }
+
+    private getWeekStartDates(numOfWeeks: number) {
+        let days = [];
+        let startWeekDate = new Date();
+        startWeekDate.setDate(startWeekDate.getDate() - startWeekDate.getDay() + 1); // get Monday
+        days.push(new Date(startWeekDate.getTime()));
+
+        for (let i = 1; i < numOfWeeks; i++) {
+            startWeekDate.setDate(startWeekDate.getDate() - 7); // back 1 week
+            days.push(new Date(startWeekDate.getTime()));
+        }
+        return days;
     }
 
     private resetAlert() {
