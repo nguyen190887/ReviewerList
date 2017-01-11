@@ -12,6 +12,8 @@ import {CodeCommentEditComponent} from './tickets/code-comment-edit.component';
 import {ReleaseNotesComponent} from './release-notes.component';
 import {TimesheetSyncComponent} from './timesheet/timesheet-sync.component';
 import {TimesheetService} from './timesheet/timesheet-service';
+import {ElmahParserComponent} from './elmah/elmah-parser.component';
+import {ElmahService} from './elmah/elmah.service';
 
 @Component({
     selector: 'reviewer-list-app',
@@ -23,6 +25,7 @@ import {TimesheetService} from './timesheet/timesheet-service';
             <a [routerLink]="['Tickets']">Ticket List</a>
             <a [routerLink]="['CodeNotifier']">Code Review Notice</a>
             <a [routerLink]="['TimesheetSync']">Timesheet Sync</a>
+            <a [routerLink]="['ElmahParser']">Elmah Parser</a>
             <a [routerLink]="['ReleaseNotes']">Release Notes</a>
         </nav>
         <div *ngIf="!loading">
@@ -40,7 +43,8 @@ import {TimesheetService} from './timesheet/timesheet-service';
         HTTP_PROVIDERS,
         ReviewService,
         TicketService,
-        TimesheetService
+        TimesheetService,
+        ElmahService
     ]
 })
 
@@ -80,6 +84,11 @@ import {TimesheetService} from './timesheet/timesheet-service';
         path: '/timesheet-sync',
         name: 'TimesheetSync',
         component: TimesheetSyncComponent
+    },
+    {
+        path: '/elmah-parser',
+        name: 'ElmahParser',
+        component: ElmahParserComponent
     },
     {
         path: '/release-notes',

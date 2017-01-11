@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', 'angular2/http', './reviewers/reviewer-list.component', './reviewers/contact-list.component', './reviewers/contact-detail.component', './reviewers/review.service', './tickets/ticket-list.component', './tickets/ticket.service', './tickets/code-notifier.component', './tickets/code-comment-edit.component', './release-notes.component', './timesheet/timesheet-sync.component', './timesheet/timesheet-service'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', 'angular2/http', './reviewers/reviewer-list.component', './reviewers/contact-list.component', './reviewers/contact-detail.component', './reviewers/review.service', './tickets/ticket-list.component', './tickets/ticket.service', './tickets/code-notifier.component', './tickets/code-comment-edit.component', './release-notes.component', './timesheet/timesheet-sync.component', './timesheet/timesheet-service', './elmah/elmah-parser.component', './elmah/elmah.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2/http', './reviewe
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, http_1, reviewer_list_component_1, contact_list_component_1, contact_detail_component_1, review_service_1, ticket_list_component_1, ticket_service_1, code_notifier_component_1, code_comment_edit_component_1, release_notes_component_1, timesheet_sync_component_1, timesheet_service_1;
+    var core_1, router_1, http_1, reviewer_list_component_1, contact_list_component_1, contact_detail_component_1, review_service_1, ticket_list_component_1, ticket_service_1, code_notifier_component_1, code_comment_edit_component_1, release_notes_component_1, timesheet_sync_component_1, timesheet_service_1, elmah_parser_component_1, elmah_service_1;
     var AppComponent;
     return {
         setters:[
@@ -55,6 +55,12 @@ System.register(['angular2/core', 'angular2/router', 'angular2/http', './reviewe
             },
             function (timesheet_service_1_1) {
                 timesheet_service_1 = timesheet_service_1_1;
+            },
+            function (elmah_parser_component_1_1) {
+                elmah_parser_component_1 = elmah_parser_component_1_1;
+            },
+            function (elmah_service_1_1) {
+                elmah_service_1 = elmah_service_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
@@ -77,7 +83,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2/http', './reviewe
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'reviewer-list-app',
-                        template: "\n        <h1>{{title}}</h1>\n        <nav>\n            <a [routerLink]=\"['ReviewerList']\">Reviewer List</a>\n            <a [routerLink]=\"['ContactList']\">Contact List</a>\n            <a [routerLink]=\"['Tickets']\">Ticket List</a>\n            <a [routerLink]=\"['CodeNotifier']\">Code Review Notice</a>\n            <a [routerLink]=\"['TimesheetSync']\">Timesheet Sync</a>\n            <a [routerLink]=\"['ReleaseNotes']\">Release Notes</a>\n        </nav>\n        <div *ngIf=\"!loading\">\n            <router-outlet></router-outlet>\n        </div>\n\n        <div *ngIf=\"loading\">Please wait...</div>\n        <div *ngIf=\"message\">{{message}}</div>\n    ",
+                        template: "\n        <h1>{{title}}</h1>\n        <nav>\n            <a [routerLink]=\"['ReviewerList']\">Reviewer List</a>\n            <a [routerLink]=\"['ContactList']\">Contact List</a>\n            <a [routerLink]=\"['Tickets']\">Ticket List</a>\n            <a [routerLink]=\"['CodeNotifier']\">Code Review Notice</a>\n            <a [routerLink]=\"['TimesheetSync']\">Timesheet Sync</a>\n            <a [routerLink]=\"['ElmahParser']\">Elmah Parser</a>\n            <a [routerLink]=\"['ReleaseNotes']\">Release Notes</a>\n        </nav>\n        <div *ngIf=\"!loading\">\n            <router-outlet></router-outlet>\n        </div>\n\n        <div *ngIf=\"loading\">Please wait...</div>\n        <div *ngIf=\"message\">{{message}}</div>\n    ",
                         directives: [
                             router_1.ROUTER_DIRECTIVES
                         ],
@@ -86,7 +92,8 @@ System.register(['angular2/core', 'angular2/router', 'angular2/http', './reviewe
                             http_1.HTTP_PROVIDERS,
                             review_service_1.ReviewService,
                             ticket_service_1.TicketService,
-                            timesheet_service_1.TimesheetService
+                            timesheet_service_1.TimesheetService,
+                            elmah_service_1.ElmahService
                         ]
                     }),
                     router_1.RouteConfig([
@@ -125,6 +132,11 @@ System.register(['angular2/core', 'angular2/router', 'angular2/http', './reviewe
                             path: '/timesheet-sync',
                             name: 'TimesheetSync',
                             component: timesheet_sync_component_1.TimesheetSyncComponent
+                        },
+                        {
+                            path: '/elmah-parser',
+                            name: 'ElmahParser',
+                            component: elmah_parser_component_1.ElmahParserComponent
                         },
                         {
                             path: '/release-notes',

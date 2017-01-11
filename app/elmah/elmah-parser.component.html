@@ -1,0 +1,35 @@
+<div class="container-fluid">
+    <h2>Elmah Parser</h2>
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-1 control-label">Elmah XML</label>
+            <div class="col-sm-11">
+                <textarea style="height: 250px;" class="form-control" [(ngModel)]="input"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-11">
+                <button class="btn btn-primary" (click)="parse()">Transform</button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="output && output.length">
+        <table class="table">
+            <tr>
+                <th>Id</th>
+                <th>Host</th>
+                <th>Type</th>
+                <th>Error</th>
+                <th>Time</th>
+            </tr>
+            <tr *ngFor="#error of output">
+                <td>{{error.ErrorId}}</td>
+                <td>{{error.Host}}</td>
+                <td>{{error.Type}}</td>
+                <td>{{error.Message}}</td>
+                <td style="width: 175px;">{{error.TimeString}}</td>
+            </tr> 
+        </table>
+    </div>
+</div>

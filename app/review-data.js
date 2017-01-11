@@ -36,7 +36,8 @@ System.register([], function(exports_1, context_1) {
             exports_1("API", API = {
                 ticketApi: 'http://localhost/reviewdata/api/ticket',
                 configApi: 'http://localhost/reviewdata/api/configuration',
-                timesheetApi: 'http://localhost/reviewdata/api/timesheet'
+                timesheetApi: 'http://localhost/reviewdata/api/timesheet',
+                elmahApi: 'http://localhost/reviewdata/api/elmahparser'
             });
         }
     }
