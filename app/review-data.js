@@ -37,7 +37,8 @@ System.register([], function(exports_1, context_1) {
                 ticketApi: 'http://localhost/reviewdata/api/ticket',
                 configApi: 'http://localhost/reviewdata/api/configuration',
                 timesheetApi: 'http://localhost/reviewdata/api/timesheet',
-                elmahApi: 'http://localhost/reviewdata/api/elmahparser'
+                elmahApi: 'http://localhost/reviewdata/api/elmahparser',
+                textDiffApi: 'http://localhost/reviewdata/api/textdiff'
             });
         }
     }
